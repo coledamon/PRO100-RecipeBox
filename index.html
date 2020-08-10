@@ -4,20 +4,39 @@
     <title>Main Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href = "css/bootstrap.css" rel="stylesheet"/>
+    <link href = "css/style.css" rel="stylesheet"/>
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <script src="scripts/bootstrap.js"></script> -->
 </head>
 <body>
-    <div class="row nav-fill">
-        <div class="col-2 nav-item">
-           <h2><a href="#">Website Name</a></h2>
-        </div>
-    <div class="col-2 offset-8 nav-item text-right">
-            <h6><a href="#">Log In</a>|<a href="#">Sign Up</a></h6>
+    <div class="navbar navbar-expand-sm navbar-dark fixed-top bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="images/box.jpg" width="30" height="30" class="d-inline-block align-top">
+                Website Name</a>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="allPosts.html">All Posts</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html">Log In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="signUp.html">Sign Up</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
+    
 
 </body>
 </html>
