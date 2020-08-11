@@ -1,0 +1,39 @@
+{
+  "name": "node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "set DEBUG=app & nodemon script.js",
+    "lint": "eslint script.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "4.5.2",
+    "chalk": "4.1.0",
+    "debug": "4.1.1",
+    "ejs": "^3.1.3",
+    "express": "4.17.1",
+    "jquery": "3.5.1",
+    "morgan": "1.10.0",
+    "nodemon": "^2.0.4"
+    },
+  "devDependencies": {
+    "eslint": "^es7.6.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0"
+  },
+  "nodemonConfig": {
+    "restartable": "rs",
+    "ignore": [
+      "node_modules/**/node_modules"
+    ],
+    "delay": "2500",
+    "env": {
+      "NODE_ENV": "development",
+      "PORT": 4000
+    }
+  }
+}
