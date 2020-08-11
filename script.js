@@ -15,10 +15,15 @@ app.use('/js', express.static(path.join(__dirname, 'node_modules/jquery/dist')))
 app.set('views', './html/');
 app.set('view engine', 'ejs');
 
-app.get('/', (req, res) => {
-    res.render('index', {list: ['a','b']});
-//   res.sendFile(path.join(__dirname, 'html/index.html'));
-});
+const homeRouter = require("./routes/homeRouter");
+const allRouter = require("./routes/allRouter");
+const loginRouter = require("./routes/loginRouter");
+const signRouter = require("./routes/signRouter");
+
+app.use('/', homeRouter);
+app.use('/allPosts', allRouter);
+app.use('/login', loginRouter);
+app.use('/signup', signRouter);
 
 app.listen(port, () => {
   debug(`listening on port ${chalk.green(port)}`);

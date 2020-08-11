@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href = "../css/bootstrap.css" rel="stylesheet"/>
+    <title>Main Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link href = "../css/style.css" rel="stylesheet"/>
-    <title>Sign Up</title>
 </head>
-<body class="body2">
+<body class="body">
     <div class="navbar navbar-expand-sm navbar-dark fixed-top bg-dark">
         <div class="container">
             <a class="navbar-brand" href="/">
@@ -15,25 +14,27 @@
                 Paughers</a>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
-                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/allPosts">All Posts</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
                     <%for(let i = 0; i < nav.length; i++) {%>
                     <li class="nav-item">
                         <a class="nav-link" href="<%=nav[i].link%>"><%=nav[i].title%></a>
                     </li>
                     <%}%>
                 </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login">Login</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/signup">Sign Up</a>
-                    </li>
-                </ul>
             </div>
         </div>
     </div>
     
+
+    <script src="/js/jquery-3.5.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
 </body>
 <footer class="page-footer font-small fixed-bottom bg-dark">
     <div class="container text-center text-md-left">
