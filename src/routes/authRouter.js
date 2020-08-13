@@ -3,6 +3,7 @@ const {MongoClient} = require('mongodb');
 const debug = require('debug')('app:authRouter');
 const authRouter = express.Router();
 const passport = require('passport');
+let whereToRead = 0;
 
 function router(nav) {
     authRouter.route('/signUp')
@@ -38,11 +39,18 @@ function router(nav) {
     });
     authRouter.route('/signin')
     .get((req, res) => {
-        res.render('login', {nav})
+        res.render('login', {nav, whereToRead, errors : req.session.messages || [] });
+        try {
+            if(req.session.messages[whereToRead] === void(0)) {
+                throw "I hate this";
+            }
+            whereToRead++;
+        }catch(err) {}
     })
     .post(passport.authenticate('local', {
         successRedirect: '/auth/profile',
-        failureRedirect: '/auth/signin'
+        failureRedirect: '/auth/signin',
+        failureMessage: 'Invalid username or password'
     }));
     authRouter.route('/profile')
     .all((req, res, next) => {
@@ -55,7 +63,7 @@ function router(nav) {
         }
     })
     .get((req, res) => {
-        res.json(req.user);
+        res.render('profile', {nav});
     });
     authRouter.route('/logout')
     .get((req,res) => {

@@ -1,7 +1,7 @@
 const passport = require('passport');
 const {Strategy} = require('passport-local');
 const {MongoClient} = require('mongodb');
-const debug = require('debug')('app.local.strategy');
+const debug = require('debug')('app:local.strategy');
 
 module.exports = function localStrategy() {
     passport.use(new Strategy(
@@ -21,13 +21,23 @@ module.exports = function localStrategy() {
                     const db = client.db(dbName);
                     const col = db.collection('users');
 
-                    const user = await col.findOne({username});
+                    const user = await col.findOne({username}, function(err, user) {
+                        if (err) {
+                            done(null, false);
+                        }
+                        if (!user) {
+                            debug('this username does not exist');
+                            done(null, false);
+                        }
+                        else {
+                            if(user.password === password) {
+                                done(null, user);
+                            } else {
+                                done(null, false);
+                            }
+                        }
+                    });
 
-                    if(user.password === password) {
-                        done(null, user);
-                    } else {
-                        done(null, false);
-                    }
 
                 } catch (err) {
                     debug(err.stack);
