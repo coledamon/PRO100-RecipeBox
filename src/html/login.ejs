@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href = "/css/bootstrap.css" rel="stylesheet"/>
+    <link href = "/css/style.css" rel="stylesheet"/>
+    <title>Login</title>
+</head>
+<body class="body2">
+    <div class="navbar navbar-expand-sm navbar-dark fixed-top bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src="/images/logo.png" width="30" height="30" class="d-inline-block align-top">
+                Paughers</a>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <%for(let i = 0; i < 2; i++) {%>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<%=nav[i].link%>"><%=nav[i].title%></a>
+                    </li>
+                    <%}%>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="<%=nav[2].link%>"><%=nav[2].title%></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<%=nav[3].link%>"><%=nav[3].title%></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container awayFromHeader py-3 bg-lightish">
+        <div class="row mr-auto ml-auto">
+            <p class="text-center">Sign In Or <a href="/auth/signUp">Register</a></p>
+        </div>
+        <div class="row text-center mr-auto ml-auto">
+            <form name="signInForm" action="/auth/signin" method="post">
+                Username: <input name="username" id="username"/><br><br>
+                Password: <input name="password" id="password"/><br><br>
+                <%if(errors.length > whereToRead) {%>
+                    <p class="bg-warning ml-5"><%=errors[whereToRead]%></p>
+                <%}%>
+                <input class="ml-5" type="submit" value="Sign In"/>
+
+            </form>
+        </div>
+    </div>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+
+</body>
+<footer class="page-footer font-small fixed-bottom bg-dark">
+    <div class="container text-center text-md-left">
+        <div class="row">
+            <div class="col-5 offset-1 mb-md-0 mb-15">
+                <h5 class="text-uppercase">Contributors</h5>
+                <ul class="list-unstyled">
+                    <li> 
+                        <a href="mailto:KColeman@student.neumont.edu" target="_blank" id='white'>Kasey Coleman</a>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        <a href="mailto:GCampbell@student.neumont.edu" target="_blank" id='white'>Matthew Campbell</a>
+                    </li>
+                    <li>
+                        <a href="mailto:CDamon@student.neumont.edu" target="_blank" id='white'>Cole Damon </a> &nbsp; &nbsp; &nbsp; &nbsp; &emsp13; &#8198; &#8198;
+                        <a href="mailto:RZarkowski@student.neumont.edu" target="_blank" id='white'>Reece Zarkowski</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-4 mb-md-0 mb-15">
+                <h5 class="text-uppercase text-right">Contact Us</h5>
+                <p class="text-right" id="white">801-555-9374</p>
+            </div>
+        </div>
+    </div>
+</footer>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Main Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link href = "/css/style.css" rel="stylesheet"/>
+</head>
+<body class="body">
+    <div class="navbar navbar-expand-sm navbar-dark fixed-top bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src="/images/logo.png" width="30" height="30" class="d-inline-block align-top">
+                Paughers</a>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="<%=nav[0].link%>"><%=nav[0].title%></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<%=nav[1].link%>"><%=nav[1].title%></a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <%for(let i = 2; i < 4; i++) {%>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<%=nav[i].link%>"><%=nav[i].title%></a>
+                    </li>
+                    <%}%>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+</body>
+<footer class="page-footer font-small fixed-bottom bg-dark">
+    <div class="container text-center text-md-left">
+        <div class="row">
+            <div class="col-5 offset-1 mb-md-0 mb-15">
+                <h5 class="text-uppercase">Contributors</h5>
+                <ul class="list-unstyled">
+                    <li> 
+                        <a href="mailto:KColeman@student.neumont.edu" target="_blank" id='white'>Kasey Coleman</a>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        <a href="mailto:GCampbell@student.neumont.edu" target="_blank" id='white'>Matthew Campbell</a>
+                    </li>
+                    <li>
+                        <a href="mailto:CDamon@student.neumont.edu" target="_blank" id='white'>Cole Damon </a> &nbsp; &nbsp; &nbsp; &nbsp; &emsp13; &#8198; &#8198;
+                        <a href="mailto:RZarkowski@student.neumont.edu" target="_blank" id='white'>Reece Zarkowski</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-4 mb-md-0 mb-15">
+                <h5 class="text-uppercase text-right">Contact Us</h5>
+                <p class="text-right" id="white">801-555-9374</p>
+            </div>
+        </div>
+    </div>
+</footer>
+</html>
