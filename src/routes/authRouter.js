@@ -8,7 +8,7 @@ let whereToRead = 0;
 function router(nav) {
     authRouter.route('/signUp')
     .get((req, res) => {
-        res.render('signUp', {nav});
+        res.render('signUp', {nav, error:""});
     })
     .post((req, res) => {
         const {username, password} = req.body;
@@ -26,11 +26,30 @@ function router(nav) {
 
                 const user = {username, password};
 
-                const results = await col.insertOne(user);
-                debug(results);        
-                req.login(results.ops[0], () => {
-                    res.redirect('/auth/profile');
-                });        
+                const usernames = await col.find().toArray();
+                debug(usernames);
+
+                let userFound = false;
+
+                for(let i = 0; i < usernames.length; i++) {
+                    debug(usernames[i].username);
+                    debug(username);
+                    if(usernames[i].username.toLowerCase() == username.toLowerCase()) {
+                        userFound = true;
+                        break;
+                    }
+                }
+                
+                if(!userFound) {
+                    const results = await col.insertOne(user);
+                    debug(results);        
+                    req.login(results.ops[0], () => {
+                        res.redirect('/auth/profile');
+                    });
+                }
+                else {
+                    res.render("signUp", {nav, error: "This username is taken, please enter a different one."});
+                }
             } catch (err) {
                 debug(err.stack);
             }

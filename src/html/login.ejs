@@ -42,7 +42,7 @@
                 Username: <input name="username" id="username"/><br><br>
                 Password: <input name="password" id="password"/><br><br>
                 <%if(errors.length > whereToRead) {%>
-                    <p class="bg-error ml-5 pl-4"><%=errors[whereToRead]%></p>
+                    <p class="bg-warning ml-5"><%=errors[whereToRead]%></p>
                 <%}%>
                 <input class="ml-5" type="submit" value="Sign In"/>
 
