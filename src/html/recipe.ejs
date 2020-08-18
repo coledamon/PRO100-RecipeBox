@@ -34,14 +34,28 @@
     
     <div class="container pt-5 mt-5">
         <div class="row">
-            <h2>All Recipes</h2>
+            <h2><%=recipe.name%></h2>
         </div>
         <div class="row">
             <ul>
                 <li>
-                    <a href="/recipe/<%=recipe._id%>" id="white"><%=recipe.name%></a>
+                    <p>Prep Time:<%=recipe.prep_time%></p>
+                    
                 </li>
+                <li><p>Cook Time:<%=recipe.cook_time %></p></li>
+                <h5>Ingredients</h5>
+                <%for(let i = 0; i < recipe.ingredients.length; i++) {%>
+                <li>
+                    <p>
+                       <%= recipe.ingredients[i]%>
+                    </p>
+                </li>
+
+
+
+                <%}%>
             </ul>
+            
         </div>
     </div>
 

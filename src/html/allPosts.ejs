@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Main Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link href = "/css/style.css" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet" />
 </head>
+
 <body class="body">
     <div class="navbar navbar-expand-sm navbar-dark fixed-top bg-dark">
         <div class="container">
@@ -39,10 +41,17 @@
         <div class="row">
             <ul>
                 <%for(let i = 0; i < recipes.length; i++) {%>
-                <li>
-                    <a href="/recipe/<%=recipes[i]._id%>" id="white"><%=recipes[i].name%></a>
-                </li>
-                <%}%>
+                    <li>
+                        <div>
+                            <h6><a  id="white"><%=recipes[i].name%></a></h6>
+                            <div>    
+                                    <p>Prep Time:<%=recipes[i].prep_time%></p>
+                                    <p>Cook Time:<%=recipes[i].cook_time %></p>
+                                    <a href="/recipe/<%=recipes[i]._id%>">Read More</a>
+                            </div>
+                        </div>
+                    </li>
+                    <%}%>
             </ul>
         </div>
     </div>
