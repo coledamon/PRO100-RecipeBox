@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Main Page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href = "/css/bootstrap.css" rel="stylesheet"/>
     <link href = "/css/style.css" rel="stylesheet"/>
+    <title>Sign Up</title>
 </head>
-<body class="body">
+<body class="body2">
     <div class="navbar navbar-expand-sm navbar-dark fixed-top bg-dark">
         <div class="container">
             <a class="navbar-brand" href="/">
@@ -14,26 +15,44 @@
                 Paughers</a>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="<%=nav[0].link%>"><%=nav[0].title%></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<%=nav[1].link%>"><%=nav[1].title%></a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav">
-                    <%for(let i = 2; i < nav.length; i++) {%>
+                    <%for(let i = 0; i < 2; i++) {%>
                     <li class="nav-item">
                         <a class="nav-link" href="<%=nav[i].link%>"><%=nav[i].title%></a>
                     </li>
                     <%}%>
                 </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="<%=nav[2].link%>"><%=nav[2].title%></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="<%=nav[3].link%>"><%=nav[3].title%></a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
-
     <script src="/js/jquery.js"></script>
     <script src="/js/bootstrap.min.js"></script>
+
+    <div class="container awayFromHeader py-3 bg-lightish">
+        <div class="row mr-auto ml-auto">
+            <p class="text-center">Sign Up Or <a href='/auth/signin/'>Sign In</a></p>
+        </div>
+        <div class="row text-center mr-auto ml-auto">
+            <form name="signUpForm" action="/auth/signUp/admin" method="post">
+                Username: <input name="username" id="username"/><br><br>
+                Password: <input name="password" id="password"/><br><br>
+                Access Code: <input name="adminPass" id="adminPass"/><br><br>
+                <%if(error !== "") {%>
+                    <p class="bg-warning ml-5 pl-4"><%=error%></p>
+                <%}%>
+                <input class="ml-5" type="submit" value="Sign Up"/>
+
+            </form>
+        </div>
+    </div>
+    
 </body>
 <footer class="page-footer font-small fixed-bottom bg-dark">
     <div class="container text-center text-md-left">

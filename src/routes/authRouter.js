@@ -22,9 +22,9 @@ function router(nav) {
                 debug('Connected correctly to server');
 
                 const db = client.db(dbName);
-                const col = await db.collection('users');
+                const col = db.collection('users');
 
-                const user = {username, password};
+                const user = {username, password, admin: false};
 
                 const usernames = await col.find().toArray();
                 debug(usernames);
@@ -55,6 +55,60 @@ function router(nav) {
             }
             client.close();
         }());        
+    });
+    authRouter.route('/signUp/admin')
+    .get((req, res) => {
+        res.render('signUpAdmin', {nav, error:""});
+    })
+    .post((req, res) => {
+        const {username, password, adminPass} = req.body;
+        const url = 'mongodb://localhost:27017';
+        const dbName = 'Paughers';
+        if(adminPass === "password") {
+            (async function addUser(){
+                let client;
+                try {
+                    client = await MongoClient.connect(url);
+                    debug('Connected correctly to server');
+
+                    const db = client.db(dbName);
+                    const col = db.collection('users');
+
+                    const user = {username, password, admin: true};
+
+                    const usernames = await col.find().toArray();
+                    debug(usernames);
+
+                    let userFound = false;
+
+                    for(let i = 0; i < usernames.length; i++) {
+                        debug(usernames[i].username);
+                        debug(username);
+                        if(usernames[i].username.toLowerCase() == username.toLowerCase()) {
+                            userFound = true;
+                            break;
+                        }
+                    }
+
+                    if(!userFound) {
+                        const results = await col.insertOne(user);
+                        debug(results);        
+                        req.login(results.ops[0], () => {
+                            res.redirect('/auth/profile');
+                        });
+                    }
+                    else {
+                        res.render("signUpAdmin", {nav, error: "This username is taken, please enter a different one."});
+                    }
+                } catch (err) {
+                    debug(err.stack);
+                }
+                client.close();
+            }());  
+        }   
+        else {
+            res.render("signUpAdmin", {nav, error: "Incorrect Admin Access Code."});
+        }   
     });
     authRouter.route('/signin')
     .get((req, res) => {
