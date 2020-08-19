@@ -4,6 +4,15 @@ const debug = require('debug')('app:allRouter');
 const allRouter = express.Router();
 
 function router(nav) {
+    allRouter.use((req, res, next) => {
+        if(!req.user) {
+            nav[2].title = "";
+        }
+        else {
+            nav[2] = {link: "/recipe/create", title:"Create"};
+        }
+        next();
+    });
     allRouter.route('/')
         .get((req, res) => {
             const url = 'mongodb://localhost:27017';
