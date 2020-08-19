@@ -41,11 +41,13 @@
             <h2>All Recipes</h2>
         </div>
         <div>
-            <%for(let i = 0; i < recipes.length; i++) {%>
-                <ul>
-                    <li white><a href="/recipe/<%=recipes[i]._id%>""><%=recipes[i].name%></a></li>
-                </ul>
-            <%}%>
+            <ul>
+                <%for(let i = 0; i < recipes.length; i++) {%>
+                    <li>
+                        <a href="/recipe/<%=recipes[i]._id%>" id="white"><%=recipes[i].name%></a>
+                    </li>
+                <%}%>
+            </ul>
         </div>
     </div>
 
