@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link href = "/css/style.css" rel="stylesheet"/>
 </head>
-<body class="body">
+<body class="body awayFromFooter">
     <div class="navbar navbar-expand-sm navbar-dark fixed-top bg-dark">
         <div class="container">
             <a class="navbar-brand" href="/">
@@ -33,6 +33,35 @@
             </div>
         </div>
     </div>
+
+    <div class="awayFromHeader">
+        <%for(let i = 0; i < recipes.length; i++) {%>
+                  <div class="card">
+                    <div class="header">
+                       <div class="icon">
+                       <a href="#"><i class="fa fa-heart-o"></i></a>
+                       </div>
+                    </div>
+                    <div >
+                       <h1 class="food"><%=recipes[i].name%></h1>
+                       <i class="fa-clock-o"> Prep Time:<%=recipes[i].prep_time%></i>
+                       <i class="fa-users">Cook Time:<%=recipes[i].cook_time %></i>
+                       
+                       <div class="stars">
+                          <li>
+                             <a href="#"><i class="fa fa-star"></i></a>
+                             <a href="#"><i class="fa fa-star"></i></a>
+                             <a href="#"><i class="fa fa-star"></i></a>
+                             <a href="#"><i class="fa fa-star"></i></a>
+                             <a href="#"><i class="fa fa-star-o"></i></a>
+                          </li>
+                       </div>
+                       <p class="info">Description or something like that </p>
+                    </div>
+                    <a href="/recipe/<%=recipes[i]._id%>" class="btn">Let's Cook!</a>
+                 </div> 
+            <%}%>
+</div>
 
     <script src="/js/jquery.js"></script>
     <script src="/js/bootstrap.min.js"></script>
