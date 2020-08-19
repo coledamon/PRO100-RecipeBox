@@ -26,7 +26,7 @@ function router(nav) {
 
                     const db = client.db(dbName);
 
-                    const col = await db.collection('recipes')
+                    const col = db.collection('recipes')
                     
                     const recipes = await col.find().toArray();
 

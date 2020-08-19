@@ -36,14 +36,16 @@
     </div>
 
     <div class="container bg-lightish awayFromHeader py-5">
-        <div class="col-3">
-            <img class="rounded-circle" height="225px" width="225px" src="/images/profile.png"/>
-            <label for="files" class="btn bg-light button mt-1 ml-5">Choose Picture</label>
-            <input id="files" style="visibility:hidden;" type="file" accept="image/jpeg">
+        <div id="profPic" class="col-3">
+            <img class="rounded-circle" id="pfp" height="225px" width="225px" src="/images/profile.png"/>
+            <input id="file" style="visibility:hidden;" type="file" accept="image/jpeg">
+            <label for="file" class="btn bg-light button mt-1 ml-5">Choose Picture</label>
         </div>
+
     </div>
 
     <script src="/js/jquery.js"></script>
+    <script src="/js/profileScript.js"></script>
     <script src="/js/bootstrap.min.js"></script>
 </body>
 <footer class="page-footer font-small fixed-bottom bg-dark">
