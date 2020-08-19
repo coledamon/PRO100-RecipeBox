@@ -3,8 +3,8 @@ const {MongoClient} = require('mongodb');
 const debug = require('debug')('app:mongo');
 const adminRouter = express.Router();
 
-const recipes = [{name: 'chicken alfredo', prep_time: '5 mins', cook_time: '30 mins', ingredients: ['chicken', 'noodles', 'idk whatever alfredo sauce is made of']}
-                ,{name: 'basil pesto pasta', prep_time: '15 mins', cook_time: '20 mins', ingredients: ['basil', 'pine nuts', 'minced garlic', 'olive oil', 'salt & pepper', 'parmesan cheese']}];
+const recipes = [{name: 'chicken alfredo', prep_time: '5 mins', cook_time: '30 mins', ingredients: 'chicken, noodles, idk whatever alfredo sauce is made of'}
+                ,{name: 'basil pesto pasta', prep_time: '15 mins', cook_time: '20 mins', ingredients: 'basil, pine nuts, minced garlic, olive oil, salt & pepper, parmesan cheese'}];
 
 function router() {
     adminRouter.route('/')
