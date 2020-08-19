@@ -15,44 +15,52 @@ function router(nav) {
     });
     
     recipeRouter.route("/create")
+    .all((req, res, next) => {
+        if(!req.user) {
+            res.redirect("/");
+        }
+        else {
+            next();
+        }
+    })
     .get((req, res) => {
-        res.render("recipeCreate", {nav});
+        res.render("recipeCreate", {nav, error:""});
     })
     .post((req, res) => {
-        // const {field1, field2} = req.body;
-        // const url = 'mongodb://localhost:27017';
-        // const dbName = 'Paughers';
-        // (async function addRecipe(){
-        //     let client;
-        //     try {
-        //         client = await MongoClient.connect(url);
-        //         debug('Connected correctly to server');
-        //         const db = client.db(dbName);
-        //         const col = db.collection('recipes');
-        //         const recipe = {};
-        //         const names = await col.find().toArray();
-        //         let nameFound = false;
-        //         for(let i = 0; i < names.length; i++) {
-        //             if(names[i].name.toLowerCase() == name.toLowerCase()) {
-        //                 nameFound = true;
-        //                 break;
-        //             }
-        //         }
-        //         if(!userFound) {
-        //             const results = await col.insertOne(user);
-        //             debug(results);        
-        //             req.login(results.ops[0], () => {
-        //                 res.redirect(results.ops[0]._id);
-        //             });
-        //         }
-        //         else {
-        //             res.render("recipeCreate", {nav, error: "A recipe with this name already exists, please choose a different one."});
-        //         }
-        //     } catch (err) {
-        //         debug(err.stack);
-        //     }
-        //     client.close();
-        // }());
+        const {name, prep_time, cook_time, description, ingredients} = req.body;
+        const url = 'mongodb://localhost:27017';
+        const dbName = 'Paughers';
+        (async function addRecipe(){
+            let client;
+            try {
+                client = await MongoClient.connect(url);
+                debug('Connected correctly to server');
+                const db = client.db(dbName);
+                const col = db.collection('recipes');
+                const recipe = {name, prep_time, cook_time, description, ingredients};
+                const names = await col.find().toArray();
+                let nameFound = false;
+                for(let i = 0; i < names.length; i++) {
+                    if(names[i].name.toLowerCase() == name.toLowerCase()) {
+                        nameFound = true;
+                        break;
+                    }
+                }
+                if(!nameFound) {
+                    const results = await col.insertOne(recipe);
+                    debug(results);        
+                    req.login(results.ops[0], () => {
+                        res.redirect("/recipe/" + results.ops[0]._id);
+                    });
+                }
+                else {
+                    res.render("recipeCreate", {nav, error: "A recipe with this name already exists, please choose a different one."});
+                }
+            } catch (err) {
+                debug(err.stack);
+            }
+            client.close();
+        }());
     });
     recipeRouter.route('/:id')
         .get((req, res) => {

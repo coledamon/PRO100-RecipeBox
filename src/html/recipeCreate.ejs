@@ -38,12 +38,15 @@
     </div>
 
     <div class="container pt-5 mt-5">
-        <form name="createRecipe" action="" method="post">
-            Recipe Name: <input name="recipeName" id="name"/><br><br>
-            Prep Time: <input name="prepTime" id="prep_time"/><br><br>
-            Cook Time: <input name="cookTime" id="cook_time"/><br><br>
+        <form name="createRecipe" action="/recipe/create" method="post">
+            Recipe Name: <input name="name" id="name"/><br><br>
+            Prep Time: <input name="prep_time" id="prep_time"/><br><br>
+            Cook Time: <input name="cook_time" id="cook_time"/><br><br>
             Description: <input name="description" id="description"/><br><br>
             Ingredients: <input name="ingredients" id="ingredients"/><br><br>
+            <%if(error !== "") {%>
+                <p class="bg-warning ml-5 pl-4"><%=error%></p>
+            <%}%>
             <input class="ml-5" type="submit" value="Add Recipe"/>
 
         </form>
