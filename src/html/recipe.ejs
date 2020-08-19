@@ -38,40 +38,40 @@
             </div>
         </div>
     </div>
-    
+
     <div class="container pt-5 mt-5">
         <div class="row">
-            <h2><%=recipe.name%></h2>
-            </div>
-            <div class="row">
-                <div id="col" class="container">
-                    <div class="card-deck text-center">
-                        <div class="col-sm-6 col-md-3 col-lg-3">
-                            <div class="card mb-4 box-shadow">
-                                <div class="card-header">
-                                    <h4 class="my-0 font-weight-normal"><%=recipe.name%></h4>
-                                </div>
-                                <div class="card-body">
-                                    <img src="https://justamumnz.com/wp-content/uploads/2017/06/Best-Ever-Chocolate-Cake-1.jpg"
-                                        alt="image" width="100" class="img-thumbnail">
-                                    <ul class="list-unstyled mt-3 mb-4">
-                                        <li>
-                                            <p>Prep Time:<%=recipe.prep_time%></p>
-                                        </li>
-                                        <li>
-                                            <p>Cook Time:<%=recipe.cook_time %></p>
-                                        </li>
-                                    </ul>
-                                    <h5>Ingredients</h5>
-                                    <%for(let i = 0; i < recipe.ingredients.length; i++) {%>
-                                    <li>
-                                        <p>
-                                            <%= recipe.ingredients[i]%>
-                                        </p>
-                                </div>
-                            </div>
-                        </div>
+            <div class="card">
+                <div class="header">
+                    <div class="icon">
+                        <a href="#"><i class="fa fa-heart-o"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h1 class="food"><%=recipe.name%></h1>
+                    <i class="fa-clock-o"> Prep Time:<%=recipe.prep_time%></i>
+                    <i class="fa-users">Cook Time:<%=recipe.cook_time %></i>
+
+                    <div class="stars">
+                        <li>
+                            <a href="#"><i class="fa fa-star"></i></a>
+                            <a href="#"><i class="fa fa-star"></i></a>
+                            <a href="#"><i class="fa fa-star"></i></a>
+                            <a href="#"><i class="fa fa-star"></i></a>
+                            <a href="#"><i class="fa fa-star-o"></i></a>
+                        </li>
+                        <p class="info">Description or something like that </p>
+                        <%for(let i = 0; i < recipe.ingredients.length; i++) {%>
+                        <li>
+                            <a>
+                                <%= recipe.ingredients[i]%>
+                            </a>
+                        </li>
+
                         <%}%>
+                        <h5>Directions</h5>
+                        <p><%=recipe.directions%></p>
+                    </div> 
             </ul>
             
         </div>
