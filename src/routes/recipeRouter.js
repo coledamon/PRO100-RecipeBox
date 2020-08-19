@@ -27,7 +27,7 @@ function router(nav) {
         res.render("recipeCreate", {nav, error:""});
     })
     .post((req, res) => {
-        const {name, prep_time, cook_time, description, ingredients} = req.body;
+        const {name, prep_time, cook_time, description, ingredients, directions} = req.body;
         const url = 'mongodb://localhost:27017';
         const dbName = 'Paughers';
         (async function addRecipe(){
@@ -37,7 +37,7 @@ function router(nav) {
                 debug('Connected correctly to server');
                 const db = client.db(dbName);
                 const col = db.collection('recipes');
-                const recipe = {name, prep_time, cook_time, description, ingredients};
+                const recipe = {name, prep_time, cook_time, description, ingredients, directions};
                 const names = await col.find().toArray();
                 let nameFound = false;
                 for(let i = 0; i < names.length; i++) {
