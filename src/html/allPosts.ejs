@@ -8,7 +8,7 @@
     <link href="/css/style.css" rel="stylesheet" />
 </head>
 
-<body class="body awayFromFooter">
+<body class="body awayFromFooter ">
     <div class="navbar navbar-expand-sm navbar-dark fixed-top bg-dark">
         <div class="container">
             <a class="navbar-brand" href="/">
@@ -25,48 +25,27 @@
                 </ul>
                 <ul class="navbar-nav">
                     <%for(let i = 2; i < nav.length; i++) {%>
-                        <%if(nav[i].title.length > 0) {%>
-                        <li class="nav-item">
-                            <a class="nav-link" href="<%=nav[i].link%>"><%=nav[i].title%></a>
-                        </li>
-                        <%}%>
+                    <%if(nav[i].title.length > 0) {%>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<%=nav[i].link%>"><%=nav[i].title%></a>
+                    </li>
+                    <%}%>
                     <%}%>
                 </ul>
             </div>
         </div>
     </div>
-    
+
     <div class="container awayFromHeader">
         <div class="row">
             <h2>All Recipes</h2>
         </div>
         <div>
-                <%for(let i = 0; i < recipes.length; i++) {%>
-                          <div class="card">
-                            <div class="header">
-                               <div class="icon">
-                               <a href="#"><i class="fa fa-heart-o"></i></a>
-                               </div>
-                            </div>
-                            <div >
-                               <h1 class="food"><%=recipes[i].name%></h1>
-                               <i class="fa-clock-o"> Prep Time:<%=recipes[i].prep_time%></i>
-                               <i class="fa-users">Cook Time:<%=recipes[i].cook_time %></i>
-                               
-                               <div class="stars">
-                                  <li>
-                                     <a href="#"><i class="fa fa-star"></i></a>
-                                     <a href="#"><i class="fa fa-star"></i></a>
-                                     <a href="#"><i class="fa fa-star"></i></a>
-                                     <a href="#"><i class="fa fa-star"></i></a>
-                                     <a href="#"><i class="fa fa-star-o"></i></a>
-                                  </li>
-                               </div>
-                               <p class="info">Description or something like that </p>
-                            </div>
-                            <a href="/recipe/<%=recipes[i]._id%>" class="btn">Let's Cook!</a>
-                         </div> 
-                    <%}%>
+            <%for(let i = 0; i < recipes.length; i++) {%>
+                <ul>
+                    <li white><a href="/recipe/<%=recipes[i]._id%>""><%=recipes[i].name%></a></li>
+                </ul>
+            <%}%>
         </div>
     </div>
 

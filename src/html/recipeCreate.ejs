@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Main Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link href = "/css/style.css" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet" />
 </head>
+
 <body class="body">
     <div class="navbar navbar-expand-sm navbar-dark fixed-top bg-dark">
         <div class="container">
@@ -34,9 +36,17 @@
             </div>
         </div>
     </div>
-    
+
     <div class="container pt-5 mt-5">
-        hi
+        <form name="createRecipe" action="" method="post">
+            Recipe Name: <input name="recipeName" id="name"/><br><br>
+            Prep Time: <input name="prepTime" id="prep_time"/><br><br>
+            Cook Time: <input name="cookTime" id="cook_time"/><br><br>
+            Description: <input name="description" id="description"/><br><br>
+            Ingredients: <input name="ingredients" id="ingredients"/><br><br>
+            <input class="ml-5" type="submit" value="Add Recipe"/>
+
+        </form>
     </div>
 
     <script src="/js/jquery-3.5.1.min.js"></script>
@@ -48,12 +58,14 @@
             <div class="col-5 offset-1 mb-md-0 mb-15">
                 <h5 class="text-uppercase">Contributors</h5>
                 <ul class="list-unstyled">
-                    <li> 
-                        <a href="mailto:KColeman@student.neumont.edu" target="_blank" id='white'>Kasey Coleman</a>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <li>
+                        <a href="mailto:KColeman@student.neumont.edu" target="_blank" id='white'>Kasey Coleman</a>&nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp;
                         <a href="mailto:GCampbell@student.neumont.edu" target="_blank" id='white'>Matthew Campbell</a>
                     </li>
                     <li>
-                        <a href="mailto:CDamon@student.neumont.edu" target="_blank" id='white'>Cole Damon </a> &nbsp; &nbsp; &nbsp; &nbsp; &emsp13; &#8198; &#8198;
+                        <a href="mailto:CDamon@student.neumont.edu" target="_blank" id='white'>Cole Damon </a> &nbsp;
+                        &nbsp; &nbsp; &nbsp; &emsp13; &#8198; &#8198;
                         <a href="mailto:RZarkowski@student.neumont.edu" target="_blank" id='white'>Reece Zarkowski</a>
                     </li>
                 </ul>
@@ -65,4 +77,5 @@
         </div>
     </div>
 </footer>
+
 </html>
