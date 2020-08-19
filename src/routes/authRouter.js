@@ -6,6 +6,15 @@ const passport = require('passport');
 let whereToRead = 0;
 
 function router(nav) {
+    authRouter.use((req, res, next) => {
+        if(!req.user) {
+            nav[2].title = "";
+        }
+        else {
+            nav[2] = {link: "/recipe/create", title:"Create"};
+        }
+        next();
+    });
     authRouter.route('/signUp')
     .get((req, res) => {
         res.render('signUp', {nav, error:""});
@@ -40,15 +49,18 @@ function router(nav) {
                     }
                 }
                 
-                if(!userFound) {
+                if(!userFound && password.length > 0) {
                     const results = await col.insertOne(user);
                     debug(results);        
                     req.login(results.ops[0], () => {
                         res.redirect('/auth/profile');
                     });
                 }
-                else {
+                else if(password.length > 0) {
                     res.render("signUp", {nav, error: "This username is taken, please enter a different one."});
+                }
+                else {
+                    res.render("signUp", {nav, error: "You must enter a password."});
                 }
             } catch (err) {
                 debug(err.stack);
@@ -57,6 +69,14 @@ function router(nav) {
         }());        
     });
     authRouter.route('/signUp/admin')
+    .all((req, res, next) => {
+        if(req.user) {
+            res.redirect("/auth/profile");
+        }
+        else {
+            next();
+        }
+    })
     .get((req, res) => {
         res.render('signUpAdmin', {nav, error:""});
     })
@@ -90,15 +110,18 @@ function router(nav) {
                         }
                     }
 
-                    if(!userFound) {
+                    if(!userFound && password.length > 0) {
                         const results = await col.insertOne(user);
                         debug(results);        
                         req.login(results.ops[0], () => {
                             res.redirect('/auth/profile');
                         });
                     }
-                    else {
+                    else if(password.length > 0) {
                         res.render("signUpAdmin", {nav, error: "This username is taken, please enter a different one."});
+                    }
+                    else {
+                        res.render("signUpAdmin", {nav, error: "You must enter a password."});
                     }
                 } catch (err) {
                     debug(err.stack);
@@ -128,8 +151,8 @@ function router(nav) {
     authRouter.route('/profile')
     .all((req, res, next) => {
         if(req.user) {
-            nav[2] = {link: "/auth/profile", title: "Profile"};
-            nav[3] = {link: "/auth/logout", title: "Log Out"};
+            nav[3] = {link: "/auth/profile", title: "Profile"};
+            nav[4] = {link: "/auth/logout", title: "Log Out"};
             next();
         } else {
             res.redirect('/');
@@ -141,8 +164,8 @@ function router(nav) {
     authRouter.route('/logout')
     .get((req,res) => {
         req.logout();
-        nav[2] = {link: "/auth/signin", title: "Login"};
-        nav[3] = {link: "/auth/signUp", title: "Sign Up"};
+        nav[3] = {link: "/auth/signin", title: "Login"};
+        nav[4] = {link: "/auth/signUp", title: "Sign Up"};
         res.redirect('/');
     }); 
     return authRouter;

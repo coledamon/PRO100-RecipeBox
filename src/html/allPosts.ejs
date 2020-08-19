@@ -25,9 +25,11 @@
                 </ul>
                 <ul class="navbar-nav">
                     <%for(let i = 2; i < nav.length; i++) {%>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<%=nav[i].link%>"><%=nav[i].title%></a>
-                    </li>
+                        <%if(nav[i].title.length > 0) {%>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<%=nav[i].link%>"><%=nav[i].title%></a>
+                        </li>
+                        <%}%>
                     <%}%>
                 </ul>
             </div>

@@ -27,7 +27,7 @@ app.use('/js', express.static(path.join(__dirname, 'node_modules/jquery/dist')))
 app.set('views', './src/html/');
 app.set('view engine', 'ejs');
 
-const nav = [{link: "/", title: "Home"}, {link: "/allPosts", title: "All Posts"}, {link: "/auth/signin", title: "Login"}, {link: "/auth/signUp", title: "Sign Up"}]
+const nav = [{link: "/", title: "Home"}, {link: "/allPosts", title: "All Posts"}, {link: "/recipe/create", title:"Create"}, {link: "/auth/signin", title: "Login"}, {link: "/auth/signUp", title: "Sign Up"}]
 
 const homeRouter = require("./src/routes/homeRouter")(nav);
 const allRouter = require("./src/routes/allRouter")(nav);
