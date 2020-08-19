@@ -60,15 +60,14 @@
                             <a href="#"><i class="fa fa-star"></i></a>
                             <a href="#"><i class="fa fa-star-o"></i></a>
                         </li>
-                        <p class="info">Description or something like that </p>
-                        <%for(let i = 0; i < recipe.ingredients.length; i++) {%>
+                        <p class="info">Description: <%=recipe.description%> </p>
+                        <h5>Ingredients</h5>
+                       
                         <li>
                             <a>
-                                <%= recipe.ingredients[i]%>
+                                <%= recipe.ingredients%>
                             </a>
                         </li>
-
-                        <%}%>
                         <h5>Directions</h5>
                         <p><%=recipe.directions%></p>
                     </div> 
