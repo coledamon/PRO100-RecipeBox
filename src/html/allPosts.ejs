@@ -40,21 +40,33 @@
         <div class="row">
             <h2>All Recipes</h2>
         </div>
-        <div class="row">
-            <ul>
+        <div>
                 <%for(let i = 0; i < recipes.length; i++) {%>
-                    <li>
-                        <div>
-                            <h6><a  id="white"><%=recipes[i].name%></a></h6>
-                            <div>    
-                                    <p>Prep Time:<%=recipes[i].prep_time%></p>
-                                    <p>Cook Time:<%=recipes[i].cook_time %></p>
-                                    <a href="/recipe/<%=recipes[i]._id%>">Read More</a>
+                          <div class="card">
+                            <div class="header">
+                               <div class="icon">
+                               <a href="#"><i class="fa fa-heart-o"></i></a>
+                               </div>
                             </div>
-                        </div>
-                    </li>
+                            <div >
+                               <h1 class="food"><%=recipes[i].name%></h1>
+                               <i class="fa-clock-o"> Prep Time:<%=recipes[i].prep_time%></i>
+                               <i class="fa-users">Cook Time:<%=recipes[i].cook_time %></i>
+                               
+                               <div class="stars">
+                                  <li>
+                                     <a href="#"><i class="fa fa-star"></i></a>
+                                     <a href="#"><i class="fa fa-star"></i></a>
+                                     <a href="#"><i class="fa fa-star"></i></a>
+                                     <a href="#"><i class="fa fa-star"></i></a>
+                                     <a href="#"><i class="fa fa-star-o"></i></a>
+                                  </li>
+                               </div>
+                               <p class="info">Description or something like that </p>
+                            </div>
+                            <a href="/recipe/<%=recipes[i]._id%>" class="btn">Let's Cook!</a>
+                         </div> 
                     <%}%>
-            </ul>
         </div>
     </div>
 
