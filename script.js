@@ -7,9 +7,6 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
-const { JSDOM } = require( "jsdom" );
-const { window } = new JSDOM( "" );
-const $ = require( "jquery" )( window );
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -43,11 +40,5 @@ app.use('/recipe', recipeRouter);
 
 app.listen(port, () => {
   debug(`listening on port ${chalk.green(port)}`);
-});
-
-var filename;
-$("#files").change(function() {
-  filename = this.files[0].name
-  debug(filename);
 });
 
