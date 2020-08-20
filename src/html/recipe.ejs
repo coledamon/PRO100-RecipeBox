@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link href="/css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body class="body awayFromFooter">
@@ -44,13 +45,13 @@
             <div class="card">
                 <div class="header">
                     <div class="icon">
-                        <a href="#"><i class="fa fa-heart-o"></i></a>
+                        <a href="#"><i class="icon fa fa-heart-o"></i></a>
                     </div>
                 </div>
                 <div>
                     <h1 class="food"><%=recipe.name%></h1>
-                    <i class="fa-clock-o"> Prep Time:<%=recipe.prep_time%></i>
-                    <i class="fa-users">Cook Time:<%=recipe.cook_time %></i>
+                    <i class="fa fa-clock-o"> Prep Time:<%=recipe.prep_time%></i>
+                    <i class="fa fa-clock-o"> Cook Time:<%=recipe.cook_time %></i>
                     <p class="info"><%=recipe.description%> </p>
                     <h5 class="info">Ingredients</h5>
                     <p class="info"> <%= recipe.ingredients%> </p>
