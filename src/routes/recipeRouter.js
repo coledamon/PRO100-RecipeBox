@@ -37,7 +37,7 @@ function router(nav) {
                 debug('Connected correctly to server');
                 const db = client.db(dbName);
                 const col = db.collection('recipes');
-                const recipe = {name, prep_time, cook_time, description, ingredients, directions, creator: req.user.username};
+                const recipe = {name, prep_time, cook_time, description, ingredients, directions, creator: req.user.username, public: false};
                 const names = await col.find().toArray();
                 let nameFound = false;
                 for(let i = 0; i < names.length; i++) {
@@ -88,23 +88,32 @@ function router(nav) {
             const url = 'mongodb://localhost:27017';
             const dbName = 'Paughers';
 
-            (async function delRecipe(){
-                let client;
-                try {
-                    client = await MongoClient.connect(url);
-                    debug('Connected correctly to server');
+            const {type} = req.body;
+            if(type =="delete") {
+                (async function delRecipe(){
+                    let client;
+                    try {
+                        client = await MongoClient.connect(url);
+                        debug('Connected correctly to server');
 
-                    const db = client.db(dbName);
-                    const col = db.collection('recipes');
-                    
-                    const recipe = await col.deleteOne({ _id: ObjectID(req.body._id) });
-                    
-                    res.redirect('/');
-                } catch (err) {
-                    debug(err.stack);
-                }
-                client.close();
-            }());
+                        const db = client.db(dbName);
+                        const col = db.collection('recipes');
+
+                        const recipe = await col.deleteOne({ _id: ObjectID(req.body._id) });
+
+                        res.redirect('/');
+                    } catch (err) {
+                        debug(err.stack);
+                    }
+                    client.close();
+                }());
+            }
+            else if(type == "private") {
+
+            }
+            else if(type == "public") {
+                
+            }
         });
     return recipeRouter;
 }
