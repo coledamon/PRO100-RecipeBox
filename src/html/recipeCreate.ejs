@@ -37,8 +37,8 @@
         </div>
     </div>
 
-    <div class="container pt-5 mt-5 ">
-        <form  class ="formStyle"name="createRecipe" action="/recipe/create" method="post">
+    <div class="container pt-5 mt-5">
+        <form  class ="formStyle pt-2"name="createRecipe" action="/recipe/create" method="post">
             <h3>Create A New Recipe</h3>
             Recipe Name: <input name="name" id="name"/><br><br>
             Prep Time: <input name="prep_time" id="prep_time"/><br><br>
@@ -49,7 +49,7 @@
             <%if(error !== "") {%>
                 <p class="bg-warning ml-5 pl-4"><%=error%></p>
             <%}%>
-            <input class="ml-5" type="submit" value="Add Recipe"/>
+            <input class="mr-auto mb-3" type="submit" value="Add Recipe"/>
             
         </form>
     </div>
