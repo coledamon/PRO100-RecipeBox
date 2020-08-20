@@ -51,33 +51,20 @@
                     <h1 class="food"><%=recipe.name%></h1>
                     <i class="fa-clock-o"> Prep Time:<%=recipe.prep_time%></i>
                     <i class="fa-users">Cook Time:<%=recipe.cook_time %></i>
+                    <p class="info"><%=recipe.description%> </p>
+                    <h5 class="info">Ingredients</h5>
+                    <p class="info"> <%= recipe.ingredients%> </p>
 
-                    <div class="stars">
-                        <li>
-                            <a href="#"><i class="fa fa-star"></i></a>
-                            <a href="#"><i class="fa fa-star"></i></a>
-                            <a href="#"><i class="fa fa-star"></i></a>
-                            <a href="#"><i class="fa fa-star"></i></a>
-                            <a href="#"><i class="fa fa-star-o"></i></a>
-                        </li>
-                        <p class="info"><%=recipe.description%> </p>
-                        <h5>Ingredients</h5>
-                       
-                        <li>
-                            <a>
-                                <%= recipe.ingredients%>
-                            </a>
-                        </li>
-                        <h5>Directions</h5>
-                        <p><%=recipe.directions%></p>
-                    </div> 
-            </ul>
-            
-        </div>
-    </div>
+                    <h5 class="info">Directions</h5>
+                    <p class="info"><%=recipe.directions%></p>
+                    
+                    </ul>
 
-    <script src="/js/jquery-3.5.1.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
+                </div>
+            </div>
+
+            <script src="/js/jquery-3.5.1.min.js"></script>
+            <script src="/js/bootstrap.min.js"></script>
 </body>
 <footer class="page-footer font-small fixed-bottom bg-dark">
     <div class="container text-center text-md-left">
@@ -85,12 +72,14 @@
             <div class="col-5 offset-1 mb-md-0 mb-15">
                 <h5 class="text-uppercase">Contributors</h5>
                 <ul class="list-unstyled">
-                    <li> 
-                        <a href="mailto:KColeman@student.neumont.edu" target="_blank" id='white'>Kasey Coleman</a>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <li>
+                        <a href="mailto:KColeman@student.neumont.edu" target="_blank" id='white'>Kasey Coleman</a>&nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp;
                         <a href="mailto:GCampbell@student.neumont.edu" target="_blank" id='white'>Matthew Campbell</a>
                     </li>
                     <li>
-                        <a href="mailto:CDamon@student.neumont.edu" target="_blank" id='white'>Cole Damon </a> &nbsp; &nbsp; &nbsp; &nbsp; &emsp13; &#8198; &#8198;
+                        <a href="mailto:CDamon@student.neumont.edu" target="_blank" id='white'>Cole Damon </a> &nbsp;
+                        &nbsp; &nbsp; &nbsp; &emsp13; &#8198; &#8198;
                         <a href="mailto:RZarkowski@student.neumont.edu" target="_blank" id='white'>Reece Zarkowski</a>
                     </li>
                 </ul>
@@ -102,4 +91,5 @@
         </div>
     </div>
 </footer>
+
 </html>
