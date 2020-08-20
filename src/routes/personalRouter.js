@@ -1,6 +1,6 @@
 const express = require('express');
 const {MongoClient} = require('mongodb');
-const debug = require('debug')('app:allRouter');
+const debug = require('debug')('app:personalRouter');
 const personalRouter = express.Router();
 
 function router(nav) {
@@ -27,12 +27,11 @@ function router(nav) {
                     debug('Connected correctly to server');
 
                     const db = client.db(dbName);
-                    
-                    const personalReps = "creator : ${rec.user}";
 
-                    const col = db.find(personalReps).collection('recipes')
+                    const col = db.collection('recipes')
                     
-                    const recipes = await col.find().sort("name", 1).toArray();
+                    const recipes = await col.find({"creator" : `${req.user.username}`}).sort("name", 1).toArray();
+                    debug(recipes);
 
                     res.render('personalPosts', {nav, recipes});
                 } catch (err) {
