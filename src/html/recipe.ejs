@@ -68,6 +68,7 @@
                             <form name="deleteRecipe" action="/recipe/:id" method="post">
                                 <input class="info mb-3" type="submit" name="delete" value="  Delete  " />
                                 <input type="hidden" name="_id" value=<%=recipe._id%>>
+                                <input type="hidden" name="type" value="delete">
                             </form>
                         <%}%>
                     <%}%>
