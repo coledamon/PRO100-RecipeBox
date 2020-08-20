@@ -109,9 +109,42 @@ function router(nav) {
                 }());
             }
             else if(type == "private") {
+                (async function toPrivate(){
+                    let client;
+                    try {
+                        client = await MongoClient.connect(url);
+                        debug('Connected correctly to server');
 
+                        const db = client.db(dbName);
+                        const col = db.collection('recipes');
+
+                        const recipe = await col.updateOne({ _id: ObjectID(req.body._id) },  { $set: { public: false } } );
+
+                        res.redirect('/');
+                    } catch (err) {
+                        debug(err.stack);
+                    }
+                    client.close();
+                }());
             }
             else if(type == "public") {
+                (async function toPublic(){
+                    let client;
+                    try {
+                        client = await MongoClient.connect(url);
+                        debug('Connected correctly to server');
+
+                        const db = client.db(dbName);
+                        const col = db.collection('recipes');
+
+                        const recipe = await col.updateOne({ _id: ObjectID(req.body._id) }, { $set: { public: true } });
+
+                        res.redirect('/');
+                    } catch (err) {
+                        debug(err.stack);
+                    }
+                    client.close();
+                }());
                 
             }
         });
