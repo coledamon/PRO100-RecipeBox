@@ -47,7 +47,7 @@
                 <div class="header pl-3 pt-3 pr-3">
                     <a href="/" class="btnBack"><i class='fas fa-arrow-left'></i>Back</a>
                     <div class="icon">
-                        <a href="#"><i class="icon fa fa-heart-o"></i></a>
+                        <a href="#"><i class="icon 	fas fa-heart"  style='font-size:24px' ></i></a>
                         <%if(user) {%>
                             <%if(user.admin || user.username == recipe.creator) {
                                 if(recipe.public) {%>
@@ -63,8 +63,6 @@
                                 <%}%>
                             <%}%>
                         <%}%>
-
-                        <a href="#"><i class="icon fa fa-trash"></i></a>
                     </div>
                 </div>
                 <div>
