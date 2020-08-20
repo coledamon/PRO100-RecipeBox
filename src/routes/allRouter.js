@@ -7,9 +7,11 @@ function router(nav) {
     allRouter.use((req, res, next) => {
         if(!req.user) {
             nav[2].title = "";
+            nav[3].title = "";
         }
         else {
-            nav[2] = {link: "/recipe/create", title:"Create"};
+            nav[2] = {link: "/personalPosts", title: "Personal Posts"};
+            nav[3] = {link: "/recipe/create", title:"Create"};
         }
         next();
     });

@@ -23,9 +23,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="<%=nav[1].link%>"><%=nav[1].title%></a>
                     </li>
+                    <%if(nav[2].title.length > 0) {%>
                     <li class="nav-item">
                         <a class="nav-link" href="<%=nav[2].link%>"><%=nav[2].title%></a>
                     </li>
+                    <%}%>
                 </ul>
                 <ul class="navbar-nav">
                     <%for(let i = 3; i < nav.length; i++) {%>

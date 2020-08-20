@@ -9,9 +9,11 @@ function router(nav) {
     authRouter.use((req, res, next) => {
         if(!req.user) {
             nav[2].title = "";
+            nav[3].title = "";
         }
         else {
-            nav[2] = {link: "/recipe/create", title:"Create"};
+            nav[2] = {link: "/personalPosts", title: "Personal Posts"};
+            nav[3] = {link: "/recipe/create", title:"Create"};
         }
         next();
     });
@@ -151,8 +153,8 @@ function router(nav) {
     authRouter.route('/profile')
     .all((req, res, next) => {
         if(req.user) {
-            nav[3] = {link: "/auth/profile", title: "Profile"};
-            nav[4] = {link: "/auth/logout", title: "Log Out"};
+            nav[4] = {link: "/auth/profile", title: "Profile"};
+            nav[5] = {link: "/auth/logout", title: "Log Out"};
             next();
         } else {
             res.redirect('/');
@@ -164,8 +166,8 @@ function router(nav) {
     authRouter.route('/logout')
     .get((req,res) => {
         req.logout();
-        nav[3] = {link: "/auth/signin", title: "Login"};
-        nav[4] = {link: "/auth/signUp", title: "Sign Up"};
+        nav[4] = {link: "/auth/signin", title: "Login"};
+        nav[5] = {link: "/auth/signUp", title: "Sign Up"};
         res.redirect('/');
     }); 
     return authRouter;
