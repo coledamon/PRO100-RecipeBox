@@ -29,8 +29,11 @@ function router() {
 
                 const db = client.db(dbName);
 
-                const response = await db.collection('recipes').insertMany(recipes);
-                res.json(response);
+                const col = db.collection('recipes');
+
+                col.deleteMany({});
+                const response = await col.insertMany(recipes);
+                res.redirect('/');
             } catch (err) {
                 debug(err.stack);
             }
