@@ -61,6 +61,10 @@ a.btn {
     box-shadow: 0px 0px 30px 2px rgb(57, 56, 56);
 }
 
+.authStyle {
+    width: 25%;
+}
+
 .bg-dark {
     background-color: #6e6a6f !important;
 }

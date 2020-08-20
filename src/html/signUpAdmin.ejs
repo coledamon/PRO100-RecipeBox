@@ -35,19 +35,19 @@
     <script src="/js/jquery.js"></script>
     <script src="/js/bootstrap.min.js"></script>
 
-    <div class="container awayFromHeader py-3 bg-lightish">
-        <div class="row mr-auto ml-auto">
+    <div class="container authStyle awayFromHeader py-3 bg-lightish">
+        <div class="ml-auto">
             <p class="text-center">Sign Up Or <a href='/auth/signin/'>Sign In</a></p>
         </div>
-        <div class="row text-center mr-auto ml-auto">
+        <div class="text-center ml-auto">
             <form name="signUpForm" action="/auth/signUp/admin" method="post">
                 Username: <input name="username" id="username"/><br><br>
                 Password: <input name="password" id="password"/><br><br>
                 Access Code: <input name="adminPass" id="adminPass"/><br><br>
                 <%if(error !== "") {%>
-                    <p class="bg-warning ml-5 pl-4"><%=error%></p>
+                    <p class="bg-warning"><%=error%></p>
                 <%}%>
-                <input class="ml-5" type="submit" value="Sign Up"/>
+                <input class="ml-auto" type="submit" value="Sign Up"/>
 
             </form>
         </div>

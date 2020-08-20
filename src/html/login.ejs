@@ -33,19 +33,19 @@
         </div>
     </div>
 
-    <div class="container awayFromHeader py-3 bg-lightish">
-        <div class="row mr-auto ml-auto">
+
+    <div class="container awayFromHeader authStyle py-3 bg-lightish">
+        <div class="ml-auto">
             <p class="text-center">Sign In Or <a href="/auth/signUp">Register</a></p>
         </div>
-        <div class="row text-center mr-auto ml-auto">
+        <div class="text-center ml-auto">
             <form name="signInForm" action="/auth/signin" method="post">
                 Username: <input name="username" id="username"/><br><br>
                 Password: <input name="password" id="password"/><br><br>
                 <%if(errors.length > whereToRead) {%>
-                    <p class="bg-warning ml-5"><%=errors[whereToRead]%></p>
+                    <p class="bg-warning"><%=errors[whereToRead]%></p>
                 <%}%>
-                <input class="ml-5" type="submit" value="Sign In"/>
-
+                <input class="ml-auto" type="submit" value="Sign In"/>
             </form>
         </div>
     </div>
