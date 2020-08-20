@@ -37,7 +37,7 @@ function router(nav) {
                 debug('Connected correctly to server');
                 const db = client.db(dbName);
                 const col = db.collection('recipes');
-                const recipe = {name, prep_time, cook_time, description, ingredients, directions};
+                const recipe = {name, prep_time, cook_time, description, ingredients, directions, creator: req.user.username};
                 const names = await col.find().toArray();
                 let nameFound = false;
                 for(let i = 0; i < names.length; i++) {
@@ -48,10 +48,7 @@ function router(nav) {
                 }
                 if(!nameFound) {
                     const results = await col.insertOne(recipe);
-                    debug(results);        
-                    req.login(results.ops[0], () => {
-                        res.redirect("/recipe/" + results.ops[0]._id);
-                    });
+                    res.redirect("/recipe/" + results.ops[0]._id);
                 }
                 else {
                     res.render("recipeCreate", {nav, error: "A recipe with this name already exists, please choose a different one."});
@@ -79,15 +76,36 @@ function router(nav) {
                     debug(col);
                     
                     const recipe = await col.findOne({ _id: ObjectID(id) });
-                    debug(recipe);
                     
-                    res.render('recipe', {nav, recipe});
+                    res.render('recipe', {nav, recipe, user: req.user});
                 } catch (err) {
                     debug(err.stack);
                 }
                 client.close();
             }());
-    });
+        })
+        .post((req, res) => {
+            const url = 'mongodb://localhost:27017';
+            const dbName = 'Paughers';
+
+            (async function delRecipe(){
+                let client;
+                try {
+                    client = await MongoClient.connect(url);
+                    debug('Connected correctly to server');
+
+                    const db = client.db(dbName);
+                    const col = db.collection('recipes');
+                    
+                    const recipe = await col.deleteOne({ _id: ObjectID(req.body._id) });
+                    
+                    res.redirect('/');
+                } catch (err) {
+                    debug(err.stack);
+                }
+                client.close();
+            }());
+        });
     return recipeRouter;
 }
 
