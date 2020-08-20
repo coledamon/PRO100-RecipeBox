@@ -31,7 +31,6 @@ function router(nav) {
                     const col = db.collection('recipes')
                     
                     const recipes = await col.find({"creator" : `${req.user.username}`}).sort("name", 1).toArray();
-                    debug(recipes);
 
                     res.render('personalPosts', {nav, recipes});
                 } catch (err) {
