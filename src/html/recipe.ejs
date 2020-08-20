@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link href="/css/style.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 </head>
 
 <body class="body awayFromFooter">
@@ -46,26 +47,24 @@
         <div class="row">
             <div class="card">
                 <div class="header pl-3 pt-3 pr-3">
-                    <a href="/" class="btnBack">&lt;Back</a>
+                    <a href="/" class="btnBack"><i class='fas fa-arrow-left'></i>Back</a>
                     <div class="icon">
-                        <a href="#"><i class="icon fa fa-heart-o"></i></a>
+                        
                         <%if(user) {%>
                             <%if(user.admin || user.username == recipe.creator) {
                                 if(recipe.public) {%>
                                     <form name="publicRecipe" action="/recipe/:id" method="post">
-                                    <a href="#"><i class="icon fa fa-eye fill-o"></i></a>
+                                    <a href="#"><i class="icon fa fa-eye fill-o" style='font-size:24px'></i></a>
                                     <input type="hidden" name="type" value="private">
                                     </form>
                                 <%} else {%>
                                     <form name="privateRecipe" action="/recipe/:id" method="post">
-                                    <a href="#"><i class="icon fa fa-eye slash fill-o"></i></a>
+                                    <a href="#"><i class="icon fa fa-eye slash fill-o" style='font-size:24px'></i></a>
                                     <input type="hidden" name="type" value="public">
                                     </form>
                                 <%}%>
                             <%}%>
                         <%}%>
-
-                        <a href="#"><i class="icon fa fa-trash"></i></a>
                     </div>
                 </div>
                 <div>
@@ -78,6 +77,7 @@
 
                     <h5 class="info">Directions</h5>
                     <p class="info"><%=recipe.directions%></p>
+                    <a href="#"><i class="icon 	fas fa-heart"  style='font-size:24px' ></i></a>
                     </ul>
 
                 </div>
