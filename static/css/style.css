@@ -52,6 +52,14 @@ a.btn {
     padding: 10px;
     transition: 250ms;
 }
+a.btnBack {
+    color: grey;
+    position: relative;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-align: Left;
+    transition: 250ms;
+}
 .formStyle{
     background-color: #7e7a7f;
     text-align: center;
@@ -62,7 +70,7 @@ a.btn {
 }
 
 .authStyle {
-    width: 25%;
+    width: 30%;
 }
 
 .bg-dark {
