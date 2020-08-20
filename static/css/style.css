@@ -33,8 +33,9 @@ img {
     margin: 0 30px;
 }
 
-.fa-users {
-    color: gray;
+.icon {
+    color: red;
+    float: right;
 }
 
 .info {
