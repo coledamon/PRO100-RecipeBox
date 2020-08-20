@@ -48,24 +48,6 @@
                     <a href="/" class="btnBack"><i class='fas fa-arrow-left'></i>Back</a>
                     <div class="icon">
                         <a href="#"><i class="icon fa fa-heart-o"></i></a>
-
-                        <a href="#"><i class="icon fa fa-trash"></i></a>
-                        
-                        <%if(user) {%>
-                            <%if(user.admin || user.username == recipe.creator) {
-                                if(recipe.public) {%>
-                                    <form name="publicRecipe" action="/recipe/:id" method="post">
-                                    <a href="#"><i class="icon fa fa-eye fill-o" style='font-size:24px'></i></a>
-                                    <input type="hidden" name="type" value="private">
-                                    </form>
-                                <%} else {%>
-                                    <form name="privateRecipe" action="/recipe/:id" method="post">
-                                    <a href="#"><i class="icon fa fa-eye slash fill-o" style='font-size:24px'></i></a>
-                                    <input type="hidden" name="type" value="public">
-                                    </form>
-                                <%}%>
-                            <%}%>
-                        <%}%>
                     </div>
                 </div>
                 <div>
