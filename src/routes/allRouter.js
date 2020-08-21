@@ -32,7 +32,7 @@ function router(nav) {
                     
                     const recipes = await col.find().sort("name", 1).toArray();
 
-                    res.render('allPosts', {nav, recipes});
+                    res.render('allPosts', {nav, recipes, user: req.user});
                 } catch (err) {
                     debug(err.stack);
                 }

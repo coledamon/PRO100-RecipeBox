@@ -34,7 +34,7 @@ module.exports = function router(nav) {
                     
                     const recipes = await col.find().toArray();
 
-                    res.render('index', {nav, recipes});
+                    res.render('index', {nav, recipes, user: req.user});
                 } catch (err) {
                     debug(err.stack);
                 }

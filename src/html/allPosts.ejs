@@ -49,7 +49,13 @@
             <ul>
                 <%for(let i = 0; i < recipes.length; i++) {%>
                     <li>
-                        <a href="/recipe/<%=recipes[i]._id%>" id="white"><%=recipes[i].name%></a>
+                        <%if(user) {%>
+                            <%if (user.username == recipes[i].creator || recipes[i].public) {%>
+                                <a href="/recipe/<%=recipes[i]._id%>" id="white"><%=recipes[i].name%></a>
+                            <%}%>
+                        <%} else if (recipes[i].public) {%>
+                            <a href="/recipe/<%=recipes[i]._id%>" id="white"><%=recipes[i].name%></a>
+                        <%}%>
                     </li>
                 <%}%>
             </ul>
