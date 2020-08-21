@@ -68,10 +68,10 @@
                 </div>
                 <div>
                     <%if(user) {%>
-                        <%if(user.admin || (user.username == recipe.creator)) {%>
+                        <%if(user.username == recipe.creator) {%>
                             <%if(recipe.public) {%>
                                 <form name="publicRecipe" action="/recipe/:id" method="post">
-                                <input class="info mb-3" type="submit" name="private" value="  Private  "/>
+                                    <input class="info mb-3" type="submit" name="private" value="  Private  "/>
                                 <input type="hidden" name="type" value="private">
                                 <input type="hidden" name="_id" value=<%=recipe._id%>>
                                 </form>
@@ -82,7 +82,9 @@
                                 <input type="hidden" name="_id" value=<%=recipe._id%>>
                                 </form>
                             <%}%>
-                                <form name="deleteRecipe" action="/recipe/:id" method="post">
+                            <%}%>
+                        <%if(user.admin || user.username == recipe.creator) {%>
+                            <form name="deleteRecipe" action="/recipe/:id" method="post">
                                 <input class="info mb-3" type="submit" name="delete" value="  Delete  " />
                                 <input type="hidden" name="_id" value=<%=recipe._id%>>
                                 <input type="hidden" name="type" value="delete">
