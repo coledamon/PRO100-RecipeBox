@@ -36,12 +36,29 @@
     </div>
 
     <div class="container bg-lightish awayFromHeader py-5">
-        <div id="profPic" class="col-3">
-            <img class="rounded-circle" id="pfp" height="225px" width="225px" src="/images/profile.png"/>
-            <input id="file" style="visibility:hidden;" type="file" accept="image/jpeg">
-            <label for="file" class="btn bg-light button mt-1 ml-5">Choose Picture</label>
+        <div class="row">
+            <div id="profPic" class="col-5">
+                <img class="rounded-circle" id="pfp" height="225px" width="225px" src="/images/profile.png"/>
+                <input id="file" style="visibility:hidden;" type="file" accept="image/jpeg">
+                <label for="file" class="btn bg-light button mt-1 ml-5">Choose Picture</label>
+            </div>
+            <div class="col-3">
+                <p><h5>Username</h5>&emsp;<%=user.username%><br><br></p>
+                <p><h5>Name</h5>&emsp;<%=user.name%><br><br></p>
+                <p><h5>Birthday</h5>&emsp;<%=user.birthday%><br></p>
+                <form name="privateRecipe" action="/auth/profile" method="post">
+                    <input class="" type="submit" name="editButton" value="  Edit  "/>
+                </form>
+            </div>
+            <div class="col-3 offset-1">
+                <div class="mt-2">
+                    <a id="dark" href="/auth/profile/changePass">Change Password</a>
+                    <%if(passSucc !== "") {%>
+                        <p class="bg-success mt-3"><%=passSucc%></p>
+                    <%}%>
+                </div>
+            </div>
         </div>
-
     </div>
 
     <script src="/js/jquery.js"></script>

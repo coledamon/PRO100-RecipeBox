@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href = "/css/bootstrap.css" rel="stylesheet"/>
+    <title>Main Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link href = "/css/style.css" rel="stylesheet"/>
-    <title>Login</title>
 </head>
 <body class="body2 awayFromFooter">
     <div class="navbar navbar-expand-sm navbar-dark fixed-top bg-dark">
@@ -16,14 +15,15 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
                     <%for(let i = 0; i < 3; i++) {%>
-                        <%if(nav[i].title.length > 0) {%>
-                            <li class="nav-item">
-                                <a class="nav-link" href="<%=nav[i].link%>"><%=nav[i].title%></a>
-                            </li>
-                        <%}%>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<%=nav[i].link%>"><%=nav[i].title%></a>
+                    </li>
                     <%}%>
                 </ul>
                 <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="<%=nav[3].link%>"><%=nav[3].title%></a>
+                    </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="<%=nav[4].link%>"><%=nav[4].title%></a>
                     </li>
@@ -35,25 +35,37 @@
         </div>
     </div>
 
-
-    <div class="container awayFromHeader authStyle py-3 bg-lightish">
-        <div class="ml-auto">
-            <p class="text-center">Sign In Or <a href="/auth/signUp">Register</a></p>
-        </div>
-        <div class="text-center ml-auto">
-            <form name="signInForm" action="/auth/signin" method="post">
-                Username: <input name="username" id="username"/><br><br>
-                Password: <input type="password" name="password" id="password"/><br><br>
-                <%if(errors.length > whereToRead) {%>
-                    <p class="bg-warning"><%=errors[whereToRead]%></p>
-                <%}%>
-                <input class="ml-auto" type="submit" value="Sign In"/>
-            </form>
+    <div class="container bg-lightish awayFromHeader py-5">
+        <div class="row">
+            <div id="profPic" class="col-5">
+                <img class="rounded-circle" id="pfp" height="225px" width="225px" src="/images/profile.png"/>
+                <input id="file" style="visibility:hidden;" type="file" accept="image/jpeg">
+                <label for="file" class="btn bg-light button mt-1 ml-5">Choose Picture</label>
+            </div>
+            <div class="col-3">
+                <p><h5>Username</h5>&emsp;<%=user.username%><br><br></p>
+                <p><h5>Name</h5>&emsp;<%=user.name%><br><br></p>
+                <p><h5>Birthday</h5>&emsp;<%=user.birthday%><br></p>
+                <form name="privateRecipe" action="/auth/profile" method="post">
+                    <input class="" type="submit" name="editButton" value="  Edit  "/>
+                </form>
+            </div>
+            <div class="col-3">
+                <form name="privateRecipe" action="/auth/profile/changePass" method="post">
+                    <p><h5>New Password</h5><input type="password" name="pass"><br></p>
+                    <p><h5>Confirm Password</h5><input type="password" name="passConf"></p>
+                    <%if(error !== "") {%>
+                        <p class="bg-warning"><%=error%></p>
+                    <%}%>
+                    <input class="ml-5" type="submit" name="save" value="  Save  "/>
+                </form>
+            </div>
         </div>
     </div>
-    <script src="/js/jquery.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
 
+    <script src="/js/jquery.js"></script>
+    <script src="/js/profileScript.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
 </body>
 <footer class="page-footer font-small fixed-bottom bg-dark">
     <div class="container text-center text-md-left">

@@ -161,7 +161,96 @@ function router(nav) {
         }
     })
     .get((req, res) => {
-        res.render('profile', {nav});
+        res.render('profile', {nav, user: req.user, passSucc: ""});
+    })
+    .post((req, res) => {
+        res.redirect('/auth/profile/edit');
+    });
+    authRouter.route('/profile/edit')
+    .all((req, res, next) => {
+        if(req.user) {
+            nav[4] = {link: "/auth/profile", title: "Profile"};
+            nav[5] = {link: "/auth/logout", title: "Log Out"};
+            next();
+        } else {
+            res.redirect('/');
+        }
+    })
+    .get((req, res) => {
+        res.render('profileEdit', {nav, user: req.user});
+    })
+    .post((req, res) => {
+        const {name, birthday} = req.body;
+        const birthYear = birthday.substring(0,4);
+        const birthMonth = birthday.substring(5,7);
+        const birthDay = birthday.substring(8);
+        var birthdayBetter = `${birthMonth}/${birthDay}/${birthYear}`;
+        if(birthdayBetter == "//") {
+            birthdayBetter = "";
+        }
+        const url = 'mongodb://localhost:27017';
+        const dbName = 'Paughers';
+        (async function addUser(){
+            let client;
+            try {
+                client = await MongoClient.connect(url);
+                debug('Connected correctly to server');
+                const db = client.db(dbName);
+                const col = db.collection('users');
+
+                const results = await col.updateOne({username: req.user.username}, {$set: {name, birthday: birthdayBetter}});
+                debug(results);        
+                const user = await col.findOne({username: req.user.username});
+                req.login(user, () => {
+                    res.redirect('/auth/profile');
+                });
+            } catch (err) {
+                debug(err.stack);
+            }
+            client.close();
+        }());
+    });
+    authRouter.route('/profile/changePass')
+    .all((req, res, next) => {
+        if(req.user) {
+            nav[4] = {link: "/auth/profile", title: "Profile"};
+            nav[5] = {link: "/auth/logout", title: "Log Out"};
+            next();
+        } else {
+            res.redirect('/');
+        }
+    })
+    .get((req, res) => {
+        res.render('profileEditPass', {nav, user: req.user, error: ""});
+    })
+    .post((req, res) => {
+        const {pass, passConf} = req.body;
+        const url = 'mongodb://localhost:27017';
+        const dbName = 'Paughers';
+        if(pass == passConf) {
+            (async function addUser(){
+                let client;
+                try {
+                    client = await MongoClient.connect(url);
+                    debug('Connected correctly to server');
+                    const db = client.db(dbName);
+                    const col = db.collection('users');
+
+                    const results = await col.updateOne({username: req.user.username}, {$set: {password: pass}});
+                    debug(results);        
+                    const user = await col.findOne({username: req.user.username});
+                    req.login(user, () => {
+                        res.render('profile', {nav, user: req.user, passSucc: "Password Changed Successfully"});
+                    });
+                } catch (err) {
+                    debug(err.stack);
+                }
+                client.close();
+            }());
+        }
+        else {
+            res.render('profileEditPass', {nav, user: req.user, error: "Passwords do not match"});
+        }
     });
     authRouter.route('/logout')
     .get((req,res) => {
