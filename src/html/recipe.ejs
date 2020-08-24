@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Main Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link href = "/css/style.css" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 </head>
-<body class="body">
+
+<body class="body awayFromFooter">
     <div class="navbar navbar-expand-sm navbar-dark fixed-top bg-dark">
         <div class="container">
             <a class="navbar-brand" href="/">
@@ -14,38 +18,82 @@
                 Paughers</a>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="<%=nav[0].link%>"><%=nav[0].title%></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<%=nav[1].link%>"><%=nav[1].title%></a>
-                    </li>
+                    <%for(let i = 0; i < 3; i++) {%>
+                        <%if(nav[i].title.length > 0) {%>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<%=nav[i].link%>"><%=nav[i].title%></a>
+                            </li>
+                        <%}%>
+                    <%}%>
                 </ul>
                 <ul class="navbar-nav">
-                    <%for(let i = 2; i < 4; i++) {%>
+                    <%if(nav[3].title.length > 0) {%>
                     <li class="nav-item">
-                        <a class="nav-link" href="<%=nav[i].link%>"><%=nav[i].title%></a>
+                        <a class="nav-link" href="<%=nav[3].link%>"><%=nav[3].title%></a>
                     </li>
                     <%}%>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<%=nav[4].link%>"><%=nav[4].title%></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<%=nav[5].link%>"><%=nav[5].title%></a>
+                    </li>
                 </ul>
             </div>
         </div>
     </div>
-    
+
     <div class="container pt-5 mt-5">
         <div class="row">
-            <h2>All Recipes</h2>
-        </div>
-        <div class="row">
-            <ul>
-                <li>
-                    <a href="/recipe/<%=recipe._id%>" id="white"><%=recipe.name%></a>
-                </li>
-            </ul>
+            <div class="card">
+                <div class="header pl-3 pt-3 pr-3">
+                    <a href="/" class="btnBack"><i class='fas fa-arrow-left'></i>Back</a>
+                </div>
+                <div>
+                    <h1 class="food"><%=recipe.name%></h1>
+                    <i class="fa fa-clock-o"> Prep Time:<%=recipe.prep_time%></i>
+                    <i class="fa fa-clock-o"> Cook Time:<%=recipe.cook_time %></i>
+                    <p class="info"><%=recipe.description%> </p>
+                    <h5 class="info">Ingredients</h5>
+                    <p class="info"> <%= recipe.ingredients%> </p>
+
+                    <h5 class="info">Directions</h5>
+                    <p class="info"><%=recipe.directions%></p>
+                    <a href="#"><i class="icon 	fas fa-heart"  style='font-size:24px' ></i></a>
+                    </ul>
+
+                </div>
+                <div>
+                    <%if(user) {%>
+                        <%if(user.username == recipe.creator) {%>
+                            <%if(recipe.public) {%>
+                                <form name="publicRecipe" action=<%=`/recipe/${recipe._id}`%> method="post">
+                                    <input class="info mb-3" type="submit" name="private" value="  Private  "/>
+                                <input type="hidden" name="type" value="private">
+                                <input type="hidden" name="_id" value=<%=recipe._id%>>
+                                </form>
+                            <%} else {%>
+                                <form name="privateRecipe" action=<%=`/recipe/${recipe._id}`%> method="post">
+                                <input class="info mb-3" type="submit" name="public" value="  Public  "/>
+                                <input type="hidden" name="type" value="public">
+                                <input type="hidden" name="_id" value=<%=recipe._id%>>
+                                </form>
+                            <%}%>
+                        <%}%>
+                        <%if(user.admin || user.username == recipe.creator) {%>
+                            <form name="deleteRecipe" action=<%=`/recipe/${recipe._id}`%> method="post">
+                                <input class="info mb-3 fa-input" type="submit" name="delete" value="  Delete&#xf1f8;  "/>
+                                <input type="hidden" name="_id" value=<%=recipe._id%>>
+                                <input type="hidden" name="type" value="delete">
+                            </form>
+                        <%}%>
+                    <%}%>
+                </div>
+            </div>
         </div>
     </div>
 
-    <script src="/js/jquery-3.5.1.min.js"></script>
+    <script src="/js/jquery.js"></script>
     <script src="/js/bootstrap.min.js"></script>
 </body>
 <footer class="page-footer font-small fixed-bottom bg-dark">
@@ -54,12 +102,14 @@
             <div class="col-5 offset-1 mb-md-0 mb-15">
                 <h5 class="text-uppercase">Contributors</h5>
                 <ul class="list-unstyled">
-                    <li> 
-                        <a href="mailto:KColeman@student.neumont.edu" target="_blank" id='white'>Kasey Coleman</a>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <li>
+                        <a href="mailto:KColeman@student.neumont.edu" target="_blank" id='white'>Kasey Coleman</a>&nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp;
                         <a href="mailto:GCampbell@student.neumont.edu" target="_blank" id='white'>Matthew Campbell</a>
                     </li>
                     <li>
-                        <a href="mailto:CDamon@student.neumont.edu" target="_blank" id='white'>Cole Damon </a> &nbsp; &nbsp; &nbsp; &nbsp; &emsp13; &#8198; &#8198;
+                        <a href="mailto:CDamon@student.neumont.edu" target="_blank" id='white'>Cole Damon </a> &nbsp;
+                        &nbsp; &nbsp; &nbsp; &emsp13; &#8198; &#8198;
                         <a href="mailto:RZarkowski@student.neumont.edu" target="_blank" id='white'>Reece Zarkowski</a>
                     </li>
                 </ul>
@@ -71,4 +121,5 @@
         </div>
     </div>
 </footer>
+
 </html>

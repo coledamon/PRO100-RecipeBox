@@ -19,14 +19,12 @@
                     <li class="nav-item">
                         <a class="nav-link" href="<%=nav[0].link%>"><%=nav[0].title%></a>
                     </li>
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" href="<%=nav[1].link%>"><%=nav[1].title%></a>
                     </li>
-                    <%if(nav[2].title.length > 0) {%>
-                    <li class="nav-item">
+                    <li class="nav-item active">
                         <a class="nav-link" href="<%=nav[2].link%>"><%=nav[2].title%></a>
                     </li>
-                    <%}%>
                 </ul>
                 <ul class="navbar-nav">
                     <%for(let i = 3; i < nav.length; i++) {%>
@@ -43,19 +41,13 @@
 
     <div class="container awayFromHeader">
         <div class="row">
-            <h2>All Recipes</h2>
+            <h2>Personal Recipes</h2>
         </div>
         <div>
             <ul>
                 <%for(let i = 0; i < recipes.length; i++) {%>
                     <li>
-                        <%if(user) {%>
-                            <%if (user.username == recipes[i].creator || recipes[i].public) {%>
-                                <a href="/recipe/<%=recipes[i]._id%>" id="white"><%=recipes[i].name%></a>
-                            <%}%>
-                        <%} else if (recipes[i].public) {%>
-                            <a href="/recipe/<%=recipes[i]._id%>" id="white"><%=recipes[i].name%></a>
-                        <%}%>
+                        <a href="/recipe/<%=recipes[i]._id%>" id="white"><%=recipes[i].name%></a>
                     </li>
                 <%}%>
             </ul>

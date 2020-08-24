@@ -1,10 +1,10 @@
 const express = require('express');
 const {MongoClient} = require('mongodb');
-const debug = require('debug')('app:allRouter');
-const allRouter = express.Router();
+const debug = require('debug')('app:personalRouter');
+const personalRouter = express.Router();
 
 function router(nav) {
-    allRouter.use((req, res, next) => {
+    personalRouter.use((req, res, next) => {
         if(!req.user) {
             nav[2].title = "";
             nav[3].title = "";
@@ -15,7 +15,7 @@ function router(nav) {
         }
         next();
     });
-    allRouter.route('/')
+    personalRouter.route('/')
         .get((req, res) => {
             const url = 'mongodb://localhost:27017';
             const dbName = 'Paughers';
@@ -30,16 +30,16 @@ function router(nav) {
 
                     const col = db.collection('recipes')
                     
-                    const recipes = await col.find().sort("name", 1).toArray();
+                    const recipes = await col.find({"creator" : `${req.user.username}`}).sort("name", 1).toArray();
 
-                    res.render('allPosts', {nav, recipes, user: req.user});
+                    res.render('personalPosts', {nav, recipes});
                 } catch (err) {
                     debug(err.stack);
                 }
                 client.close();
             }());
         });
-    return allRouter;
+    return personalRouter;
 }
 
 module.exports = router;

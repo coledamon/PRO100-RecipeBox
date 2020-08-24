@@ -1,3 +1,78 @@
+* {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    text-decoration: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+img {
+    max-width: 100%;
+}
+
+.card {
+    position: relative;
+    width: 80%;
+    margin: 20px auto;
+    box-shadow: 0px 0px 30px 2px #000;
+}
+
+.food {
+    color: black;
+    text-align: left;
+    font-weight: normal;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 5px 30px;
+}
+.fa-clock-o {
+    color: gray;
+    margin: 0 30px;
+}
+
+.icon {
+    color: red;
+    float: right;
+}
+
+.info {
+    margin: 10px 30px;
+}
+
+a.btn {
+    display: block;
+    color: grey;
+    position: relative;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-align: center;
+    padding: 10px;
+    transition: 250ms;
+}
+a.btnBack {
+    color: grey;
+    position: relative;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-align: Left;
+    transition: 250ms;
+}
+.formStyle{
+    background-color: #7e7a7f;
+    text-align: center;
+    position: relative;
+    max-width: 500px;
+    margin: 50px auto;
+    box-shadow: 0px 0px 30px 2px rgb(57, 56, 56);
+}
+
+.authStyle {
+    width: 30%;
+}
+
 .bg-dark {
     background-color: #6e6a6f !important;
 }
@@ -14,10 +89,17 @@
     color: #FFFFFF;
 }
 
-.awayFromHeader{
+.awayFromHeader {
     margin-top: 100px;
 }
 
 .bg-lightish {
     background-color: #D4D2D5;
+}
+
+.awayFromFooter {
+    margin-bottom: 150px;
+}
+.fa-input {
+    font-family: FontAwesome, 'Helvetica Neue', Helvetica, Arial, sans-serif; 
 }

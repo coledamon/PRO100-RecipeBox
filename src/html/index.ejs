@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Main Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link href = "/css/style.css" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 </head>
-<body class="body">
+
+<body class="body awayFromFooter">
     <div class="navbar navbar-expand-sm navbar-dark fixed-top bg-dark">
         <div class="container">
             <a class="navbar-brand" href="/">
@@ -20,18 +24,66 @@
                     <li class="nav-item">
                         <a class="nav-link" href="<%=nav[1].link%>"><%=nav[1].title%></a>
                     </li>
+                    <%if(nav[2].title.length > 0) {%>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<%=nav[2].link%>"><%=nav[2].title%></a>
+                    </li>
+                    <%}%>
                 </ul>
                 <ul class="navbar-nav">
-                    <%for(let i = 2; i < 4; i++) {%>
+                    <%for(let i = 3; i < nav.length; i++) {%>
+                    <%if(nav[i].title.length > 0) {%>
                     <li class="nav-item">
                         <a class="nav-link" href="<%=nav[i].link%>"><%=nav[i].title%></a>
                     </li>
+                    <%}%>
                     <%}%>
                 </ul>
             </div>
         </div>
     </div>
-    
+
+    <div class="awayFromHeader">
+        <%for(let i = 0; i < recipes.length; i++) {%>
+            <%if(user) {%>
+                <%if (user.username == recipes[i].creator || recipes[i].public) {%>
+                    <div class="card">
+           
+                        <div>
+                            
+                            <h1 class="food"><%=recipes[i].name%></h1>
+                            <i class="fa fa-clock-o"> Prep Time:<%=recipes[i].prep_time%></i>
+                            <i class="fa fa-clock-o"> Cook Time:<%=recipes[i].cook_time %></i>
+                            <p class="info"><%=recipes[i].description%></p>
+                            <a href="#"><i class="icon 	fas fa-heart"  style='font-size:24px' ></i></a>
+                            <a href="/recipe/<%=recipes[i]._id%>" class="btn">Let's Cook!</a> 
+                           
+            
+                        </div>
+            
+                    </div>
+                <%}%>
+            <%} else if (recipes[i].public) {%>
+                <div class="card">
+           
+                    <div>
+                        
+                        <h1 class="food"><%=recipes[i].name%></h1>
+                        <i class="fa fa-clock-o"> Prep Time:<%=recipes[i].prep_time%></i>
+                        <i class="fa fa-clock-o"> Cook Time:<%=recipes[i].cook_time %></i>
+                        <p class="info"><%=recipes[i].description%></p>
+                        <a href="#"><i class="icon 	fas fa-heart"  style='font-size:24px' ></i></a>
+                        <a href="/recipe/<%=recipes[i]._id%>" class="btn">Let's Cook!</a> 
+                       
+        
+                    </div>
+        
+                </div>
+            <%}%>
+        
+
+        <%}%>
+</div>
 
     <script src="/js/jquery.js"></script>
     <script src="/js/bootstrap.min.js"></script>
