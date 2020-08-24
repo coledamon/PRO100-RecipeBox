@@ -100,3 +100,6 @@ a.btnBack {
 .awayFromFooter {
     margin-bottom: 150px;
 }
+.fa-input {
+    font-family: FontAwesome, 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+}
