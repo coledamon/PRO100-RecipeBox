@@ -64,7 +64,7 @@
                     <%if(user) {%>
                         <%if(user.admin || user.username == recipe.creator) {%>
                             <form class="col-2" name="deleteRecipe" action=<%=`/recipe/${recipe._id}`%> method="post">
-                                <input class="info mb-3 fa-input" type="submit" name="delete" value="  Delete&#xf1f8;  "/>
+                                <input class="info mb-3 fa-input" type="submit" name="delete" value="  Delete &#xf1f8;  "/>
                                 <input type="hidden" name="_id" value=<%=recipe._id%>>
                                 <input type="hidden" name="type" value="delete">
                             </form>
@@ -74,11 +74,17 @@
                                     <input type="hidden" name="type" value="edit">
                                     <input type="hidden" name="_id" value=<%=recipe._id%>>
                                 </form>
-                            <%}%>
+                            <%} else {%>
+                                <div class="col-2"></div>
+                                <%}%>%>
+                        <%} else {%>
+                            <div class="col-4"></div>
+                            <%}%>%>
+                    <%} else {%>
+                        <div class="col-4"></div>
                         <%}%>
-                    <%}%>
                     <div class="col-1 offset-7">
-                    <a href="#"><i class="icon mt-2 fas fa-heart"  style='font-size:24px' ></i></a>
+                    <a href="#"><i class="icon mt-2 mb-2 fas fa-heart"  style='font-size:24px' ></i></a>
                     </div>
                 </div>
             </div>

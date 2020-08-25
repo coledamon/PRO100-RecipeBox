@@ -56,12 +56,12 @@
                         <i class="fa fa-clock-o"> Prep Time:<input name="prep_time" value="<%=recipe.prep_time%>"></i>
                         <i class="fa fa-clock-o"> Cook Time:<input name="cook_time" value="<%=recipe.cook_time %>"></i>
                         <h5 class="info">Description</h5>
-                        <p class="info"><textarea rows="4" cols="115" name="description" wrap="soft"><%=recipe.description%></textarea> </p>
+                        <p class="info"><textarea rows="4" class="notFull" name="description" wrap="soft"><%=recipe.description%></textarea> </p>
                         <h5 class="info">Ingredients</h5>
-                        <p class="info"> <textarea rows="4" cols="115" name="ingredients" wrap="soft"><%= recipe.ingredients%></textarea> </p>
+                        <p class="info"> <textarea rows="4" class="notFull" name="ingredients" wrap="soft"><%= recipe.ingredients%></textarea> </p>
 
                         <h5 class="info">Directions</h5>
-                        <p class="info"><textarea rows="4" cols="115" name="directions" wrap="soft"><%=recipe.directions%></textarea></p>
+                        <p class="info"><textarea rows="4" class="notFull" name="directions" wrap="soft"><%=recipe.directions%></textarea></p>
                         </ul>
 
                     </div>
@@ -73,6 +73,9 @@
                         <input type="hidden" name="type" value="edit">
                         <input type="hidden" name="_id" value=<%=recipe._id%>>
                         <br>
+                        <%if(error !== "") {%>
+                            <p class="bg-warning text-center"><%=error%></p>
+                        <%}%>
                         <input class="info mb-3" type="submit" name="save" value="  Save  "/>
                     </div>
                     <%}else {%>

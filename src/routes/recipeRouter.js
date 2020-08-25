@@ -36,35 +36,40 @@ function router(nav) {
         }
         const url = 'mongodb://localhost:27017';
         const dbName = 'Paughers';
-        (async function addRecipe(){
-            let client;
-            try {
-                client = await MongoClient.connect(url);
-                debug('Connected correctly to server');
-                const db = client.db(dbName);
-                const col = db.collection('recipes');
-                const recipe = {name, prep_time, cook_time, description, ingredients, directions, creator: req.user.username, public};
-                const names = await col.find().toArray();
-                let nameFound = false;
-                      
-                for(let i = 0; i < names.length; i++) {
-                    if(names[i].name.toLowerCase() == name.toLowerCase()) {
-                        nameFound = true;
-                        break;
+        if(name.length > 0 && prep_time.length > 0 && cook_time.length > 0 && description.length > 0 && ingredients.length > 0 && directions.length > 0) {
+            (async function addRecipe(){
+                let client;
+                try {
+                    client = await MongoClient.connect(url);
+                    debug('Connected correctly to server');
+                    const db = client.db(dbName);
+                    const col = db.collection('recipes');
+                    const recipe = {name, prep_time, cook_time, description, ingredients, directions, creator: req.user.username, public};
+                    const names = await col.find().toArray();
+                    let nameFound = false;
+
+                    for(let i = 0; i < names.length; i++) {
+                        if(names[i].name.toLowerCase() == name.toLowerCase()) {
+                            nameFound = true;
+                            break;
+                        }
                     }
+                    if(!nameFound) {
+                        const results = await col.insertOne(recipe);
+                        res.redirect("/recipe/" + results.ops[0]._id);
+                    }
+                    else {
+                        res.render("recipeCreate", {nav, error: "A recipe with this name already exists, please choose a different one."});
+                    }
+                } catch (err) {
+                    debug(err.stack);
                 }
-                if(!nameFound) {
-                    const results = await col.insertOne(recipe);
-                    res.redirect("/recipe/" + results.ops[0]._id);
-                }
-                else {
-                    res.render("recipeCreate", {nav, error: "A recipe with this name already exists, please choose a different one."});
-                }
-            } catch (err) {
-                debug(err.stack);
-            }
-            client.close();
-        }());
+                client.close();
+            }());
+        }
+        else {
+            res.render("recipeCreate", {nav, error:"All fields must contain text."});
+        }
     });
     recipeRouter.route("/edit/:id")
     .all((req, res, next) => {
@@ -90,7 +95,7 @@ function router(nav) {
                 
                 const recipe = await col.findOne({ _id: ObjectID(id) });
                 
-                res.render('recipeEdit', {nav, recipe, user: req.user});
+                res.render('recipeEdit', {nav, recipe, user: req.user, error: ""});
             } catch (err) {
                 debug(err.stack);
             }
@@ -105,22 +110,43 @@ function router(nav) {
         }
         const url = 'mongodb://localhost:27017';
         const dbName = 'Paughers';
-        (async function updateRecipe(){
-            let client;
-            try {
-                client = await MongoClient.connect(url);
-                debug('Connected correctly to server');
-                const db = client.db(dbName);
-                const col = db.collection('recipes');
+        if(prep_time.length > 0 && cook_time.length > 0 && description.length > 0 && ingredients.length > 0 && directions.length > 0) {
+            (async function updateRecipe(){
+                let client;
+                try {
+                    client = await MongoClient.connect(url);
+                    debug('Connected correctly to server');
+                    const db = client.db(dbName);
+                    const col = db.collection('recipes');
 
-                const results = await col.updateOne({ _id: ObjectID(_id) }, {$set: {prep_time, cook_time, description, ingredients, directions, public}});
-                debug(results);       
-                res.redirect(`/recipe/${_id}`);
-            } catch (err) {
-                debug(err.stack);
-            }
-            client.close();
-        }());
+                    const results = await col.updateOne({ _id: ObjectID(_id) }, {$set: {prep_time, cook_time, description, ingredients, directions, public}});
+                    debug(results);       
+                    res.redirect(`/recipe/${_id}`);
+                } catch (err) {
+                    debug(err.stack);
+                }
+                client.close();
+            }());
+        }
+        else {
+            (async function mongo(){
+                let client;
+                try {
+                    client = await MongoClient.connect(url);
+                    debug('Connected correctly to server');
+                    const db = client.db(dbName);
+                    const col = db.collection('recipes');
+                    debug(col);
+                    
+                    const recipe = await col.findOne({ _id: ObjectID(_id) });
+                    
+                    res.render('recipeEdit', {nav, recipe, user: req.user, error: "All fields must contain text."});
+                } catch (err) {
+                    debug(err.stack);
+                }
+                client.close();
+            }());
+        }
     });
     recipeRouter.route('/:id')
         .get((req, res) => {
