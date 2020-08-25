@@ -236,12 +236,17 @@ function router(nav) {
                     const db = client.db(dbName);
                     const col = db.collection('users');
 
-                    const results = await col.updateOne({username: req.user.username}, {$set: {password: pass}});
-                    debug(results);        
-                    const user = await col.findOne({username: req.user.username});
-                    req.login(user, () => {
-                        res.render('profile', {nav, user: req.user, passSucc: "Password Changed Successfully"});
-                    });
+                    if(pass.length > 0) {
+                        const results = await col.updateOne({username: req.user.username}, {$set: {password: pass}});
+                        debug(results);        
+                        const user = await col.findOne({username: req.user.username});
+                        req.login(user, () => {
+                            res.render('profile', {nav, user: req.user, passSucc: "Password Changed Successfully"});
+                        });
+                    }
+                    else {
+                        res.render("profileEditPass", {nav, user: req.user, error: "You must enter a password."});
+                    }
                 } catch (err) {
                     debug(err.stack);
                 }
