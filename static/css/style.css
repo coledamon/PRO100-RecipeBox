@@ -106,3 +106,8 @@ a.btnBack {
 .fa-input {
     font-family: FontAwesome, 'Helvetica Neue', Helvetica, Arial, sans-serif; 
 }
+
+.bigText{
+    height: 5em;
+    width: 100%;
+}

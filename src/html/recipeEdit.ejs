@@ -49,44 +49,37 @@
                 <div class="header pl-3 pt-3 pr-3">
                     <a href="/" class="btnBack"><i class='fas fa-arrow-left'></i>Back</a>
                 </div>
-                <div>
-                    <h1 class="food"><%=recipe.name%></h1>
-                    <i class="fa fa-clock-o"> Prep Time:<%=recipe.prep_time%></i>
-                    <i class="fa fa-clock-o"> Cook Time:<%=recipe.cook_time %></i>
-                    <p class="info"><%=recipe.description%> </p>
-                    <h5 class="info">Ingredients</h5>
-                    <p class="info"> <%= recipe.ingredients%> </p>
+                <form name="editRecipe" action=<%=`/recipe/edit/${recipe._id}`%> method="post">
+                    <%if(user.username == recipe.creator) {%>
+                    <div>
+                        <h1 class="food"><%=recipe.name%></h1>
+                        <i class="fa fa-clock-o"> Prep Time:<input name="prep_time" value="<%=recipe.prep_time%>"></i>
+                        <i class="fa fa-clock-o"> Cook Time:<input name="cook_time" value="<%=recipe.cook_time %>"></i>
+                        <h5 class="info">Description</h5>
+                        <p class="info"><textarea rows="4" cols="115" name="description" wrap="soft"><%=recipe.description%></textarea> </p>
+                        <h5 class="info">Ingredients</h5>
+                        <p class="info"> <textarea rows="4" cols="115" name="ingredients" wrap="soft"><%= recipe.ingredients%></textarea> </p>
 
-                    <h5 class="info">Directions</h5>
-                    <p class="info"><%=recipe.directions%></p>
-                    <a href="#"><i class="icon 	fas fa-heart"  style='font-size:24px' ></i></a>
-                    </ul>
+                        <h5 class="info">Directions</h5>
+                        <p class="info"><textarea rows="4" cols="115" name="directions" wrap="soft"><%=recipe.directions%></textarea></p>
+                        </ul>
 
-                </div>
-                <div>
-                    <%if(user) {%>
-                        <%if(user.username == recipe.creator) {%>
-                            <form name="publicRecipe" action=<%=`/recipe/${recipe._id}`%> method="post">
-                                <input class="info mb-3" type="submit" name="private" value="  Edit  "/>
-                                <input type="hidden" name="type" value="edit">
-                                <input type="hidden" name="_id" value=<%=recipe._id%>>
-                            </form>
-                            <%if(recipe.public) {%>
-                                <form name="publicRecipe" action=<%=`/recipe/${recipe._id}/edit`%> method="post">
-                                    <input class="info mb-3" type="submit" name="private" value="  Private  "/>
-                                <input type="hidden" name="type" value="private">
-                                <input type="hidden" name="_id" value=<%=recipe._id%>>
-                                </form><!--maybe make this a radio? --also def put inside of edit bc only buttons that should show outside are edit and delete-->
-                            <%} else {%>
-                                <form name="privateRecipe" action=<%=`/recipe/${recipe._id}`%> method="post">
-                                <input class="info mb-3" type="submit" name="public" value="  Public  "/>
-                                <input type="hidden" name="type" value="public">
-                                <input type="hidden" name="_id" value=<%=recipe._id%>>
-                                </form>
-                            <%}%>
-                        <%}%>
+                    </div>
+                    <div>
+                        <input class="ml-5 mt-4" type="radio" id="public" name="visibility" <%if(recipe.public){%>checked<%}%> value="public">
+                        <label for="public">Public</label><br>
+                        <input class="ml-5" type="radio" id="private" name="visibility" <%if(!recipe.public){%>checked<%}%> value="private">
+                        <label for="private">Private</label><br>
+                        <input type="hidden" name="type" value="edit">
+                        <input type="hidden" name="_id" value=<%=recipe._id%>>
+                        <br>
+                        <input class="info mb-3" type="submit" name="save" value="  Save  "/>
+                    </div>
+                    <%}else {%>
+                        <br>
+                        <h4 class="bg-danger text-center py-2">You do not have permission to edit this recipe!</h4>
                     <%}%>
-                </div>
+                </form>
             </div>
         </div>
     </div>

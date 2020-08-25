@@ -29,7 +29,11 @@ function router(nav) {
         res.render("recipeCreate", {nav, error:""});
     })
     .post((req, res) => {
-        const {name, prep_time, cook_time, description, ingredients, directions} = req.body;
+        const {name, prep_time, cook_time, description, ingredients, directions, visibility} = req.body;
+        let public = true;
+        if(visibility == "private") {
+            public = false;
+        }
         const url = 'mongodb://localhost:27017';
         const dbName = 'Paughers';
         (async function addRecipe(){
@@ -39,7 +43,7 @@ function router(nav) {
                 debug('Connected correctly to server');
                 const db = client.db(dbName);
                 const col = db.collection('recipes');
-                const recipe = {name, prep_time, cook_time, description, ingredients, directions, creator: req.user.username, public: false};
+                const recipe = {name, prep_time, cook_time, description, ingredients, directions, creator: req.user.username, public};
                 const names = await col.find().toArray();
                 let nameFound = false;
                       
@@ -63,30 +67,61 @@ function router(nav) {
         }());
     });
     recipeRouter.route("/edit/:id")
-        .get((req, res) => {
-            const id = req.params.id;
-            const url = 'mongodb://localhost:27017';
-            const dbName = 'Paughers';
-            
-            (async function mongo(){
-                let client;
-                try {
-                    client = await MongoClient.connect(url);
-                    debug('Connected correctly to server');
+    .all((req, res, next) => {
+        if(!req.user) {
+            res.redirect("/");
+        }
+        else {
+            next();
+        }
+    })
+    .get((req, res) => {
+        const id = req.params.id;
+        const url = 'mongodb://localhost:27017';
+        const dbName = 'Paughers';
+        (async function mongo(){
+            let client;
+            try {
+                client = await MongoClient.connect(url);
+                debug('Connected correctly to server');
+                const db = client.db(dbName);
+                const col = db.collection('recipes');
+                debug(col);
+                
+                const recipe = await col.findOne({ _id: ObjectID(id) });
+                
+                res.render('recipeEdit', {nav, recipe, user: req.user});
+            } catch (err) {
+                debug(err.stack);
+            }
+            client.close();
+        }());
+    })
+    .post((req, res) => {
+        const {prep_time, cook_time, description, ingredients, directions, visibility, _id} = req.body;
+        let public = true;
+        if(visibility == "private") {
+            public = false;
+        }
+        const url = 'mongodb://localhost:27017';
+        const dbName = 'Paughers';
+        (async function updateRecipe(){
+            let client;
+            try {
+                client = await MongoClient.connect(url);
+                debug('Connected correctly to server');
+                const db = client.db(dbName);
+                const col = db.collection('recipes');
 
-                    const db = client.db(dbName);
-                    const col = db.collection('recipes');
-                    debug(col);
-                    
-                    const recipe = await col.findOne({ _id: ObjectID(id) });
-                    
-                    res.render('recipeEdit', {nav, recipe, user: req.user});
-                } catch (err) {
-                    debug(err.stack);
-                }
-                client.close();
-            }());
-        });
+                const results = await col.updateOne({ _id: ObjectID(_id) }, {$set: {prep_time, cook_time, description, ingredients, directions, public}});
+                debug(results);       
+                res.redirect(`/recipe/${_id}`);
+            } catch (err) {
+                debug(err.stack);
+            }
+            client.close();
+        }());
+    });
     recipeRouter.route('/:id')
         .get((req, res) => {
             const id = req.params.id;
