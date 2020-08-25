@@ -42,6 +42,7 @@ function router(nav) {
                 const recipe = {name, prep_time, cook_time, description, ingredients, directions, creator: req.user.username, public: false};
                 const names = await col.find().toArray();
                 let nameFound = false;
+                      
                 for(let i = 0; i < names.length; i++) {
                     if(names[i].name.toLowerCase() == name.toLowerCase()) {
                         nameFound = true;
