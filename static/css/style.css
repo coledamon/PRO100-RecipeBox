@@ -111,3 +111,7 @@ a.btnBack {
     height: 5em;
     width: 100%;
 }
+
+.notFull {
+    width: 100%;
+}
