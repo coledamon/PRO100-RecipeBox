@@ -46,6 +46,10 @@
             Description: <input name="description" id="description"/><br><br>
             Ingredients: <input name="ingredients" id="ingredients"/><br><br>
             Directions: <input name="directions" id="directions"/><br><br>
+            <input class="" type="radio" id="public" name="visibility" checked value="public">
+            <label for="public">Public</label>
+            <input class="ml-3" type="radio" id="private" name="visibility" value="private">
+            <label for="private">Private</label><br><br>
             <%if(error !== "") {%>
                 <p class="bg-warning ml-5 pl-4"><%=error%></p>
             <%}%>
