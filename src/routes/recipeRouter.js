@@ -61,6 +61,31 @@ function router(nav) {
             client.close();
         }());
     });
+    recipeRouter.route("/edit/:id")
+        .get((req, res) => {
+            const id = req.params.id;
+            const url = 'mongodb://localhost:27017';
+            const dbName = 'Paughers';
+            
+            (async function mongo(){
+                let client;
+                try {
+                    client = await MongoClient.connect(url);
+                    debug('Connected correctly to server');
+
+                    const db = client.db(dbName);
+                    const col = db.collection('recipes');
+                    debug(col);
+                    
+                    const recipe = await col.findOne({ _id: ObjectID(id) });
+                    
+                    res.render('recipeEdit', {nav, recipe, user: req.user});
+                } catch (err) {
+                    debug(err.stack);
+                }
+                client.close();
+            }());
+        });
     recipeRouter.route('/:id')
         .get((req, res) => {
             const id = req.params.id;
@@ -110,44 +135,8 @@ function router(nav) {
                     client.close();
                 }());
             }
-            else if(type == "private") {
-                (async function toPrivate(){
-                    let client;
-                    try {
-                        client = await MongoClient.connect(url);
-                        debug('Connected correctly to server');
-
-                        const db = client.db(dbName);
-                        const col = db.collection('recipes');
-
-                        const recipe = await col.updateOne({ _id: ObjectID(req.body._id) },  { $set: { public: false } } );
-
-                        res.redirect('/');
-                    } catch (err) {
-                        debug(err.stack);
-                    }
-                    client.close();
-                }());
-            }
-            else if(type == "public") {
-                (async function toPublic(){
-                    let client;
-                    try {
-                        client = await MongoClient.connect(url);
-                        debug('Connected correctly to server');
-
-                        const db = client.db(dbName);
-                        const col = db.collection('recipes');
-
-                        const recipe = await col.updateOne({ _id: ObjectID(req.body._id) }, { $set: { public: true } });
-
-                        res.redirect('/');
-                    } catch (err) {
-                        debug(err.stack);
-                    }
-                    client.close();
-                }());
-                
+            else if(type == "edit") {
+                res.redirect(`/recipe/edit/${req.body._id}`);
             }
         });
     return recipeRouter;

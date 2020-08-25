@@ -71,13 +71,19 @@
                                 <input type="hidden" name="type" value="edit">
                                 <input type="hidden" name="_id" value=<%=recipe._id%>>
                             </form>
-                        <%}%>
-                        <%if(user.admin || user.username == recipe.creator) {%>
-                            <form name="deleteRecipe" action=<%=`/recipe/${recipe._id}`%> method="post">
-                                <input class="info mb-3 fa-input" type="submit" name="delete" value="  Delete&#xf1f8;  "/>
+                            <%if(recipe.public) {%>
+                                <form name="publicRecipe" action=<%=`/recipe/${recipe._id}/edit`%> method="post">
+                                    <input class="info mb-3" type="submit" name="private" value="  Private  "/>
+                                <input type="hidden" name="type" value="private">
                                 <input type="hidden" name="_id" value=<%=recipe._id%>>
-                                <input type="hidden" name="type" value="delete">
-                            </form>
+                                </form><!--maybe make this a radio? --also def put inside of edit bc only buttons that should show outside are edit and delete-->
+                            <%} else {%>
+                                <form name="privateRecipe" action=<%=`/recipe/${recipe._id}`%> method="post">
+                                <input class="info mb-3" type="submit" name="public" value="  Public  "/>
+                                <input type="hidden" name="type" value="public">
+                                <input type="hidden" name="_id" value=<%=recipe._id%>>
+                                </form>
+                            <%}%>
                         <%}%>
                     <%}%>
                 </div>
