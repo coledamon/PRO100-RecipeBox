@@ -44,7 +44,7 @@ function router(nav) {
                     debug('Connected correctly to server');
                     const db = client.db(dbName);
                     const col = db.collection('recipes');
-                    const recipe = {name, prep_time, cook_time, description, ingredients, directions, creator: req.user.username, public};
+                    const recipe = {name, prep_time, cook_time, description, ingredients, directions, creator: req.user.username, public, likes: 0, flagged: false};
                     const names = await col.find().toArray();
                     let nameFound = false;
 
@@ -174,11 +174,13 @@ function router(nav) {
             }());
         })
         .post((req, res) => {
+            debug(req.body);
             const url = 'mongodb://localhost:27017';
             const dbName = 'Paughers';
 
             const {type} = req.body;
             if(type =="delete") {
+                debug("hi");
                 (async function delRecipe(){
                     let client;
                     try {
@@ -199,6 +201,24 @@ function router(nav) {
             }
             else if(type == "edit") {
                 res.redirect(`/recipe/edit/${req.body._id}`);
+            }
+            else if(type == "flag") {
+                (async function flagRecipe(){
+                    let client;
+                    try {
+                        client = await MongoClient.connect(url);
+                        debug('Connected correctly to server');
+                        const db = client.db(dbName);
+                        const col = db.collection('recipes');
+    
+                        const results = await col.updateOne({ _id: ObjectID(req.body._id) }, {$set: { flagged: true }});
+                        debug(results);       
+                        res.redirect(`/recipe/${req.body._id}`);
+                    } catch (err) {
+                        debug(err.stack);
+                    }
+                    client.close();
+                }());
             }
         });
     return recipeRouter;
