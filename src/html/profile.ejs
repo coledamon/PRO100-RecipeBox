@@ -38,9 +38,15 @@
     <div class="container bg-lightish awayFromHeader py-5">
         <div class="row">
             <div id="profPic" class="col-5">
-                <img class="rounded-circle" id="pfp" height="225px" width="225px" src="/images/profile.png"/>
-                <input id="file" style="visibility:hidden;" type="file" accept="image/jpeg">
-                <label for="file" class="btn bg-light button mt-1 ml-5">Choose Picture</label>
+            <img class="rounded-circle" id="pfp" height="225px" width="225px" src="<%=imgurl%>"/>
+                <form name="editAcct" id="formThing" enctype="multipart/form-data" action="/auth/profile/uploadPic" method="post">
+                    <input id="file" style="visibility:hidden;" type="file" name="pfpPic" accept="image/jpeg">
+                    <label for="file" class="btn bg-light button mt-1 ml-5">Choose Picture</label>
+                    <%if(error !== "") {%>
+                        <p class="bg-warning"><%=error%></p>
+                    <%}%>
+                    <input type="submit" style="visibility:hidden;">
+                </form>
             </div>
             <div class="col-3">
                 <p><h5>Username</h5>&emsp;<%=user.username%><br><br></p>

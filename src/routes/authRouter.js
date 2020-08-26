@@ -1,8 +1,9 @@
 const express = require('express');
-const {MongoClient, ObjectID} = require('mongodb');
+const {MongoClient, ObjectID, GridFSBucket} = require('mongodb');
 const debug = require('debug')('app:authRouter');
 const authRouter = express.Router();
 const passport = require('passport');
+const fs = require('fs');
 let whereToRead = 0;
 
 function router(nav) {
@@ -161,7 +162,48 @@ function router(nav) {
         }
     })
     .get((req, res) => {
-        res.render('profile', {nav, user: req.user, passSucc: ""});
+        const url = 'mongodb://localhost:27017';
+        const dbName = 'Paughers';
+        let error=""; 
+        if(req.session.error != null) {
+            error = req.session.error;
+            req.session.error = null;
+        }
+        (async function getPic(){
+            let client;
+            try {
+                client = await MongoClient.connect(url);
+                debug('Connected correctly to server');  
+
+                const db = client.db(dbName);
+
+                const col = db.collection('profPics.files');    
+                const colChunks = db.collection('profPics.chunks');
+                
+                debug(req.user.username);
+                const docs = await col.findOne({filename: `${req.user.username}`})
+                debug(docs);
+                if(docs){
+                    debug("hey")
+                    const chunks = await colChunks.findOne({files_id : ObjectID(docs._id)});
+                    debug(chunks);
+                    if(chunks){
+                        debug("you");
+                        let fileData = [];          
+                        fileData.push(chunks.data.toString('base64'));          
+                        let finalFile = 'data:' + docs.contentType + ';base64,' + fileData.join('');          
+                        
+                        res.render('profile', {nav, user: req.user, passSucc: "", error, imgurl: finalFile});
+                        return;
+                    };      
+                }
+
+                res.render('profile', {nav, user: req.user, passSucc: "", error, imgurl: "/images/profile.png"});
+            }catch(err) {
+                debug(err.stack);
+            };  
+            client.close();
+        }());
     })
     .post((req, res) => {
         res.redirect('/auth/profile/edit');
@@ -264,7 +306,7 @@ function router(nav) {
                         debug(results);        
                         const user = await col.findOne({username: req.user.username});
                         req.login(user, () => {
-                            res.render('profile', {nav, user: req.user, passSucc: "Password Changed Successfully"});
+                            res.render('profile', {nav, user: req.user, passSucc: "Password Changed Successfully", error:""});
                         });
                     }
                     else {
@@ -318,6 +360,46 @@ function router(nav) {
             client.close();
         }());
         res.redirect('/auth/logout');
+    });
+
+    authRouter.route('/profile/uploadPic')
+    .all((req, res, next) => {
+        if(!req.user) {
+            res.redirect("/");
+        }
+        else {
+            next();
+        }
+    })
+    .get((req, res) => {
+        res.redirect('/');
+    })
+    .post((req, res) => {
+        const upload = require("../../static/js/upload")(req, res);
+
+        (async function uploadFile(){
+            try {
+                await upload;
+            
+                console.log(req.file);
+                if (req.file == undefined) {
+                    req.session.error="You must select a file";
+                    res.redirect('/auth/profile');
+                    debug('no file');
+                    return;
+                }
+            
+                res.redirect('/auth/profile');
+                debug('good');
+                return;
+          } catch (error) {
+            console.log(error);
+            req.session.error=`Error when trying upload image: ${error}`;
+            res.redirect('/auth/profile');
+            debug('bad');
+            return;
+          }
+        }());
     });
     return authRouter;
 }
