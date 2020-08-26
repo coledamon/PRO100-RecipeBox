@@ -50,7 +50,6 @@ var storage = new GridFsStorage({
         };
     }
 });
-debug("hi");
 
 var uploadFile = multer({ storage: storage }).single("pfpPic");
 debug(storage);

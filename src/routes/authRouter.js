@@ -184,11 +184,9 @@ function router(nav) {
                 const docs = await col.findOne({filename: `${req.user.username}`})
                 debug(docs);
                 if(docs){
-                    debug("hey")
                     const chunks = await colChunks.findOne({files_id : ObjectID(docs._id)});
                     debug(chunks);
                     if(chunks){
-                        debug("you");
                         let fileData = [];          
                         fileData.push(chunks.data.toString('base64'));          
                         let finalFile = 'data:' + docs.contentType + ';base64,' + fileData.join('');          

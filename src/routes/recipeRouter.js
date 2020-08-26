@@ -174,13 +174,11 @@ function router(nav) {
             }());
         })
         .post((req, res) => {
-            debug(req.body);
             const url = 'mongodb://localhost:27017';
             const dbName = 'Paughers';
 
             const {type} = req.body;
             if(type =="delete") {
-                debug("hi");
                 (async function delRecipe(){
                     let client;
                     try {
