@@ -1,5 +1,5 @@
 const express = require('express');
-const {MongoClient} = require('mongodb');
+const {MongoClient, ObjectID} = require('mongodb');
 const debug = require('debug')('app:authRouter');
 const authRouter = express.Router();
 const passport = require('passport');
@@ -264,6 +264,38 @@ function router(nav) {
         nav[5] = {link: "/auth/signUp", title: "Sign Up"};
         res.redirect('/');
     }); 
+    authRouter.route('/profile/deleteConf')
+    .all((req, res, next) => {
+        if(!req.user) {
+            res.redirect("/");
+        }
+        else {
+            next();
+        }
+    })
+    .get((req, res) => {
+        res.render("deleteConf", {nav, user: req.user});
+    })
+    .post((req, res) => {
+        const url = 'mongodb://localhost:27017';
+        const dbName = 'Paughers';
+        (async function delProf(){
+            let client;
+            try {
+                client = await MongoClient.connect(url);
+                debug('Connected correctly to server');
+                const db = client.db(dbName);
+                const col = db.collection('users');
+
+                const results = await col.deleteOne({username: req.user.username});
+                debug(results);
+            } catch (err) {
+                debug(err.stack);
+            }
+            client.close();
+        }());
+        res.redirect('/auth/logout');
+    });
     return authRouter;
 }
 
