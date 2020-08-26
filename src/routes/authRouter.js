@@ -177,10 +177,12 @@ function router(nav) {
         }
     })
     .get((req, res) => {
-        res.render('profileEdit', {nav, user: req.user});
+        const birthdayDOM = `${req.user.birthday.substring(6)}-${req.user.birthday.substring(0, 2)}-${req.user.birthday.substring(3, 5)}`;
+        res.render('profileEdit', {nav, user: req.user, bdayString: birthdayDOM, error:""});
     })
     .post((req, res) => {
-        const {name, birthday} = req.body;
+        const {username, name, birthday} = req.body;
+        const oldUsername = req.user.username;
         const birthYear = birthday.substring(0,4);
         const birthMonth = birthday.substring(5,7);
         const birthDay = birthday.substring(8);
@@ -196,14 +198,35 @@ function router(nav) {
                 client = await MongoClient.connect(url);
                 debug('Connected correctly to server');
                 const db = client.db(dbName);
-                const col = db.collection('users');
+                const col = db.collection('users');     
 
-                const results = await col.updateOne({username: req.user.username}, {$set: {name, birthday: birthdayBetter}});
-                debug(results);        
-                const user = await col.findOne({username: req.user.username});
-                req.login(user, () => {
-                    res.redirect('/auth/profile');
-                });
+                const usernames = await col.find().toArray();
+                debug(usernames);
+        
+                let userFound = false;
+        
+                for(let i = 0; i < usernames.length; i++) {
+                    if(usernames[i].username.toLowerCase() == username.toLowerCase()) {
+                        userFound = true;
+                        break;
+                    }
+                }
+                
+                if(!userFound || username == req.user.username) {
+                    const results = await col.updateOne({username: req.user.username}, {$set: {username, name, birthday: birthdayBetter}});
+                    debug(results);        
+                    const user = await col.findOne({username});
+                    req.login(user, () => {
+                        (async function updateRecipes(){
+                            const moreResults = await db.collection('recipes').updateMany({creator: oldUsername}, {$set : {creator: req.user.username}});
+                        }());
+                        res.redirect('/auth/profile');
+                    });
+                }
+                else {
+                    const birthdayDOM = `${req.user.birthday.substring(6)}-${req.user.birthday.substring(0, 2)}-${req.user.birthday.substring(3, 5)}`;
+                    res.render('profileEdit', {nav, user: req.user, bdayString: birthdayDOM, error: "This username is taken, please enter a different one."});
+                }
             } catch (err) {
                 debug(err.stack);
             }

@@ -43,9 +43,12 @@
                 <label for="file" class="btn bg-light button mt-1 ml-5">Choose Picture</label>
             </div>
             <form name="privateRecipe" action="/auth/profile/edit" method="post">
-                <p><h5>Username</h5>&emsp;<%=user.username%><br></p>
-                <p><h5>Name</h5><input type="text" name="name"><br></p>
-                <p><h5>Birthday</h5><input type="date" name="birthday"></p>
+                <p><h5>Username</h5><input type="text" value="<%=user.username%>" name="username"><br></p>
+                <p><h5>Name</h5><input type="text" value="<%=user.name%>" name="name"><br></p>
+                <p><h5>Birthday</h5><input type="date" value="<%=bdayString%>" name="birthday"></p>
+                <%if(error !== "") {%>
+                    <p class="bg-warning text-center"><%=error%></p>
+                <%}%>
                 <input class="ml-5" type="submit" name="save" value="  Save  "/>
             </form>
         </div>
