@@ -44,7 +44,7 @@ function router(nav) {
                     debug('Connected correctly to server');
                     const db = client.db(dbName);
                     const col = db.collection('recipes');
-                    const recipe = {name, prep_time, cook_time, description, ingredients, directions, creator: req.user.username, public};
+                    const recipe = {name, prep_time, cook_time, description, ingredients, directions, creator: req.user.username, public, likes: 0};
                     const names = await col.find().toArray();
                     let nameFound = false;
 
