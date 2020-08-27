@@ -39,8 +39,6 @@
         <div class="row">
             <div id="profPic" class="col-5">
                 <img class="rounded-circle" id="pfp" height="225px" width="225px" src="/images/profile.png"/>
-                <input id="file" style="visibility:hidden;" type="file" accept="image/jpeg">
-                <label for="file" class="btn bg-light button mt-1 ml-5">Choose Picture</label>
             </div>
             <form name="privateRecipe" action="/auth/profile/edit" method="post">
                 <p><h5>Username</h5><input type="text" value="<%=user.username%>" name="username"><br></p>

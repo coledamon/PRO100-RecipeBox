@@ -47,7 +47,16 @@
         <div class="row">
             <div class="card">
                 <div class="header pl-3 pt-3 pr-3">
-                    <a href="/" class="btnBack"><i class='fas fa-arrow-left'></i>Back</a>
+                    <div class="row notFull">
+                        <div class="col-2">
+                            <a href="/" class="btnBack"><i class='fas fa-arrow-left'></i>Back</a>
+                        </div>
+                        <form class="col-2" name="flagRecipe" action=<%=`/recipe/${recipe._id}`%> method="post">
+                            <input class="info mb-3 fa-input" type="submit" name="flag" value="  Flag  "/>
+                            <input type="hidden" name="_id" value=<%=recipe._id%>>
+                            <input type="hidden" name="type" value="flag">
+                        </form>
+                    </div>
                 </div>
                 <div>
                     <h1 class="food"><%=recipe.name%></h1>
