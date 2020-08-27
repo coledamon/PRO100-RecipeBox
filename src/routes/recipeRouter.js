@@ -75,6 +75,7 @@ function router(nav) {
         .post((req, res) => {
             const {location} = req.body;
             const id = req.params.id;
+            debug(id);
             const user = req.user;
             const url = 'mongodb://localhost:27017';
             const dbName = 'Paughers';
@@ -112,7 +113,7 @@ function router(nav) {
                             const oldLikeList = username.likedPosts;
                             oldLikeList.splice(username.likedPosts.indexOf(`${recipe._id}`), 1);
 
-                            debug(oldLikeList);
+                             debug(oldLikeList);
                             const addRecipeToList = await userList.updateOne({ _id: ObjectID(username._id)}, {$set: {likedPosts: oldLikeList}});
                             debug(addRecipeToList);
                         }
@@ -128,12 +129,6 @@ function router(nav) {
                     else if(!user){
                         req.session.error = "You need to create an account before liking any posts."
                         res.redirect("/auth/signUp"); 
-                    }
-                    if(location == "home"){
-                        res.redirect('/')
-                    }
-                    else if (location == "recipe") {
-                        res.redirect(`/recipe/${id}`)
                     }
                     
                     

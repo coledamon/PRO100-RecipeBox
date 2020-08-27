@@ -223,7 +223,10 @@ function router(nav) {
         }
     })
     .get((req, res) => {
-        const birthdayDOM = `${req.user.birthday.substring(6)}-${req.user.birthday.substring(0, 2)}-${req.user.birthday.substring(3, 5)}`;
+        let birthdayDOM;
+        if(req.user.birthday) {
+            birthdayDOM = `${req.user.birthday.substring(6)}-${req.user.birthday.substring(0, 2)}-${req.user.birthday.substring(3, 5)}`;
+        }
         res.render('profileEdit', {nav, user: req.user, bdayString: birthdayDOM, error:""});
     })
     .post((req, res) => {
