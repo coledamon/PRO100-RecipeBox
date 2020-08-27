@@ -88,20 +88,38 @@ function router(nav) {
                     if(user){
                         const db = client.db(dbName);
                         const userList = db.collection('users');
-                        const username = await userList.findOne({_id: ObjectID(id)});
+                        const username = await userList.findOne({_id: ObjectID(req.user._id)});
                         const col = db.collection('recipes');
                         const recipe = await col.findOne({_id: ObjectID(id)});
                         debug(recipe);
-                        
-                        if(username.likedPosts.includes(recipe._id)) {
-
+                        debug(username);
+                        debug(username.likedPosts);
+                        debug(recipe._id);
+                        debug(username.likedPosts.includes(`${recipe._id}`));
+                        if(!username.likedPosts.includes(`${recipe._id}`)) {
+                            const addLike = recipe.likes + like;
+                            const results = await col.updateOne({ _id: ObjectID(id) }, {$set: {likes : addLike}});
+                            const oldLikeList = username.likedPosts;
+                            debug(oldLikeList);
+                            oldLikeList.push(`${recipe._id}`);
+                            const addRecipeToList = await userList.updateOne({ _id: ObjectID(username._id)}, {$set: {likedPosts: oldLikeList}});
+                            debug(addRecipeToList);
+                        }
+                        else{
+                            const minusLike = recipe.likes - like;
+                            const results = await col.updateOne({ _id: ObjectID(id) }, {$set: {likes : minusLike}});
+                            debug(results); 
+                            const oldLikeList = username.likedPosts;
+                            
+                            oldLikeList.pop(`${recipe._id}`);
+                            debug(oldLikeList);
+                            const addRecipeToList = await userList.updateOne({ _id: ObjectID(username._id)}, {$set: {likedPosts: oldLikeList}});
+                            debug(addRecipeToList);
                         }
 
 
                         
-                        const addLike = recipe.likes + like;
-                        const results = await col.updateOne({ _id: ObjectID(id) }, {$set: {likes : addLike}});
-                        debug(results);    
+                          
                     
                     }
                     else if(!user){
