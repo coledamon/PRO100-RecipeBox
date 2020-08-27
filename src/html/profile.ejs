@@ -41,7 +41,7 @@
             <img class="rounded-circle" id="pfp" height="225px" width="225px" src="<%=imgurl%>"/>
                 <form name="editAcct" id="formThing" enctype="multipart/form-data" action="/auth/profile/uploadPic" method="post">
                     <input id="file" style="visibility:hidden;" type="file" name="pfpPic" accept="image/jpeg">
-                    <label for="file" class="buttons bg-light button mt-1 ml-5">Choose Picture</label>
+                    <label for="file" class="buttons bg-light button mt-1 ml-4">&ensp;Choose Picture&ensp;</label>
                     <%if(error !== "") {%>
                         <p class="bg-warning"><%=error%></p>
                     <%}%>
