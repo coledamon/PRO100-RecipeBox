@@ -102,7 +102,7 @@
                             <input class="info mb-3 fa-input" type="submit" name="like" value="  &#xf004;  " id="whatever" style="visibility: hidden;" />
                             <input type="hidden" name="location" value="recipe">
                             <input type="hidden" name="_id" value=<%=recipe._id%>>
-                            <label for="whatever" ><i class="icon 	fas fa-heart"  style='font-size:24px' ></i></label>
+                            <label for="whatever" ><i class="icon 	<%if(user.likedPosts.includes(`${recipe._id}`)){%>fas<%}else{%>far<%}%> fa-heart"  style='font-size:24px' ></i></label>
                         </form>
                     </div>
                 </div>

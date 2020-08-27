@@ -116,11 +116,14 @@ function router(nav) {
                             const addRecipeToList = await userList.updateOne({ _id: ObjectID(username._id)}, {$set: {likedPosts: oldLikeList}});
                             debug(addRecipeToList);
                         }
-
-
-                        
-                          
-                    
+                        req.login(username, () => {
+                            if(location == "home"){
+                                res.redirect('/')
+                            }
+                            else if (location == "recipe") {
+                                res.redirect(`/recipe/${id}`)
+                            }
+                        });
                     }
                     else if(!user){
                         req.session.error = "You need to create an account before liking any posts."
