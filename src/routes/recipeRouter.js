@@ -105,7 +105,8 @@ function router(nav) {
                     
                     }
                     else if(!user){
-                        
+                        req.session.error = "You need to create an account before liking any posts."
+                        res.redirect("/auth/signUp"); 
                     }
                     if(location == "home"){
                         res.redirect('/')
