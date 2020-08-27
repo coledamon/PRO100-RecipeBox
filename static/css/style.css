@@ -132,8 +132,14 @@ a.btnBack {
     width:100px;
     columns: 10;
     float: right;
+    padding-left: 800px;
 }
 .heart{
-    margin:0;
+    padding:50px;
     float: right;
 }
+
+form {
+    float: right;   
+    margin: auto;
+   }
