@@ -95,6 +95,8 @@
                     <div class="col-1 offset-7">
                         <form name="likeRecipe" action="<%=`/recipe/like/${recipe._id}`%>" method="post"> 
                             <input class="info mb-3 fa-input" type="submit" name="like" value="  &#xf004;  " id="whatever" style="visibility: hidden;" />
+                            <input type="hidden" name="location" value="recipe">
+                            <input type="hidden" name="_id" value=<%=recipe._id%>>
                             <label for="whatever" ><i class="icon 	fas fa-heart"  style='font-size:24px' ></i></label>
                         </form>
                     </div>

@@ -36,7 +36,7 @@ function router(nav) {
                 const db = client.db(dbName);
                 const col = db.collection('users');
 
-                const user = {username, password, admin: false};
+                const user = {username, password, admin: false, likedPosts: []};
 
                 const usernames = await col.find().toArray();
                 debug(usernames);
@@ -97,7 +97,7 @@ function router(nav) {
                     const db = client.db(dbName);
                     const col = db.collection('users');
 
-                    const user = {username, password, admin: true};
+                    const user = {username, password, admin: true, likedPosts: []};
 
                     const usernames = await col.find().toArray();
                     debug(usernames);
