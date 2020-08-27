@@ -86,19 +86,26 @@ function router(nav) {
                     client = await MongoClient.connect(url);
                     debug('Connected correctly to server');
                     if(user){
-                    
-                    const db = client.db(dbName);
-                    const col = db.collection('recipes');
-                    
-                    const recipe = await col.findOne({_id: ObjectID(id)});
-                    debug(recipe);
-                    const addLike = recipe.likes + like;
-                    const results = await col.updateOne({ _id: ObjectID(id) }, {$set: {likes : addLike}});
-                    debug(results);    
+                        const db = client.db(dbName);
+                        const userList = db.collection('users');
+                        const username = await userList.findOne({_id: ObjectID(id)});
+                        const col = db.collection('recipes');
+                        const recipe = await col.findOne({_id: ObjectID(id)});
+                        debug(recipe);
+                        
+                        if(username.likedPosts.includes(recipe._id)) {
+
+                        }
+
+
+                        
+                        const addLike = recipe.likes + like;
+                        const results = await col.updateOne({ _id: ObjectID(id) }, {$set: {likes : addLike}});
+                        debug(results);    
                     
                     }
                     else if(!user){
-
+                        
                     }
                     if(location == "home"){
                         res.redirect('/')
