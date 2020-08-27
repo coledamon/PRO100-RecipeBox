@@ -59,7 +59,7 @@
                             <form name="likeRecipe" action="<%=`/recipe/like/${recipes[i]._id}`%>" method="post"> 
                                 <input class="info fa-input" type="submit" name="like" value="  &#xf004;  " id="whatever" style="visibility: hidden;" />
                                 <input type="hidden" name="location" value="home">
-                                <label for="whatever" ><i class="icon fas fa-heart"  style='font-size:24px' ></i></label>
+                                <label for="whatever" ><i class="icon 	<%if(user.likedPosts.includes(`${recipes[i]._id}`)){%>fas<%}else{%>far<%}%> fa-heart" style='font-size:24px' ></i></label>
                             </form>
 
                             <a href="/recipe/<%=recipes[i]._id%>" class="btn">Let's Cook!</a>
@@ -82,7 +82,7 @@
                         <form name="likeRecipe" action="<%=`/recipe/like/${recipes[i]._id}`%>" method="post"> 
                             <input class="info mb-3 fa-input" type="submit" name="like" value="  &#xf004;  " id="whatever" style="visibility: hidden;" />
                             <input type="hidden" name="location" value="home">
-                            <label for="whatever" ><i class="icon 	fas fa-heart"  style='font-size:24px' ></i></label>
+                            <label for="whatever" ><i class="icon 	far fa-heart"  style='font-size:24px' ></i></label>
                         </form>
                         <a href="/recipe/<%=recipes[i]._id%>" class="btn">Let's Cook!</a> 
                        
