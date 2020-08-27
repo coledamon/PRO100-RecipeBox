@@ -52,11 +52,16 @@
                             <a href="/" class="btnBack"><i class='fas fa-arrow-left'></i>Back</a>
                         </div>
                         <form class="col-10" name="flagRecipe" action=<%=`/recipe/${recipe._id}`%> method="post">
-                            <input class="mb-3 fa-input buttons float" type="submit" name="flag" value=" Flag &#xf11d; "/>
+                        <input class="mb-3 fa-input buttons float" type="submit" name="flag" value=" Flag <%if(recipe.flagged) {%>&#xf024;<%} else {%>&#xf11d;<%}%> "/>
                             <input type="hidden" name="_id" value=<%=recipe._id%>>
                             <input type="hidden" name="type" value="flag">
                         </form>
                     </div>
+                    <%if(recipe.flagged) {%>
+                        <div class="bg-danger row text-center">
+                            <h3 class="ml-auto mr-auto">This recipe has been flagged and is currently under review.</h3>
+                        </div>
+                    <%}%>
                 </div>
                 <div>
                     <h1 class="food"><%=recipe.name%></h1>
