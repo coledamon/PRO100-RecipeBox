@@ -110,8 +110,8 @@ function router(nav) {
                             const results = await col.updateOne({ _id: ObjectID(id) }, {$set: {likes : minusLike}});
                             debug(results); 
                             const oldLikeList = username.likedPosts;
-                            
-                            oldLikeList.pop(`${recipe._id}`);
+                            oldLikeList.splice(username.likedPosts.indexOf(`${recipe._id}`), 1);
+
                             debug(oldLikeList);
                             const addRecipeToList = await userList.updateOne({ _id: ObjectID(username._id)}, {$set: {likedPosts: oldLikeList}});
                             debug(addRecipeToList);
