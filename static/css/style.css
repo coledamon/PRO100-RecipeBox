@@ -115,3 +115,15 @@ a.btnBack {
 .notFull {
     width: 100%;
 }
+.buttons {
+    position: relative;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-align: center;
+    color:#6e6a6f;
+    border-radius: 4px;
+    border:none;
+}
+.float{
+    float: right;
+}

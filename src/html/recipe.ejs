@@ -51,8 +51,8 @@
                         <div class="col-2">
                             <a href="/" class="btnBack"><i class='fas fa-arrow-left'></i>Back</a>
                         </div>
-                        <form class="col-2" name="flagRecipe" action=<%=`/recipe/${recipe._id}`%> method="post">
-                            <input class="info mb-3 fa-input" type="submit" name="flag" value="  Flag  "/>
+                        <form class="col-10" name="flagRecipe" action=<%=`/recipe/${recipe._id}`%> method="post">
+                            <input class="mb-3 fa-input buttons float" type="submit" name="flag" value=" Flag &#xf11d; "/>
                             <input type="hidden" name="_id" value=<%=recipe._id%>>
                             <input type="hidden" name="type" value="flag">
                         </form>
@@ -73,13 +73,13 @@
                     <%if(user) {%>
                         <%if(user.admin || user.username == recipe.creator) {%>
                             <form class="col-2" name="deleteRecipe" action=<%=`/recipe/${recipe._id}`%> method="post">
-                                <input class="info mb-3 fa-input" type="submit" name="delete" value="  Delete &#xf1f8;  "/>
+                                <input class="info mb-3 fa-input buttons" type="submit" name="delete" value=" Delete &#xf1f8; "/>
                                 <input type="hidden" name="_id" value=<%=recipe._id%>>
                                 <input type="hidden" name="type" value="delete">
                             </form>
                             <%if(user.username == recipe.creator) {%>
                                 <form class="col-2" name="publicRecipe" action=<%=`/recipe/${recipe._id}`%> method="post">
-                                    <input class="info mb-3" type="submit" name="private" value="  Edit  "/>
+                                    <input class="info mb-3 buttons" type="submit" name="private" value=" Edit "/>
                                     <input type="hidden" name="type" value="edit">
                                     <input type="hidden" name="_id" value=<%=recipe._id%>>
                                 </form>
