@@ -41,7 +41,7 @@
             <img class="rounded-circle" id="pfp" height="225px" width="225px" src="<%=imgurl%>"/>
                 <form name="editAcct" id="formThing" enctype="multipart/form-data" action="/auth/profile/uploadPic" method="post">
                     <input id="file" style="visibility:hidden;" type="file" name="pfpPic" accept="image/jpeg">
-                    <label for="file" class="btn bg-light button mt-1 ml-5">Choose Picture</label>
+                    <label for="file" class="buttons bg-light button mt-1 ml-5">Choose Picture</label>
                     <%if(error !== "") {%>
                         <p class="bg-warning"><%=error%></p>
                     <%}%>
@@ -53,7 +53,7 @@
                 <p><h5>Name</h5>&emsp;<%=user.name%><br><br></p>
                 <p><h5>Birthday</h5>&emsp;<%=user.birthday%><br></p>
                 <form name="editAcct" action="/auth/profile" method="post">
-                    <input class="" type="submit" name="editButton" value="  Edit  "/>
+                    <input class="buttons" type="submit" name="editButton" value="  Edit  "/>
                 </form>
             </div>
             <div class="col-3 offset-1">
