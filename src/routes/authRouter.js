@@ -20,7 +20,13 @@ function router(nav) {
     });
     authRouter.route('/signUp')
     .get((req, res) => {
-        res.render('signUp', {nav, error:""});
+        let error=""; 
+        if(req.session.error != null) {
+            error = req.session.error;
+            req.session.error = null;
+        }
+        res.render('signUp', {nav, error});
+        
     })
     .post((req, res) => {
         const {username, password} = req.body;
