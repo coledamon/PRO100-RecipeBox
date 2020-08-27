@@ -56,7 +56,7 @@
                             <i class="fa fa-clock-o"> Cook Time:<%=recipes[i].cook_time %></i>
                             <p class="info"><%=recipes[i].description%></p> 
                             
-                            <form name="likeRecipe" action="<%=`/recipe/like/${recipes[i]._id}`%>" method="post"> 
+                            <form class="like" name="likeRecipe" action="<%=`/recipe/like/${recipes[i]._id}`%>" method="post"> 
                                 <input class="info fa-input" type="submit" name="like" value="  &#xf004;  " id="whatever" style="visibility: hidden;" />
                                 <input type="hidden" name="location" value="home">
                                 <label for="whatever" ><i class="icon 	<%if(user.likedPosts.includes(`${recipes[i]._id}`)){%>fas<%}else{%>far<%}%> fa-heart" style='font-size:24px' ></i></label>

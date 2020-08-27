@@ -130,18 +130,14 @@ a.btnBack {
 }
 
 .like{
-    width:100px;
-    columns: 10;
-    float: right;
-    padding-left: 800px;
-}
-.heart{
-    padding:50px;
-    float: right;
-}
-
-form {
     float: right;   
     margin: auto;
+    height:50px;
+    width:50px;
+    columns:10;
 
-   }
+}
+.heart{
+    padding:800px;
+    float: right;
+}
