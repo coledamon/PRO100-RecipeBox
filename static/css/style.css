@@ -51,6 +51,7 @@ a.btn {
     text-align: center;
     padding: 10px;
     transition: 250ms;
+    margin-right: 50px;
 }
 a.btnBack {
     color: grey;
@@ -142,4 +143,5 @@ a.btnBack {
 form {
     float: right;   
     margin: auto;
+
    }
