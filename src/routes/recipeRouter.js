@@ -71,6 +71,35 @@ function router(nav) {
             res.render("recipeCreate", {nav, error:"All fields must contain text."});
         }
     });
+    recipeRouter.route('/like/:id')
+        .post((req, res) => {
+            const id = req.params.id;
+            const url = 'mongodb://localhost:27017';
+            const dbName = 'Paughers';
+
+            (async function likePost(){
+                let client;
+                const like = 1;
+                try {
+                    client = await MongoClient.connect(url);
+                    debug('Connected correctly to server');
+
+                    const db = client.db(dbName);
+                    const col = db.collection('recipes');
+                    
+                    const recipe = await col.findOne({_id: ObjectID(id)});
+                    debug(recipe);
+                    const addLike = recipe.likes + like;
+                    const results = await col.updateOne({ _id: ObjectID(id) }, {$set: {likes : addLike}});
+                    debug(results);    
+                    
+
+                } catch (err) {
+                    debug(err.stack);
+                }
+                client.close();
+            }());
+        });
     recipeRouter.route("/edit/:id")
     .all((req, res, next) => {
         if(!req.user) {
@@ -200,7 +229,11 @@ function router(nav) {
             else if(type == "edit") {
                 res.redirect(`/recipe/edit/${req.body._id}`);
             }
+            else if(type == "like") {
+                res.redirect(`/recipe/edit/${req.body._id}`);
+            }
         });
+
     return recipeRouter;
 }
 
