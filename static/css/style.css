@@ -127,3 +127,13 @@ a.btnBack {
 .float{
     float: right;
 }
+
+.like{
+    width:100px;
+    columns: 10;
+    float: right;
+}
+.heart{
+    margin:0;
+    float: right;
+}
