@@ -45,7 +45,7 @@
                 <div class="header pl-3 pt-3 pr-3">
                     <div class="row notFull">
                         <div class="col-2">
-                            <button onclick="history.back()" class="btnBack"><i class='fas fa-arrow-left'></i>Back</button>
+                            <a href="/" class="btnBack"><i class='fas fa-arrow-left'></i>Home</a>
                         </div>
                         <%if(user) {%>
                             <%if(user.admin || user.username != recipe.creator) {%>
