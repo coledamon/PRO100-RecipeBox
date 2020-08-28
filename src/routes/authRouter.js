@@ -15,8 +15,13 @@ function router(nav) {
         }
         else {
             nav[2] = {link: "/personalPosts", title: "Personal Posts"};
-            nav[3] = {link: "/recipe/create", title:"Create"};
-            nav[4] = {link: "/flaggedRecipes", title: "Flagged Rcipes"};
+            if(req.user.admin) {
+                nav[3] = {link: "/flaggedRecipes", title: "Flagged Rcipes"};
+            }
+            else {
+                nav[3].title = "";
+            }
+            nav[4] = {link: "/recipe/create", title:"Create"};
         }
         next();
     });
@@ -162,8 +167,8 @@ function router(nav) {
     authRouter.route('/profile')
     .all((req, res, next) => {
         if(req.user) {
-            nav[4] = {link: "/auth/profile", title: "Profile"};
-            nav[5] = {link: "/auth/logout", title: "Log Out"};
+            nav[5] = {link: "/auth/profile", title: "Profile"};
+            nav[6] = {link: "/auth/logout", title: "Log Out"};
             next();
         } else {
             res.redirect('/');
@@ -203,7 +208,7 @@ function router(nav) {
                         return;
                     };      
                 }
-
+                debug(nav);
                 res.render('profile', {nav, user: req.user, passSucc: "", error, imgurl: "/images/profile.png"});
             }catch(err) {
                 debug(err.stack);
@@ -287,8 +292,6 @@ function router(nav) {
     authRouter.route('/profile/changePass')
     .all((req, res, next) => {
         if(req.user) {
-            nav[4] = {link: "/auth/profile", title: "Profile"};
-            nav[5] = {link: "/auth/logout", title: "Log Out"};
             next();
         } else {
             res.redirect('/');
@@ -334,8 +337,8 @@ function router(nav) {
     authRouter.route('/logout')
     .get((req,res) => {
         req.logout();
-        nav[4] = {link: "/auth/signin", title: "Login"};
-        nav[5] = {link: "/auth/signUp", title: "Sign Up"};
+        nav[5] = {link: "/auth/signin", title: "Login"};
+        nav[6] = {link: "/auth/signUp", title: "Sign Up"};
         res.redirect('/');
     }); 
     authRouter.route('/profile/deleteConf')

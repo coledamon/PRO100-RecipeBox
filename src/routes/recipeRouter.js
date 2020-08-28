@@ -12,8 +12,13 @@ function router(nav) {
         }
         else {
             nav[2] = {link: "/personalPosts", title: "Personal Posts"};
-            nav[3] = {link: "/recipe/create", title:"Create"};
-            nav[4] = {link: "/flaggedRecipes", title: "Flagged Rcipes"};
+            if(req.user.admin) {
+                nav[3] = {link: "/flaggedRecipes", title: "Flagged Rcipes"};
+            }
+            else {
+                nav[3].title = "";
+            }
+            nav[4] = {link: "/recipe/create", title:"Create"};
         }
         next();
     });
@@ -277,8 +282,20 @@ function router(nav) {
                         debug('Connected correctly to server');
                         const db = client.db(dbName);
                         const col = db.collection('recipes');
-    
-                        const results = await col.updateOne({ _id: ObjectID(req.body._id) }, {$set: { flagged: true, public: false }});
+
+                        const recipe = await col.findOne({ _id: ObjectID(req.body._id)});
+
+                        let results;
+                        if(recipe.flagged) {
+                            if(req.user) {
+                                if(req.user.admin) {
+                                    results = await col.updateOne({ _id: ObjectID(req.body._id) }, {$set: { flagged: false}});
+                                }
+                            }
+                        }
+                        else {
+                            results = await col.updateOne({ _id: ObjectID(req.body._id) }, {$set: { flagged: true}});
+                        }
                         debug(results);       
                         res.redirect(`/recipe/${req.body._id}`);
                     } catch (err) {

@@ -12,8 +12,13 @@ function router(nav) {
         }
         else {
             nav[2] = {link: "/personalPosts", title: "Personal Posts"};
-            nav[3] = {link: "/recipe/create", title:"Create"};
-            nav[4] = {link: "/flaggedRecipes", title: "Flagged Rcipes"};
+            if(req.user.admin) {
+                nav[3] = {link: "/flaggedRecipes", title: "Flagged Rcipes"};
+            }
+            else {
+                nav[3].title = "";
+            }
+            nav[4] = {link: "/recipe/create", title:"Create"};
         }
         next();
     });

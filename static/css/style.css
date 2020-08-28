@@ -53,13 +53,22 @@ a.btn {
     transition: 250ms;
     margin-right: 50px;
 }
-a.btnBack {
+button.btnBack {
+    border: none;
+    background-color: transparent;
     color: grey;
     position: relative;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     text-align: Left;
     transition: 250ms;
+    outline: none;
+}
+button.btnBack:hover {
+    text-decoration: underline;
+}
+button.btnBack:active {
+    outline: none;
 }
 .formStyle{
     background-color: #7e7a7f;

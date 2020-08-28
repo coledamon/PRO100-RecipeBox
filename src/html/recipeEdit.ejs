@@ -18,7 +18,7 @@
                 Paughers</a>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
-                    <%for(let i = 0; i < 3; i++) {%>
+                    <%for(let i = 0; i < 4; i++) {%>
                         <%if(nav[i].title.length > 0) {%>
                             <li class="nav-item">
                                 <a class="nav-link" href="<%=nav[i].link%>"><%=nav[i].title%></a>
@@ -27,17 +27,13 @@
                     <%}%>
                 </ul>
                 <ul class="navbar-nav">
-                    <%if(nav[3].title.length > 0) {%>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<%=nav[3].link%>"><%=nav[3].title%></a>
-                    </li>
+                    <%for(let i = 4; i < nav.length; i++) {%>
+                        <%if(nav[i].title.length > 0) {%>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<%=nav[i].link%>"><%=nav[i].title%></a>
+                            </li>
+                        <%}%>
                     <%}%>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<%=nav[4].link%>"><%=nav[4].title%></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<%=nav[5].link%>"><%=nav[5].title%></a>
-                    </li>
                 </ul>
             </div>
         </div>

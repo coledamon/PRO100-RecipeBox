@@ -22,17 +22,20 @@
                     <li class="nav-item">
                         <a class="nav-link" href="<%=nav[1].link%>"><%=nav[1].title%></a>
                     </li>
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" href="<%=nav[2].link%>"><%=nav[2].title%></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="<%=nav[3].link%>"><%=nav[3].title%></a>
                     </li>
                 </ul>
                 <ul class="navbar-nav">
-                    <%for(let i = 3; i < nav.length; i++) {%>
-                    <%if(nav[i].title.length > 0) {%>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<%=nav[i].link%>"><%=nav[i].title%></a>
-                    </li>
-                    <%}%>
+                    <%for(let i = 4; i < nav.length; i++) {%>
+                        <%if(nav[i].title.length > 0) {%>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<%=nav[i].link%>"><%=nav[i].title%></a>
+                            </li>
+                        <%}%>
                     <%}%>
                 </ul>
             </div>
