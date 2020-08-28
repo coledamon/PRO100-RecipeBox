@@ -8,10 +8,12 @@ function router(nav) {
         if(!req.user) {
             nav[2].title = "";
             nav[3].title = "";
+            nav[4].title = "";
         }
         else {
             nav[2] = {link: "/personalPosts", title: "Personal Posts"};
             nav[3] = {link: "/recipe/create", title:"Create"};
+            nav[4] = {link: "/flaggedRecipes", title: "Flagged Rcipes"};
         }
         next();
     });
@@ -276,7 +278,7 @@ function router(nav) {
                         const db = client.db(dbName);
                         const col = db.collection('recipes');
     
-                        const results = await col.updateOne({ _id: ObjectID(req.body._id) }, {$set: { flagged: true }});
+                        const results = await col.updateOne({ _id: ObjectID(req.body._id) }, {$set: { flagged: true, public: false }});
                         debug(results);       
                         res.redirect(`/recipe/${req.body._id}`);
                     } catch (err) {

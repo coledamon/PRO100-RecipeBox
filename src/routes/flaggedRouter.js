@@ -1,12 +1,10 @@
 const express = require('express');
-const homeRouter = express.Router();
 const {MongoClient} = require('mongodb');
-const debug = require('debug')('app:allRouter');
+const debug = require('debug')('app:flaggedRouter');
+const flaggedRouter = express.Router();
 
-
-module.exports = function router(nav) {
-    homeRouter.use((req, res, next) => {
-        
+function router(nav) {
+    flaggedRouter.use((req, res, next) => {
         if(!req.user) {
             nav[2].title = "";
             nav[3].title = "";
@@ -19,12 +17,13 @@ module.exports = function router(nav) {
         }
         next();
     });
-    homeRouter.route('/')
+    flaggedRouter.route('/')
         .get((req, res) => {
             const url = 'mongodb://localhost:27017';
             const dbName = 'Paughers';
 
             (async function mongo(){
+                debug(req.user);
                 let client;
                 try {
                     client = await MongoClient.connect(url);
@@ -32,16 +31,18 @@ module.exports = function router(nav) {
 
                     const db = client.db(dbName);
 
-                    const col = await db.collection('recipes')
+                    const col = db.collection('recipes')
                     
-                    const recipes = await col.find().toArray();
+                    const recipes = await col.find({"flagged" : true }).sort("name", 1).toArray();
 
-                    res.render('index', {nav, recipes, user: req.user});
+                    res.render('flaggedRecipes', {nav, recipes});
                 } catch (err) {
                     debug(err.stack);
                 }
                 client.close();
             }());
         });
-    return homeRouter;
+    return flaggedRouter;
 }
+
+module.exports = router;
