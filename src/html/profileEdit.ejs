@@ -40,7 +40,15 @@
     <div class="container bg-lightish awayFromHeader py-5">
         <div class="row">
             <div id="profPic" class="col-5">
-                <img class="rounded-circle" id="pfp" height="225px" width="225px" src="/images/profile.png"/>
+                <img class="rounded-circle" id="pfp" height="225px" width="225px" src="<%=imgurl%>"/>
+                <form name="editAcct" id="formThing" enctype="multipart/form-data" action="/auth/profile/uploadPic" method="post">
+                    <input id="file" style="visibility:hidden;" type="file" name="pfpPic" accept="image/jpeg">
+                    <label for="file" class="buttons bg-light button mt-1 ml-4">&ensp;Choose Picture&ensp;</label>
+                    <%if(error !== "") {%>
+                        <p class="bg-warning"><%=error%></p>
+                    <%}%>
+                    <input type="submit" style="visibility:hidden;">
+                </form>
             </div>
             <form name="privateRecipe" action="/auth/profile/edit" method="post">
                 <p><h5>Username</h5><input type="text" value="<%=user.username%>" name="username"><br></p>
@@ -57,28 +65,28 @@
     <script src="/js/jquery.js"></script>
     <script src="/js/profileScript.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-</body>
-<footer class="page-footer font-small fixed-bottom bg-dark">
-    <div class="container text-center text-md-left">
-        <div class="row">
-            <div class="col-5 offset-1 mb-md-0 mb-15">
-                <h5 class="text-uppercase">Contributors</h5>
-                <ul class="list-unstyled">
-                    <li> 
-                        <a href="mailto:KColeman@student.neumont.edu" target="_blank" id='white'>Kasey Coleman</a>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                        <a href="mailto:GCampbell@student.neumont.edu" target="_blank" id='white'>Matthew Campbell</a>
-                    </li>
-                    <li>
-                        <a href="mailto:CDamon@student.neumont.edu" target="_blank" id='white'>Cole Damon </a> &nbsp; &nbsp; &nbsp; &nbsp; &emsp13; &#8198; &#8198;
-                        <a href="mailto:RZarkowski@student.neumont.edu" target="_blank" id='white'>Reece Zarkowski</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-4 mb-md-0 mb-15">
-                <h5 class="text-uppercase text-right">Contact Us</h5>
-                <p class="text-right" id="white">801-555-9374</p>
+    <footer class="page-footer font-small fixed-bottom bg-dark">
+        <div class="container text-center text-md-left">
+            <div class="row">
+                <div class="col-5 offset-1 mb-md-0 mb-15">
+                    <h5 class="text-uppercase">Contributors</h5>
+                    <ul class="list-unstyled">
+                        <li> 
+                            <a href="mailto:KColeman@student.neumont.edu" target="_blank" id='white'>Kasey Coleman</a>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            <a href="mailto:GCampbell@student.neumont.edu" target="_blank" id='white'>Matthew Campbell</a>
+                        </li>
+                        <li>
+                            <a href="mailto:CDamon@student.neumont.edu" target="_blank" id='white'>Cole Damon </a> &nbsp; &nbsp; &nbsp; &nbsp; &emsp13; &#8198; &#8198;
+                            <a href="mailto:RZarkowski@student.neumont.edu" target="_blank" id='white'>Reece Zarkowski</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-4 mb-md-0 mb-15">
+                    <h5 class="text-uppercase text-right">Contact Us</h5>
+                    <p class="text-right" id="white">801-555-9374</p>
+                </div>
             </div>
         </div>
-    </div>
-</footer>
+    </footer>
+</body>
 </html>

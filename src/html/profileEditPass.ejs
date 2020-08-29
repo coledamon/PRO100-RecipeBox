@@ -40,26 +40,22 @@
     <div class="container bg-lightish awayFromHeader py-5">
         <div class="row">
             <div id="profPic" class="col-5">
-                <img class="rounded-circle" id="pfp" height="225px" width="225px" src="/images/profile.png"/>
-                <input id="file" style="visibility:hidden;" type="file" accept="image/jpeg">
-                <label for="file" class="btn bg-light button mt-1 ml-5">Choose Picture</label>
+                <img class="rounded-circle" id="pfp" height="225px" width="225px" src="<%=imgurl%>"/>
             </div>
             <div class="col-3">
                 <p><h5>Username</h5>&emsp;<%=user.username%><br><br></p>
                 <p><h5>Name</h5>&emsp;<%=user.name%><br><br></p>
                 <p><h5>Birthday</h5>&emsp;<%=user.birthday%><br></p>
-                <form name="privateRecipe" action="/auth/profile" method="post">
-                    <input class="" type="submit" name="editButton" value="  Edit  "/>
-                </form>
             </div>
             <div class="col-3">
-                <form name="privateRecipe" action="/auth/profile/changePass" method="post">
+                <form name="changePass" action="/auth/profile/changePass" method="post">
                     <p><h5>New Password</h5><input type="password" name="pass"><br></p>
                     <p><h5>Confirm Password</h5><input type="password" name="passConf"></p>
                     <%if(error !== "") {%>
                         <p class="bg-warning"><%=error%></p>
                     <%}%>
-                    <input class="ml-5" type="submit" name="save" value="  Save  "/>
+                    <a href="/auth/profile" class="hoverNone buttons" style="text-decoration: none;">&ensp;Cancel&ensp;</a>
+                    <input class="buttons" type="submit" name="save" value="  Save  "/>
                 </form>
             </div>
         </div>
@@ -68,28 +64,28 @@
     <script src="/js/jquery.js"></script>
     <script src="/js/profileScript.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-</body>
-<footer class="page-footer font-small fixed-bottom bg-dark">
-    <div class="container text-center text-md-left">
-        <div class="row">
-            <div class="col-5 offset-1 mb-md-0 mb-15">
-                <h5 class="text-uppercase">Contributors</h5>
-                <ul class="list-unstyled">
-                    <li> 
-                        <a href="mailto:KColeman@student.neumont.edu" target="_blank" id='white'>Kasey Coleman</a>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                        <a href="mailto:GCampbell@student.neumont.edu" target="_blank" id='white'>Matthew Campbell</a>
-                    </li>
-                    <li>
-                        <a href="mailto:CDamon@student.neumont.edu" target="_blank" id='white'>Cole Damon </a> &nbsp; &nbsp; &nbsp; &nbsp; &emsp13; &#8198; &#8198;
-                        <a href="mailto:RZarkowski@student.neumont.edu" target="_blank" id='white'>Reece Zarkowski</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-4 mb-md-0 mb-15">
-                <h5 class="text-uppercase text-right">Contact Us</h5>
-                <p class="text-right" id="white">801-555-9374</p>
+    <footer class="page-footer font-small fixed-bottom bg-dark">
+        <div class="container text-center text-md-left">
+            <div class="row">
+                <div class="col-5 offset-1 mb-md-0 mb-15">
+                    <h5 class="text-uppercase">Contributors</h5>
+                    <ul class="list-unstyled">
+                        <li> 
+                            <a href="mailto:KColeman@student.neumont.edu" target="_blank" id='white'>Kasey Coleman</a>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            <a href="mailto:GCampbell@student.neumont.edu" target="_blank" id='white'>Matthew Campbell</a>
+                        </li>
+                        <li>
+                            <a href="mailto:CDamon@student.neumont.edu" target="_blank" id='white'>Cole Damon </a> &nbsp; &nbsp; &nbsp; &nbsp; &emsp13; &#8198; &#8198;
+                            <a href="mailto:RZarkowski@student.neumont.edu" target="_blank" id='white'>Reece Zarkowski</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-4 mb-md-0 mb-15">
+                    <h5 class="text-uppercase text-right">Contact Us</h5>
+                    <p class="text-right" id="white">801-555-9374</p>
+                </div>
             </div>
         </div>
-    </div>
-</footer>
+    </footer>
+</body>
 </html>

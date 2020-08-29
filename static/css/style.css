@@ -51,7 +51,7 @@ a.btn {
     text-align: center;
     padding: 10px;
     transition: 250ms;
-    margin-right: 50px;
+    margin-right: 75px;
 }
 a.btnBack {
     color: grey;
@@ -135,11 +135,14 @@ a.btnBack {
     float: right;   
     margin: auto;
     height:50px;
-    width:50px;
+    width:75px;
     columns:10;
 
 }
 .heart{
     padding:800px;
     float: right;
+}
+.hoverNone:hover {
+    color:#6e6a6f;
 }

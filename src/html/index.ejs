@@ -55,11 +55,10 @@
                             <i class="fa fa-clock-o"> Cook Time:<%=recipes[i].cook_time %></i>
                             <p class="info"><%=recipes[i].description%></p> 
                             
-                            <form class="like" name="likeRecipe" action="<%=`/recipe/like/${recipes[i]._id}`%>" method="post"> 
-                                <input class="info fa-input" type="submit" name="like" value="  &#xf004;  " id="whatever" style="visibility: hidden;" />
-                                <input type="hidden" name="location" value="home">
-                                <label for="whatever" ><i class="icon 	<%if(user.likedPosts.includes(`${recipes[i]._id}`)){%>fas<%}else{%>far<%}%> fa-heart" style='font-size:24px' ></i></label>
-                            </form>
+                            <div class="like pt-2" href="/recipe/<%=recipes[i]._id%>">
+                                <i class="icon  <%if(user.likedPosts.includes(`${recipes[i]._id}`)){%>fas<%}else{%>far<%}%> fa-heart" style='font-size:24px' ></i>
+                                <p class="pl-2" style="font-size: 18px; margin-top: -2px"><%=recipes[i].likes%></p>
+                            </div>
 
                             <a href="/recipe/<%=recipes[i]._id%>" class="btn">Let's Cook!</a>
                             
@@ -78,11 +77,10 @@
                         <i class="fa fa-clock-o"> Prep Time:<%=recipes[i].prep_time%></i>
                         <i class="fa fa-clock-o"> Cook Time:<%=recipes[i].cook_time %></i>
                         <p class="info"><%=recipes[i].description%></p>
-                        <form class="like"  name="likeRecipe" action="<%=`/recipe/like/${recipes[i]._id}`%>" method="post"> 
-                            <input class="info mb-3 fa-input" type="submit" name="like" value="  &#xf004;  " id="whatever" style="visibility: hidden;" />
-                            <input type="hidden" name="location" value="home">
-                            <label for="whatever" ><i class="icon 	far fa-heart"  style='font-size:24px' ></i></label>
-                        </form>
+                        <div class="like pt-2" href="/recipe/<%=recipes[i]._id%>">
+                            <i class="icon far fa-heart" style='font-size:24px' ></i>
+                            <p class="pl-2" style="font-size: 18px; margin-top: -2px"><%=recipes[i].likes%></p>
+                        </div>
                         <a href="/recipe/<%=recipes[i]._id%>" class="btn">Let's Cook!</a> 
                        
         
@@ -97,28 +95,28 @@
 
     <script src="/js/jquery.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-</body>
-<footer class="page-footer font-small fixed-bottom bg-dark footer">
-    <div class="container text-center text-md-left">
-        <div class="row">
-            <div class="col-5 offset-1 mb-md-0 mb-15">
-                <h5 class="text-uppercase">Contributors</h5>
-                <ul class="list-unstyled">
-                    <li> 
-                        <a href="mailto:KColeman@student.neumont.edu" target="_blank" id='white'>Kasey Coleman</a>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                        <a href="mailto:GCampbell@student.neumont.edu" target="_blank" id='white'>Matthew Campbell</a>
-                    </li>
-                    <li>
-                        <a href="mailto:CDamon@student.neumont.edu" target="_blank" id='white'>Cole Damon </a> &nbsp; &nbsp; &nbsp; &nbsp; &emsp13; &#8198; &#8198;
-                        <a href="mailto:RZarkowski@student.neumont.edu" target="_blank" id='white'>Reece Zarkowski</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-4 mb-md-0 mb-15">
-                <h5 class="text-uppercase text-right">Contact Us</h5>
-                <p class="text-right" id="white">801-555-9374</p>
+    <footer class="page-footer font-small fixed-bottom bg-dark footer">
+        <div class="container text-center text-md-left">
+            <div class="row">
+                <div class="col-5 offset-1 mb-md-0 mb-15">
+                    <h5 class="text-uppercase">Contributors</h5>
+                    <ul class="list-unstyled">
+                        <li> 
+                            <a href="mailto:KColeman@student.neumont.edu" target="_blank" id='white'>Kasey Coleman</a>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            <a href="mailto:GCampbell@student.neumont.edu" target="_blank" id='white'>Matthew Campbell</a>
+                        </li>
+                        <li>
+                            <a href="mailto:CDamon@student.neumont.edu" target="_blank" id='white'>Cole Damon </a> &nbsp; &nbsp; &nbsp; &nbsp; &emsp13; &#8198; &#8198;
+                            <a href="mailto:RZarkowski@student.neumont.edu" target="_blank" id='white'>Reece Zarkowski</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-4 mb-md-0 mb-15">
+                    <h5 class="text-uppercase text-right">Contact Us</h5>
+                    <p class="text-right" id="white">801-555-9374</p>
+                </div>
             </div>
         </div>
-    </div>
-</footer>
+    </footer>
+</body>
 </html>
