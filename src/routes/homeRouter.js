@@ -37,9 +37,9 @@ module.exports = function router(nav) {
 
                     const db = client.db(dbName);
 
-                    const col = await db.collection('recipes')
+                    const col = db.collection('recipes')
                     
-                    const recipes = await col.find().toArray();
+                    const recipes = await col.find().sort("creationDate", -1).toArray();
 
                     res.render('index', {nav, recipes, user: req.user});
                 } catch (err) {

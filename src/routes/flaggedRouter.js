@@ -50,7 +50,7 @@ function router(nav) {
 
                     const col = db.collection('recipes')
                     
-                    const recipes = await col.find({"flagged" : true }).sort("name", 1).toArray();
+                    const recipes = await col.find({"flagged" : true }).collation({"locale": "en"}).sort("name", 1).toArray();
 
                     res.render('flaggedRecipes', {nav, recipes});
                 } catch (err) {

@@ -37,7 +37,7 @@ function router(nav) {
 
                     const col = db.collection('recipes')
                     
-                    const recipes = await col.find().sort("name", 1).toArray();
+                    const recipes = await col.find().collation({"locale": "en"}).sort("name", 1).toArray();
 
                     res.render('allPosts', {nav, recipes, user: req.user});
                 } catch (err) {

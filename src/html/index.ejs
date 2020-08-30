@@ -45,7 +45,7 @@
     <div class="awayFromHeader">
         <%for(let i = 0; i < recipes.length; i++) {%>
             <%if(user) {%>
-                <%if (user.username == recipes[i].creator || recipes[i].public) {%>
+                <%if (recipes[i].public) {%>
                     <div class="card">
            
                         <div>

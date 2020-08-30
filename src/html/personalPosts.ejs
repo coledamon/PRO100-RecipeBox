@@ -46,16 +46,34 @@
 
     <div class="container awayFromHeader">
         <div class="row">
-            <h2>Personal Recipes</h2>
+            <div class="col-3">
+                <h2>Personal Recipes</h2>
+            </div>
+            <div class="col-3 offset-4">
+                <h2>Privated Recipes</h2>
+            </div>
         </div>
-        <div>
-            <ul>
-                <%for(let i = 0; i < recipes.length; i++) {%>
-                    <li>
-                        <a href="/recipe/<%=recipes[i]._id%>" id="white"><%=recipes[i].name%></a>
-                    </li>
-                <%}%>
-            </ul>
+        <div class="row">
+            <div class="col-3">
+                <ul>
+                    <%for(let i = 0; i < recipes.length; i++) {%>
+                        <li>
+                            <a href="/recipe/<%=recipes[i]._id%>" id="white"><%=recipes[i].name%></a>
+                        </li>
+                    <%}%>
+                </ul>
+            </div>
+            <div class="col-3 offset-4">
+                <ul>
+                    <%for(let i = 0; i < recipes.length; i++) {%>
+                        <%if(!recipes[i].public) {%>
+                            <li>
+                                <a href="/recipe/<%=recipes[i]._id%>" id="white"><%=recipes[i].name%></a>
+                            </li>
+                        <%}%>
+                    <%}%>
+                </ul>
+            </div>
         </div>
     </div>
 
