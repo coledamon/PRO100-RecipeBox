@@ -104,12 +104,12 @@
                         <div class="col-4"></div>
                         <%}%>
                     <div class="col-2 offset-6">
-                        <form name="likeRecipe" class="like" style="display: inline-block;" action="<%=`/recipe/like/${recipe._id}`%>" method="post"> 
+                        <form name="likeRecipe" class="like mr-1" style="display: inline-block;" action="<%=`/recipe/like/${recipe._id}`%>" method="post"> 
                             <input class="info mb-3 fa-input" type="submit" name="like" value="  &#xf004;  " id="whatever" style="visibility: hidden;" />
                             <input type="hidden" name="location" value="recipe">
                             <input type="hidden" name="_id" value=<%=recipe._id%>>
                             <label for="whatever" ><i class="icon 	<%if(user) {if(user.likedPosts.includes(`${recipe._id}`)){%>fas<%}else{%>far<%}} else{%>far<%}%> fa-heart"  style='font-size:24px' ></i></label>
-                            <p class="pl-3" style="font-size: 18px; padding-top:3px;"><%=recipe.likes%></p>
+                            <p class="pl-3" style="font-size: 18px; padding-top:3px;width:75px;"><%=recipe.likes%></p>
                         </form>
                     </div>
                 </div>

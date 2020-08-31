@@ -56,8 +56,8 @@
                             <p class="info"><%=recipes[i].description%></p> 
                             
                             <div class="like pt-2" href="/recipe/<%=recipes[i]._id%>">
-                                <i class="icon  <%if(user.likedPosts.includes(`${recipes[i]._id}`)){%>fas<%}else{%>far<%}%> fa-heart" style='font-size:24px' ></i>
-                                <p class="pl-2" style="font-size: 18px; margin-top: -2px"><%=recipes[i].likes%></p>
+                                <i class="icon <%if(user.likedPosts.includes(`${recipes[i]._id}`)){%>fas<%}else{%>far<%}%> fa-heart" style='font-size:24px; padding-top: 2px;margin-right:-10px;' ></i>
+                                <p style="font-size: 18px;width:75px;"><%=recipes[i].likes%></p>
                             </div>
 
                             <a href="/recipe/<%=recipes[i]._id%>" class="btn">Let's Cook!</a>
@@ -78,8 +78,8 @@
                         <i class="fa fa-clock-o"> Cook Time:<%=recipes[i].cook_time %></i>
                         <p class="info"><%=recipes[i].description%></p>
                         <div class="like pt-2" href="/recipe/<%=recipes[i]._id%>">
-                            <i class="icon far fa-heart" style='font-size:24px' ></i>
-                            <p class="pl-2" style="font-size: 18px; margin-top: -2px"><%=recipes[i].likes%></p>
+                            <i class="icon far fa-heart" style='font-size:24px; padding-top: 2px;margin-right:-10px;' ></i>
+                            <p style="font-size: 18px;width:75px;"><%=recipes[i].likes%></p>
                         </div>
                         <a href="/recipe/<%=recipes[i]._id%>" class="btn">Let's Cook!</a> 
                        
