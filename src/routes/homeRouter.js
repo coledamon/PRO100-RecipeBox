@@ -41,6 +41,7 @@ module.exports = function router(nav) {
                     
                     const recipes = await col.find().sort("creationDate", -1).toArray();
 
+                    debug(recipes);
                     res.render('index', {nav, recipes, user: req.user});
                 } catch (err) {
                     debug(err.stack);

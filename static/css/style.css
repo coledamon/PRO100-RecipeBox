@@ -84,10 +84,16 @@ a.btnBack {
 
 .body {
     background-color: #aa968a;
+    min-height: calc(100vh - 100px);
+    padding-bottom: 150px;
+    position: relative;
 }
 
 .body2 {
     background-color: #bfafa6;
+    min-height: calc(100vh - 100px);
+    padding-bottom: 150px;
+    position: relative;
 }
 
 #white {
@@ -145,4 +151,10 @@ a.btnBack {
 }
 .hoverNone:hover {
     color:#6e6a6f;
+}
+
+.footerBottom {
+    width: 100%;
+    position: absolute; 
+    bottom: 0;
 }

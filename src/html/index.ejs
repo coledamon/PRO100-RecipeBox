@@ -10,7 +10,7 @@
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 </head>
 
-<body class="body awayFromFooter">
+<body class="body">
     <div class="navbar navbar-expand-sm navbar-dark fixed-top bg-dark">
         <div class="container">
             <a class="navbar-brand" href="/">
@@ -91,11 +91,14 @@
         
 
         <%}%>
-</div>
-
-    <script src="/js/jquery.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <footer class="page-footer font-small fixed-bottom bg-dark footer">
+        <%if(recipes.length == 0) {%>
+            <div class="text-center">
+                <h4>Head over to <a href="/admin">localhost:4000/admin</a> to import some basic recipes</h3>
+            </div>
+        <%}%>
+        
+    </div>
+    <footer class="page-footer font-small pt-2 bg-dark footerBottom">
         <div class="container text-center text-md-left">
             <div class="row">
                 <div class="col-5 offset-1 mb-md-0 mb-15">
@@ -118,5 +121,9 @@
             </div>
         </div>
     </footer>
+
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    
 </body>
 </html>
