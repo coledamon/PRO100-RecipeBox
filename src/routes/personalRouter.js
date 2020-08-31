@@ -8,10 +8,18 @@ function router(nav) {
         if(!req.user) {
             nav[2].title = "";
             nav[3].title = "";
+            nav[4].title = "";
+            res.redirect("/");
         }
         else {
             nav[2] = {link: "/personalPosts", title: "Personal Posts"};
-            nav[3] = {link: "/recipe/create", title:"Create"};
+            if(req.user.admin) {
+                nav[3] = {link: "/flaggedRecipes", title: "Flagged Rcipes"};
+            }
+            else {
+                nav[3].title = "";
+            }
+            nav[4] = {link: "/recipe/create", title:"Create"};
         }
         next();
     });
@@ -30,7 +38,7 @@ function router(nav) {
 
                     const col = db.collection('recipes')
                     
-                    const recipes = await col.find({"creator" : `${req.user.username}`}).sort("name", 1).toArray();
+                    const recipes = await col.find({"creator" : `${req.user.username}`}).collation({"locale": "en"}).sort("name", 1).toArray();
 
                     res.render('personalPosts', {nav, recipes});
                 } catch (err) {

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Main Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link href="/css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+</head>
+
+<body class="body">
+    <div class="navbar navbar-expand-sm navbar-dark fixed-top bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src="/images/logo.png" width="30" height="30" class="d-inline-block align-top">
+                Paughers</a>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <%for(let i = 0; i < 4; i++) {%>
+                        <%if(nav[i].title.length > 0) {%>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<%=nav[i].link%>"><%=nav[i].title%></a>
+                            </li>
+                        <%}%>
+                    <%}%>
+                </ul>
+                <ul class="navbar-nav">
+                    <%for(let i = 4; i < nav.length; i++) {%>
+                        <%if(nav[i].title.length > 0) {%>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<%=nav[i].link%>"><%=nav[i].title%></a>
+                            </li>
+                        <%}%>
+                    <%}%>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container pt-5 mt-5">
+        <div class="row">
+            <div class="card">
+                <div class="header pl-3 pt-3 pr-3">
+                    <a href="/" class="btnBack"><i class='fas fa-arrow-left'></i>Back</a>
+                </div>
+                <form name="editRecipe" action=<%=`/recipe/edit/${recipe._id}`%> method="post">
+                    <%if(user.username == recipe.creator) {%>
+                    <div>
+                        <h1 class="food"><%=recipe.name%></h1>
+                        <i class="fa fa-clock-o"> Prep Time:<input name="prep_time" value="<%=recipe.prep_time%>"></i>
+                        <i class="fa fa-clock-o"> Cook Time:<input name="cook_time" value="<%=recipe.cook_time %>"></i>
+                        <h5 class="info">Description</h5>
+                        <p class="info"><textarea rows="4" class="notFull" name="description" wrap="soft"><%=recipe.description%></textarea> </p>
+                        <h5 class="info">Ingredients</h5>
+                        <p class="info"> <textarea rows="4" class="notFull" name="ingredients" wrap="soft"><%= recipe.ingredients%></textarea> </p>
+
+                        <h5 class="info">Directions</h5>
+                        <p class="info"><textarea rows="4" class="notFull" name="directions" wrap="soft"><%=recipe.directions%></textarea></p>
+                        </ul>
+
+                    </div>
+                    <div>
+                        <input class="ml-5 mt-4" type="radio" id="public" name="visibility" <%if(recipe.public){%>checked<%}%> value="public">
+                        <label for="public">Public</label><br>
+                        <input class="ml-5" type="radio" id="private" name="visibility" <%if(!recipe.public){%>checked<%}%> value="private">
+                        <label for="private">Private</label><br>
+                        <input type="hidden" name="type" value="edit">
+                        <input type="hidden" name="_id" value=<%=recipe._id%>>
+                        <br>
+                        <%if(error !== "") {%>
+                            <p class="bg-warning text-center"><%=error%></p>
+                        <%}%>
+                        <input class="info col-11 buttons" type="submit" name="save" value="  Save  "/>
+                    </div>
+                    <%}else {%>
+                        <br>
+                        <h4 class="bg-danger text-center py-2">You do not have permission to edit this recipe!</h4>
+                    <%}%>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <footer class="page-footer font-small pt-2 bg-dark footerBottom">
+        <div class="container text-center text-md-left">
+            <div class="row">
+                <div class="col-5 offset-1 mb-md-0 mb-15">
+                    <h5 class="text-uppercase">Contributors</h5>
+                    <ul class="list-unstyled">
+                        <li>
+                            <a href="mailto:KColeman@student.neumont.edu" target="_blank" id='white'>Kasey Coleman</a>&nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp;
+                            <a href="mailto:GCampbell@student.neumont.edu" target="_blank" id='white'>Matthew Campbell</a>
+                        </li>
+                        <li>
+                            <a href="mailto:CDamon@student.neumont.edu" target="_blank" id='white'>Cole Damon </a> &nbsp;
+                            &nbsp; &nbsp; &nbsp; &emsp13; &#8198; &#8198;
+                            <a href="mailto:RZarkowski@student.neumont.edu" target="_blank" id='white'>Reece Zarkowski</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-4 mb-md-0 mb-15">
+                    <h5 class="text-uppercase text-right">Contact Us</h5>
+                    <p class="text-right" id="white">801-555-9374</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

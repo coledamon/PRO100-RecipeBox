@@ -8,7 +8,7 @@
     <link href="/css/style.css" rel="stylesheet" />
 </head>
 
-<body class="body awayFromFooter">
+<body class="body">
     <div class="navbar navbar-expand-sm navbar-dark fixed-top bg-dark">
         <div class="container">
             <a class="navbar-brand" href="/">
@@ -16,21 +16,23 @@
                 Paughers</a>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
-                    <%for(let i = 0; i < 3; i++) {%>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<%=nav[i].link%>"><%=nav[i].title%></a>
-                    </li>
+                    <%for(let i = 0; i < 4; i++) {%>
+                        <%if(nav[i].title.length > 0) {%>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<%=nav[i].link%>"><%=nav[i].title%></a>
+                            </li>
+                        <%}%>
                     <%}%>
                 </ul>
                 <ul class="navbar-nav">
                     <li class="nav-item active">
-                        <a class="nav-link" href="<%=nav[3].link%>"><%=nav[3].title%></a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="<%=nav[4].link%>"><%=nav[4].title%></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<%=nav[5].link%>"><%=nav[5].title%></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<%=nav[6].link%>"><%=nav[6].title%></a>
                     </li>
                 </ul>
             </div>
@@ -46,41 +48,45 @@
             Description: <input name="description" id="description"/><br><br>
             Ingredients: <input name="ingredients" id="ingredients"/><br><br>
             Directions: <input name="directions" id="directions"/><br><br>
+            <input class="" type="radio" id="public" name="visibility" checked value="public">
+            <label for="public">Public</label>
+            <input class="ml-3" type="radio" id="private" name="visibility" value="private">
+            <label for="private">Private</label><br><br>
             <%if(error !== "") {%>
-                <p class="bg-warning ml-5 pl-4"><%=error%></p>
+                <p class="bg-warning text-center"><%=error%></p>
             <%}%>
-            <input class="mr-auto mb-3" type="submit" value="Add Recipe"/>
+            <input class="mr-auto mb-3 buttons" type="submit" value=" Add Recipe "/>
             
         </form>
     </div>
 
     <script src="/js/jquery.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-</body>
-<footer class="page-footer font-small fixed-bottom bg-dark">
-    <div class="container text-center text-md-left">
-        <div class="row">
-            <div class="col-5 offset-1 mb-md-0 mb-15">
-                <h5 class="text-uppercase">Contributors</h5>
-                <ul class="list-unstyled">
-                    <li>
-                        <a href="mailto:KColeman@student.neumont.edu" target="_blank" id='white'>Kasey Coleman</a>&nbsp;
-                        &nbsp; &nbsp; &nbsp; &nbsp;
-                        <a href="mailto:GCampbell@student.neumont.edu" target="_blank" id='white'>Matthew Campbell</a>
-                    </li>
-                    <li>
-                        <a href="mailto:CDamon@student.neumont.edu" target="_blank" id='white'>Cole Damon </a> &nbsp;
-                        &nbsp; &nbsp; &nbsp; &emsp13; &#8198; &#8198;
-                        <a href="mailto:RZarkowski@student.neumont.edu" target="_blank" id='white'>Reece Zarkowski</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-4 mb-md-0 mb-15">
-                <h5 class="text-uppercase text-right">Contact Us</h5>
-                <p class="text-right" id="white">801-555-9374</p>
+    <footer class="page-footer font-small pt-2 bg-dark footerBottom">
+        <div class="container text-center text-md-left">
+            <div class="row">
+                <div class="col-5 offset-1 mb-md-0 mb-15">
+                    <h5 class="text-uppercase">Contributors</h5>
+                    <ul class="list-unstyled">
+                        <li>
+                            <a href="mailto:KColeman@student.neumont.edu" target="_blank" id='white'>Kasey Coleman</a>&nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp;
+                            <a href="mailto:GCampbell@student.neumont.edu" target="_blank" id='white'>Matthew Campbell</a>
+                        </li>
+                        <li>
+                            <a href="mailto:CDamon@student.neumont.edu" target="_blank" id='white'>Cole Damon </a> &nbsp;
+                            &nbsp; &nbsp; &nbsp; &emsp13; &#8198; &#8198;
+                            <a href="mailto:RZarkowski@student.neumont.edu" target="_blank" id='white'>Reece Zarkowski</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-4 mb-md-0 mb-15">
+                    <h5 class="text-uppercase text-right">Contact Us</h5>
+                    <p class="text-right" id="white">801-555-9374</p>
+                </div>
             </div>
         </div>
-    </div>
-</footer>
+    </footer>
+</body>
 
 </html>

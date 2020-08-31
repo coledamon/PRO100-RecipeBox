@@ -24,7 +24,7 @@ app.use('/js', express.static(path.join(__dirname, 'node_modules/jquery/dist')))
 app.set('views', './src/html/');
 app.set('view engine', 'ejs');
 
-const nav = [{link: "/", title: "Home"}, {link: "/allPosts", title: "All Posts"}, {link: "/personalPosts", title: "Personal Posts"}, {link: "/recipe/create", title:"Create"}, {link: "/auth/signin", title: "Login"}, {link: "/auth/signUp", title: "Sign Up"}]
+const nav = [{link: "/", title: "Home"}, {link: "/allPosts", title: "All Posts"}, {link: "/personalPosts", title: "Personal Posts"}, {link: "/flaggedRecipes", title: "Flagged Recipes"}, {link: "/recipe/create", title:"Create"}, {link: "/auth/signin", title: "Login"}, {link: "/auth/signUp", title: "Sign Up"}]
 
 const homeRouter = require("./src/routes/homeRouter")(nav);
 const allRouter = require("./src/routes/allRouter")(nav);
@@ -32,6 +32,7 @@ const adminRouter = require("./src/routes/adminRouter")();
 const recipeRouter = require("./src/routes/recipeRouter")(nav);
 const authRouter = require("./src/routes/authRouter")(nav);
 const personalRouter = require("./src/routes/personalRouter")(nav);
+const flaggedRouter = require("./src/routes/flaggedRouter")(nav);
 
 app.use('/', homeRouter);
 app.use('/allPosts', allRouter);
@@ -39,6 +40,7 @@ app.use('/admin', adminRouter);
 app.use('/auth', authRouter);
 app.use('/recipe', recipeRouter);
 app.use('/personalPosts', personalRouter);
+app.use('/flaggedRecipes', flaggedRouter);
 
 app.listen(port, () => {
   debug(`listening on port ${chalk.green(port)}`);

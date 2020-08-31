@@ -10,7 +10,7 @@
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 </head>
 
-<body class="body awayFromFooter">
+<body class="body">
     <div class="navbar navbar-expand-sm navbar-dark fixed-top bg-dark">
         <div class="container">
             <a class="navbar-brand" href="/">
@@ -18,7 +18,7 @@
                 Paughers</a>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
-                    <%for(let i = 0; i < 3; i++) {%>
+                    <%for(let i = 0; i < 4; i++) {%>
                         <%if(nav[i].title.length > 0) {%>
                             <li class="nav-item">
                                 <a class="nav-link" href="<%=nav[i].link%>"><%=nav[i].title%></a>
@@ -27,27 +27,47 @@
                     <%}%>
                 </ul>
                 <ul class="navbar-nav">
-                    <%if(nav[3].title.length > 0) {%>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<%=nav[3].link%>"><%=nav[3].title%></a>
-                    </li>
+                    <%for(let i = 4; i < nav.length; i++) {%>
+                        <%if(nav[i].title.length > 0) {%>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<%=nav[i].link%>"><%=nav[i].title%></a>
+                            </li>
+                        <%}%>
                     <%}%>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<%=nav[4].link%>"><%=nav[4].title%></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<%=nav[5].link%>"><%=nav[5].title%></a>
-                    </li>
                 </ul>
             </div>
         </div>
     </div>
 
-    <div class="container pt-5 mt-5">
+    <div class="container awayFromHeader">
         <div class="row">
             <div class="card">
                 <div class="header pl-3 pt-3 pr-3">
-                    <a href="/" class="btnBack"><i class='fas fa-arrow-left'></i>Back</a>
+                    <div class="row notFull">
+                        <div class="col-2">
+                            <a href="/" class="btnBack"><i class='fas fa-arrow-left'></i>Home</a>
+                        </div>
+                        <%if(user) {%>
+                            <%if(user.admin || user.username != recipe.creator) {%>
+                                <form class="col-10" name="flagRecipe" action=<%=`/recipe/${recipe._id}`%> method="post">
+                                    <input class="mb-3 fa-input buttons float" type="submit" name="flag" value=" Flag <%if(recipe.flagged) {%>&#xf024;<%} else {%>&#xf11d;<%}%> "/>
+                                    <input type="hidden" name="_id" value=<%=recipe._id%>>
+                                    <input type="hidden" name="type" value="flag">
+                                </form>
+                            <%}%>
+                        <%} else {%>
+                            <form class="col-10" name="flagRecipe" action=<%=`/recipe/${recipe._id}`%> method="post">
+                                <input class="mb-3 fa-input buttons float" type="submit" name="flag" value=" Flag <%if(recipe.flagged) {%>&#xf024;<%} else {%>&#xf11d;<%}%> "/>
+                                <input type="hidden" name="_id" value=<%=recipe._id%>>
+                                <input type="hidden" name="type" value="flag">
+                            </form>
+                        <%}%>
+                    </div>
+                    <%if(recipe.flagged) {%>
+                        <div class="bg-danger row text-center">
+                            <h3 class="ml-auto mr-auto">This recipe has been flagged and is currently under review.</h3>
+                        </div>
+                    <%}%>
                 </div>
                 <div>
                     <h1 class="food"><%=recipe.name%></h1>
@@ -59,35 +79,39 @@
 
                     <h5 class="info">Directions</h5>
                     <p class="info"><%=recipe.directions%></p>
-                    <a href="#"><i class="icon 	fas fa-heart"  style='font-size:24px' ></i></a>
-                    </ul>
-
                 </div>
-                <div>
+                <div class="row notFull">
                     <%if(user) {%>
-                        <%if(user.username == recipe.creator) {%>
-                            <%if(recipe.public) {%>
-                                <form name="publicRecipe" action=<%=`/recipe/${recipe._id}`%> method="post">
-                                    <input class="info mb-3" type="submit" name="private" value="  Private  "/>
-                                <input type="hidden" name="type" value="private">
-                                <input type="hidden" name="_id" value=<%=recipe._id%>>
-                                </form>
-                            <%} else {%>
-                                <form name="privateRecipe" action=<%=`/recipe/${recipe._id}`%> method="post">
-                                <input class="info mb-3" type="submit" name="public" value="  Public  "/>
-                                <input type="hidden" name="type" value="public">
-                                <input type="hidden" name="_id" value=<%=recipe._id%>>
-                                </form>
-                            <%}%>
-                        <%}%>
                         <%if(user.admin || user.username == recipe.creator) {%>
-                            <form name="deleteRecipe" action=<%=`/recipe/${recipe._id}`%> method="post">
-                                <input class="info mb-3 fa-input" type="submit" name="delete" value="  Delete&#xf1f8;  "/>
+                            <form class="col-2" name="deleteRecipe" action=<%=`/recipe/${recipe._id}`%> method="post">
+                                <input class="info mb-3 fa-input buttons" type="submit" name="delete" value=" Delete &#xf1f8; "/>
                                 <input type="hidden" name="_id" value=<%=recipe._id%>>
                                 <input type="hidden" name="type" value="delete">
                             </form>
+                            <%if(user.username == recipe.creator) {%>
+                                <form class="col-2" name="publicRecipe" action=<%=`/recipe/${recipe._id}`%> method="post">
+                                    <input class="info mb-3 buttons" type="submit" name="private" value=" Edit "/>
+                                    <input type="hidden" name="type" value="edit">
+                                    <input type="hidden" name="_id" value=<%=recipe._id%>>
+                                </form>
+                            <%} else {%>
+                                <div class="col-2"></div>
+                                <%}%>%>
+                        <%} else {%>
+                            <div class="col-4"></div>
+                            <%}%>%>
+                    <%} else {%>
+                        <div class="col-4"></div>
                         <%}%>
-                    <%}%>
+                    <div class="col-2 offset-6">
+                        <form name="likeRecipe" class="like mr-1" style="display: inline-block;" action="<%=`/recipe/like/${recipe._id}`%>" method="post"> 
+                            <input class="info mb-3 fa-input" type="submit" name="like" value="  &#xf004;  " id="whatever" style="visibility: hidden;" />
+                            <input type="hidden" name="location" value="recipe">
+                            <input type="hidden" name="_id" value=<%=recipe._id%>>
+                            <label for="whatever" ><i class="icon 	<%if(user) {if(user.likedPosts.includes(`${recipe._id}`)){%>fas<%}else{%>far<%}} else{%>far<%}%> fa-heart"  style='font-size:24px' ></i></label>
+                            <p class="pl-3" style="font-size: 18px; padding-top:3px;width:75px;"><%=recipe.likes%></p>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -95,31 +119,31 @@
 
     <script src="/js/jquery.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-</body>
-<footer class="page-footer font-small fixed-bottom bg-dark">
-    <div class="container text-center text-md-left">
-        <div class="row">
-            <div class="col-5 offset-1 mb-md-0 mb-15">
-                <h5 class="text-uppercase">Contributors</h5>
-                <ul class="list-unstyled">
-                    <li>
-                        <a href="mailto:KColeman@student.neumont.edu" target="_blank" id='white'>Kasey Coleman</a>&nbsp;
-                        &nbsp; &nbsp; &nbsp; &nbsp;
-                        <a href="mailto:GCampbell@student.neumont.edu" target="_blank" id='white'>Matthew Campbell</a>
-                    </li>
-                    <li>
-                        <a href="mailto:CDamon@student.neumont.edu" target="_blank" id='white'>Cole Damon </a> &nbsp;
-                        &nbsp; &nbsp; &nbsp; &emsp13; &#8198; &#8198;
-                        <a href="mailto:RZarkowski@student.neumont.edu" target="_blank" id='white'>Reece Zarkowski</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-4 mb-md-0 mb-15">
-                <h5 class="text-uppercase text-right">Contact Us</h5>
-                <p class="text-right" id="white">801-555-9374</p>
+    <footer class="page-footer font-small pt-2 bg-dark footerBottom">
+        <div class="container text-center text-md-left">
+            <div class="row">
+                <div class="col-5 offset-1 mb-md-0 mb-15">
+                    <h5 class="text-uppercase">Contributors</h5>
+                    <ul class="list-unstyled">
+                        <li>
+                            <a href="mailto:KColeman@student.neumont.edu" target="_blank" id='white'>Kasey Coleman</a>&nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp;
+                            <a href="mailto:GCampbell@student.neumont.edu" target="_blank" id='white'>Matthew Campbell</a>
+                        </li>
+                        <li>
+                            <a href="mailto:CDamon@student.neumont.edu" target="_blank" id='white'>Cole Damon </a> &nbsp;
+                            &nbsp; &nbsp; &nbsp; &emsp13; &#8198; &#8198;
+                            <a href="mailto:RZarkowski@student.neumont.edu" target="_blank" id='white'>Reece Zarkowski</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-4 mb-md-0 mb-15">
+                    <h5 class="text-uppercase text-right">Contact Us</h5>
+                    <p class="text-right" id="white">801-555-9374</p>
+                </div>
             </div>
         </div>
-    </div>
-</footer>
+    </footer>
+</body>
 
 </html>

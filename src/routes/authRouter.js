@@ -1,8 +1,9 @@
 const express = require('express');
-const {MongoClient} = require('mongodb');
+const {MongoClient, ObjectID, GridFSBucket} = require('mongodb');
 const debug = require('debug')('app:authRouter');
 const authRouter = express.Router();
 const passport = require('passport');
+const fs = require('fs');
 let whereToRead = 0;
 
 function router(nav) {
@@ -10,16 +11,29 @@ function router(nav) {
         if(!req.user) {
             nav[2].title = "";
             nav[3].title = "";
+            nav[4].title = "";
         }
         else {
             nav[2] = {link: "/personalPosts", title: "Personal Posts"};
-            nav[3] = {link: "/recipe/create", title:"Create"};
+            if(req.user.admin) {
+                nav[3] = {link: "/flaggedRecipes", title: "Flagged Rcipes"};
+            }
+            else {
+                nav[3].title = "";
+            }
+            nav[4] = {link: "/recipe/create", title:"Create"};
         }
         next();
     });
     authRouter.route('/signUp')
     .get((req, res) => {
-        res.render('signUp', {nav, error:""});
+        let error=""; 
+        if(req.session.error != null) {
+            error = req.session.error;
+            req.session.error = null;
+        }
+        res.render('signUp', {nav, error});
+        
     })
     .post((req, res) => {
         const {username, password} = req.body;
@@ -35,7 +49,7 @@ function router(nav) {
                 const db = client.db(dbName);
                 const col = db.collection('users');
 
-                const user = {username, password, admin: false};
+                const user = {username, password, admin: false, likedPosts: []};
 
                 const usernames = await col.find().toArray();
                 debug(usernames);
@@ -96,7 +110,7 @@ function router(nav) {
                     const db = client.db(dbName);
                     const col = db.collection('users');
 
-                    const user = {username, password, admin: true};
+                    const user = {username, password, admin: true, likedPosts: []};
 
                     const usernames = await col.find().toArray();
                     debug(usernames);
@@ -153,23 +167,271 @@ function router(nav) {
     authRouter.route('/profile')
     .all((req, res, next) => {
         if(req.user) {
-            nav[4] = {link: "/auth/profile", title: "Profile"};
-            nav[5] = {link: "/auth/logout", title: "Log Out"};
+            nav[5] = {link: "/auth/profile", title: "Profile"};
+            nav[6] = {link: "/auth/logout", title: "Log Out"};
             next();
         } else {
             res.redirect('/');
         }
     })
     .get((req, res) => {
-        res.render('profile', {nav});
+        const url = 'mongodb://localhost:27017';
+        const dbName = 'Paughers';
+        let error=""; 
+        let passSucc = "";
+        if(req.session.error != null) {
+            error = req.session.error;
+            req.session.error = null;
+        }
+        if(req.session.passSucc != null) {
+            passSucc = req.session.passSucc;
+            req.session.passSucc = null;
+        }
+        if(req.session.imgurl == null) {
+            (async function getPic(){
+                let client;
+                try {
+                    client = await MongoClient.connect(url);
+                    debug('Connected correctly to server');  
+
+                    const db = client.db(dbName);
+
+                    const col = db.collection('profPics.files');    
+                    const colChunks = db.collection('profPics.chunks');
+
+                    debug(req.user.username);
+                    const docs = await col.findOne({filename: `${req.user.username}`})
+                    debug(docs);
+                    if(docs){
+                        const chunks = await colChunks.findOne({files_id : ObjectID(docs._id)});
+                        debug(chunks);
+                        if(chunks){
+                            let fileData = [];          
+                            fileData.push(chunks.data.toString('base64'));          
+                            let finalFile = 'data:' + docs.contentType + ';base64,' + fileData.join('');          
+                            req.session.imgurl = finalFile;
+                            res.render('profile', {nav, user: req.user, passSucc, error, imgurl: req.session.imgurl});
+                            return;
+                        };      
+                    }
+                    debug(nav);
+                    req.session.imgurl = "/images/profile.png";
+                    res.render('profile', {nav, user: req.user, passSucc: "", error, imgurl: req.session.imgurl});
+                }catch(err) {
+                    debug(err.stack);
+                };  
+                client.close();
+            }());
+        }
+        else {
+            res.render('profile', {nav, user: req.user, passSucc: "", error, imgurl: req.session.imgurl});
+        }
+    })
+    .post((req, res) => {
+        res.redirect('/auth/profile/edit');
+    });
+    authRouter.route('/profile/edit')
+    .all((req, res, next) => {
+        if(req.user) {
+            next();
+        } else {
+            res.redirect('/');
+        }
+    })
+    .get((req, res) => {
+        let birthdayDOM;
+        if(req.user.birthday) {
+            birthdayDOM = `${req.user.birthday.substring(6)}-${req.user.birthday.substring(0, 2)}-${req.user.birthday.substring(3, 5)}`;
+        }
+        res.render('profileEdit', {nav, user: req.user, bdayString: birthdayDOM, error:"", imgurl: req.session.imgurl});
+    })
+    .post((req, res) => {
+        const {username, name, birthday} = req.body;
+        const oldUsername = req.user.username;
+        const birthYear = birthday.substring(0,4);
+        const birthMonth = birthday.substring(5,7);
+        const birthDay = birthday.substring(8);
+        var birthdayBetter = `${birthMonth}/${birthDay}/${birthYear}`;
+        if(birthdayBetter == "//") {
+            birthdayBetter = "";
+        }
+        const url = 'mongodb://localhost:27017';
+        const dbName = 'Paughers';
+        (async function updateUser(){
+            let client;
+            try {
+                client = await MongoClient.connect(url);
+                debug('Connected correctly to server');
+                const db = client.db(dbName);
+                const col = db.collection('users');     
+
+                const usernames = await col.find().toArray();
+                debug(usernames);
+        
+                let userFound = false;
+        
+                for(let i = 0; i < usernames.length; i++) {
+                    if(usernames[i].username.toLowerCase() == username.toLowerCase()) {
+                        userFound = true;
+                        break;
+                    }
+                }
+                
+                if(!userFound || username == req.user.username) {
+                    const results = await col.updateOne({username: req.user.username}, {$set: {username, name, birthday: birthdayBetter}});
+                    debug(results);        
+                    const user = await col.findOne({username});
+                    req.login(user, () => {
+                        (async function updateRecipes(){
+                            const moreResults = await db.collection('recipes').updateMany({creator: oldUsername}, {$set : {creator: req.user.username}});
+                        }());
+                        res.redirect('/auth/profile');
+                    });
+                }
+                else {
+                    const birthdayDOM = `${req.user.birthday.substring(6)}-${req.user.birthday.substring(0, 2)}-${req.user.birthday.substring(3, 5)}`;
+                    res.render('profileEdit', {nav, user: req.user, bdayString: birthdayDOM, error: "This username is taken, please enter a different one.", imgurl: req.session.imgurl});
+                }
+            } catch (err) {
+                debug(err.stack);
+            }
+            client.close();
+        }());
+    });
+    authRouter.route('/profile/changePass')
+    .all((req, res, next) => {
+        if(req.user) {
+            next();
+        } else {
+            res.redirect('/');
+        }
+    })
+    .get((req, res) => {
+        res.render('profileEditPass', {nav, user: req.user, error: "", imgurl: req.session.imgurl});
+    })
+    .post((req, res) => {
+        const {pass, passConf} = req.body;
+        const url = 'mongodb://localhost:27017';
+        const dbName = 'Paughers';
+        if(pass == passConf) {
+            (async function addUser(){
+                let client;
+                try {
+                    client = await MongoClient.connect(url);
+                    debug('Connected correctly to server');
+                    const db = client.db(dbName);
+                    const col = db.collection('users');
+
+                    if(pass.length > 0) {
+                        const results = await col.updateOne({username: req.user.username}, {$set: {password: pass}});
+                        debug(results);        
+                        const user = await col.findOne({username: req.user.username});
+                        req.login(user, () => {
+                            req.session.passSucc = "Password Changed Successfully"
+                            res.redirect("/auth/profile");
+                        });
+                    }
+                    else {
+                        res.render("profileEditPass", {nav, user: req.user, error: "You must enter a password.", imgurl: req.session.imgurl});
+                    }
+                } catch (err) {
+                    debug(err.stack);
+                }
+                client.close();
+            }());
+        }
+        else {
+            res.render('profileEditPass', {nav, user: req.user, error: "Passwords do not match", imgurl: req.session.imgurl});
+        }
     });
     authRouter.route('/logout')
     .get((req,res) => {
+        req.session.imgurl = null;
         req.logout();
-        nav[4] = {link: "/auth/signin", title: "Login"};
-        nav[5] = {link: "/auth/signUp", title: "Sign Up"};
+        nav[5] = {link: "/auth/signin", title: "Login"};
+        nav[6] = {link: "/auth/signUp", title: "Sign Up"};
         res.redirect('/');
     }); 
+    authRouter.route('/profile/deleteConf')
+    .all((req, res, next) => {
+        if(!req.user) {
+            res.redirect("/");
+        }
+        else {
+            next();
+        }
+    })
+    .get((req, res) => {
+        res.render("deleteConf", {nav, user: req.user});
+    })
+    .post((req, res) => {
+        const url = 'mongodb://localhost:27017';
+        const dbName = 'Paughers';
+        (async function delProf(){
+            let client;
+            try {
+                client = await MongoClient.connect(url);
+                debug('Connected correctly to server');
+                const db = client.db(dbName);
+                const col = db.collection('users');
+                
+                const likes = req.user.likedPosts;
+                for(let i = 0; i < likes.length; i++) {
+                    const recipe = await db.collection("recipes").findOne({_id: ObjectID(likes[i])});
+                    const newLikes = recipe.likes - 1;
+                    const result = await db.collection("recipes").updateOne({_id: ObjectID(likes[i])}, {$set: {likes: newLikes}});
+                }
+
+                const results = await col.deleteOne({username: req.user.username});
+                debug(results);
+            } catch (err) {
+                debug(err.stack);
+            }
+            client.close();
+        }());
+        res.redirect('/auth/logout');
+    });
+
+    authRouter.route('/profile/uploadPic')
+    .all((req, res, next) => {
+        if(!req.user) {
+            res.redirect("/");
+        }
+        else {
+            next();
+        }
+    })
+    .get((req, res) => {
+        res.redirect('/');
+    })
+    .post((req, res) => {
+        const upload = require("../../static/js/upload")(req, res);
+
+        (async function uploadFile(){
+            try {
+                await upload;
+            
+                console.log(req.file);
+                if (req.file == undefined) {
+                    req.session.error="You must select a file";
+                    res.redirect('/auth/profile');
+                    debug('no file');
+                    return;
+                }
+            
+                req.session.imgurl = null;
+                res.redirect('/auth/profile');
+                debug('good');
+                return;
+          } catch (error) {
+            console.log(error);
+            req.session.error=`Error when trying upload image: ${error}`;
+            res.redirect('/auth/profile');
+            debug('bad');
+            return;
+          }
+        }());
+    });
     return authRouter;
 }
 

@@ -10,10 +10,17 @@ module.exports = function router(nav) {
         if(!req.user) {
             nav[2].title = "";
             nav[3].title = "";
+            nav[4].title = "";
         }
         else {
             nav[2] = {link: "/personalPosts", title: "Personal Posts"};
-            nav[3] = {link: "/recipe/create", title:"Create"};
+            if(req.user.admin) {
+                nav[3] = {link: "/flaggedRecipes", title: "Flagged Rcipes"};
+            }
+            else {
+                nav[3].title = "";
+            }
+            nav[4] = {link: "/recipe/create", title:"Create"};
         }
         next();
     });
@@ -30,10 +37,11 @@ module.exports = function router(nav) {
 
                     const db = client.db(dbName);
 
-                    const col = await db.collection('recipes')
+                    const col = db.collection('recipes')
                     
-                    const recipes = await col.find().toArray();
+                    const recipes = await col.find().sort("creationDate", -1).toArray();
 
+                    debug(recipes);
                     res.render('index', {nav, recipes, user: req.user});
                 } catch (err) {
                     debug(err.stack);
